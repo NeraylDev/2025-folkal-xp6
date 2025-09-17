@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "MouseDelta",
+                    "type": "Value",
+                    "id": "3db9696a-10c8-450a-ac50-b9b0fba106ce",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "LeftMouse",
                     "type": "Button",
                     "id": "b76dc21a-8831-4a74-b8cc-2ff2d818dbfb",
@@ -148,6 +157,17 @@
                     "processors": "",
                     "groups": ";Keyboard and Mouse",
                     "action": "Shift",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7f782b6-9185-41fd-84e6-64fed45daa3e",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseDelta",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

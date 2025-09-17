@@ -1,9 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
+    private CinemachineVirtualCamera _virtualCamera;
+    private CinemachinePOV _cinemachinePOV;
+
+    private PlayerController _playerController;
 
     public static PlayerCamera instance;
 
@@ -13,6 +16,17 @@ public class PlayerCamera : MonoBehaviour
         if (instance != null)
             Destroy(gameObject);
         instance = this;
+
+        _cinemachinePOV = _virtualCamera.GetCinemachineComponent<CinemachinePOV>();
     }
 
+    private void Start()
+    {
+        _playerController = PlayerController.instance;
+    }
+
+    private void Update()
+    {
+        _cinemachinePOV.m_VerticalAxis.m_MaxSpeed = _playerController.GetMouseSensibility.y;
+    }
 }

@@ -13,8 +13,15 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody _rigidBody;
 
+    public static PlayerMovement instance;
+
     private void Awake()
     {
+        // --- Singleton ---
+        if (instance != null)
+            Destroy(gameObject);
+        instance = this;
+
         _rigidBody = GetComponent<Rigidbody>();
         _defaultMoveSpeed = _moveSpeed;
     }
@@ -39,5 +46,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public float ResetMoveSpeed() => _moveSpeed = _defaultMoveSpeed;
+
+    public void Rotate(float delta)
+    {
+        transform.Rotate(Vector3.up, delta * _playerController.GetMouseSensibility.x * Time.deltaTime);
+    }
 
 }

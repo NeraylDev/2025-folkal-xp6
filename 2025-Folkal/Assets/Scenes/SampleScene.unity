@@ -644,6 +644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdca6f4fa67705a47b6f9fcae8f86115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mouseSensibility: {x: 100, y: 1}
 --- !u!114 &571113677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,6 +657,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25997720607853c439e207ec76f3bbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showCursor: 0
+  _lockCursor: 0
 --- !u!4 &571113678
 Transform:
   m_ObjectHideFlags: 0
@@ -712,7 +715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565ea7cd012fccb46aac99ea494813f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
+  _moveSpeed: 250
 --- !u!1 &775899437
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,6 +913,7 @@ GameObject:
   - component: {fileID: 1083243125}
   - component: {fileID: 1083243124}
   - component: {fileID: 1083243123}
+  - component: {fileID: 1083243126}
   m_Layer: 0
   m_Name: Main Cinemachine
   m_TagString: Untagged
@@ -988,6 +992,18 @@ Transform:
   - {fileID: 1204335270}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1083243126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083243122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d802015d093d5c44a953c65bb24cd33a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1204335269
 GameObject:
   m_ObjectHideFlags: 3
@@ -1034,13 +1050,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9beda531928fc40968802117a5d256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RecenterTarget: 0
+  m_RecenterTarget: 1
   m_VerticalAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 300
-    m_AccelTime: 0.1
-    m_DecelTime: 0.1
+    m_MaxSpeed: 200
+    m_AccelTime: 0
+    m_DecelTime: 0
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
     m_InvertInput: 1
@@ -1062,7 +1078,7 @@ MonoBehaviour:
   m_HorizontalAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 300
+    m_MaxSpeed: 0
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
@@ -1078,9 +1094,9 @@ MonoBehaviour:
       m_LegacyHeadingDefinition: -1
       m_LegacyVelocityFilterStrength: -1
   m_HorizontalRecentering:
-    m_enabled: 0
-    m_WaitTime: 1
-    m_RecenteringTime: 2
+    m_enabled: 1
+    m_WaitTime: 0
+    m_RecenteringTime: 0
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_ApplyBeforeBody: 0

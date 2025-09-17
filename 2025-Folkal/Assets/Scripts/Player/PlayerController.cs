@@ -3,9 +3,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Vector2 _mouseSensibility;
     private Vector2 _moveDirection;
 
+    private PlayerMovement _playerMovement;
+
     public Vector2 GetMoveDirection => _moveDirection;
+    public Vector2 GetMouseSensibility => _mouseSensibility;
 
     public static PlayerController instance;
 
@@ -15,6 +19,11 @@ public class PlayerController : MonoBehaviour
         if (instance != null)
             Destroy(gameObject);
         instance = this;
+    }
+
+    private void Start()
+    {
+        _playerMovement = PlayerMovement.instance;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -27,6 +36,11 @@ public class PlayerController : MonoBehaviour
     public void OnStopRun(InputAction.CallbackContext context) { Debug.Log("Stop Run"); }
 
     public void OnInteract(InputAction.CallbackContext context) { Debug.Log("Interact"); }
+
+    public void OnMouseDelta(InputAction.CallbackContext context)
+    {
+        _playerMovement.Rotate(context.ReadValue<Vector2>().x);
+    }
 
     public void OnLeftShiftDown(InputAction.CallbackContext context) { Debug.Log("LeftShift Down"); }
     public void OnLeftShiftUp(InputAction.CallbackContext context) { Debug.Log("LeftShift Up"); }

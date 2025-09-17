@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    [Header("Mouse Settings")]
+    [SerializeField] private bool _showCursor = false;
+    [SerializeField] private bool _lockCursor = true;
+
     private PlayerController _playerController;
     private PlayerInputAsset _inputAsset;
 
@@ -15,6 +19,9 @@ public class PlayerInput : MonoBehaviour
         instance = this;
 
         _inputAsset = new PlayerInputAsset();
+
+        Cursor.visible = _showCursor;
+        Cursor.lockState = _lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
     private void Start()
@@ -28,6 +35,8 @@ public class PlayerInput : MonoBehaviour
 
         _inputAsset.Player.Shift.performed += _playerController.OnStartRun;
         _inputAsset.Player.Shift.canceled += _playerController.OnStopRun;
+
+        _inputAsset.Player.MouseDelta.performed += _playerController.OnMouseDelta;
 
         _inputAsset.Player.LeftMouse.started += _playerController.OnLeftMouseDown;
         _inputAsset.Player.LeftMouse.canceled += _playerController.OnLeftMouseUp;
