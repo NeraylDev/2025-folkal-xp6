@@ -17,6 +17,7 @@ public class PlayerCamera : MonoBehaviour
             Destroy(gameObject);
         instance = this;
 
+        _virtualCamera = GetComponent<CinemachineVirtualCamera>();
         _cinemachinePOV = _virtualCamera.GetCinemachineComponent<CinemachinePOV>();
     }
 
