@@ -5,12 +5,15 @@ public class PlayerController : MonoBehaviour
 {
     private Vector2 _moveDirection;
 
+    public Vector2 GetMoveDirection => _moveDirection;
+
     public static PlayerController instance;
 
     private void Awake()
     {
+        // --- Singleton ---
         if (instance != null)
-            Destroy(instance);
+            Destroy(gameObject);
         instance = this;
     }
 

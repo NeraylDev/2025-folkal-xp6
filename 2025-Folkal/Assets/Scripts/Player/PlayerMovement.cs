@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    [SerializeField] private float _moveSpeed;
+    private float _defaultMoveSpeed;
+
+    public float SetMoveSpeed { set { _moveSpeed = value; } }
+
+    private PlayerController _playerController;
+
+    private Rigidbody _rigidBody;
+
+    private void Awake()
+    {
+        _rigidBody = GetComponent<Rigidbody>();
+        _defaultMoveSpeed = _moveSpeed;
+    }
+
+    private void Start()
+    {
+        _playerController = PlayerController.instance;
+    }
+
+    private void Update()
+    {
+        Move();
+    }
+
+    public void Move()
+    {
+        Vector3 finalDirection = (transform.right * _playerController.GetMoveDirection.x
+                            + transform.forward * _playerController.GetMoveDirection.y).normalized;
+
+        Vector3 finalVelocity = finalDirection * _moveSpeed * Time.deltaTime;
+        _rigidBody.velocity = finalVelocity;
+    }
+
+    public float ResetMoveSpeed() => _moveSpeed = _defaultMoveSpeed;
+
+}

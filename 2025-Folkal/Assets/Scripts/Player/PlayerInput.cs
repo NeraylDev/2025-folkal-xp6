@@ -1,21 +1,28 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
     private PlayerController _playerController;
-
     private PlayerInputAsset _inputAsset;
+
+    public static PlayerInput instance;
 
     private void Awake()
     {
+        // --- Singleton ---
+        if (instance != null)
+            Destroy(gameObject);
+        instance = this;
+
         _inputAsset = new PlayerInputAsset();
-        _playerController = PlayerController.instance;
     }
 
     private void Start()
     {
+        _playerController = PlayerController.instance;
+
         _inputAsset.Player.Move.performed += _playerController.OnMove;
+        _inputAsset.Player.Move.canceled += _playerController.OnMove;
 
         _inputAsset.Player.Interact.started += _playerController.OnInteract;
 

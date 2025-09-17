@@ -99,7 +99,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""781acd6d-13fd-4ad9-9b93-e23e50203f05"",
-                    ""path"": ""<AndroidJoystick>/stick/down"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -110,7 +110,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""e73ed5d3-8930-4601-895d-e21c8031d024"",
-                    ""path"": ""<NimbusGamepadHid>/buttonSouth"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
