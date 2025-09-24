@@ -11,7 +11,7 @@ public abstract class CoreRoot : MonoBehaviour, ICoreRoot
         if (!_fruitList.Contains(fruit)) return;
 
         Debug.Log("Fruto " + fruit.name + " foi removido");
-        fruit.SetCoreRoot(null);
+        fruit.RemoveFromRoot();
         _fruitList.Remove(fruit);
     }
 }

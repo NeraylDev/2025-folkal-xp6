@@ -12,6 +12,20 @@ public abstract class Throwable : MonoBehaviour, IThrowable
         _rigidBody = GetComponent<Rigidbody>();
     }
 
+    public void SetParent(Transform newParent)
+    {
+        DisableRigidbody();
+        transform.parent = newParent;
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+    }
+
+    public void RemoveParent()
+    {
+        EnableRigidbody();
+        transform.parent = null;
+    }
+
     public void SetCoreRoot(CoreRoot root) => _root = root;
 
     public void RemoveFromRoot()
@@ -26,14 +40,22 @@ public abstract class Throwable : MonoBehaviour, IThrowable
 
     public void EnableRigidbody()
     {
+        _rigidBody.isKinematic = false;
         _rigidBody.useGravity = true;
         _rigidBody.constraints = RigidbodyConstraints.None;
+
+        if (TryGetComponent(out Collider collider))
+            collider.enabled = true;
     }
 
     public void DisableRigidbody()
     {
+        _rigidBody.isKinematic = true;
         _rigidBody.useGravity = false;
         _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+
+        if (TryGetComponent(out Collider collider))
+            collider.enabled = false;
     }
 
     public void OnHeld()

@@ -16,9 +16,19 @@ public class PlayerHand : MonoBehaviour
 
     private Transform _mainCameraTransform;
 
+    public static PlayerHand instance;
+
+    private void Awake()
+    {
+        // --- Singleton ---
+        if (instance != null)
+            Destroy(gameObject);
+        instance = this;
+    }
+
     private void Start()
     {
-        _mainCameraTransform = PlayerCamera.instance.transform;
+        _mainCameraTransform = Camera.main.transform;
     }
 
     private void Update()
@@ -49,7 +59,7 @@ public class PlayerHand : MonoBehaviour
         if (_heldThrowable != null) return;
 
         Debug.Log("Começou a segurar " + throwable.name);
-        throwable.transform.parent = transform;
+        throwable.SetParent(transform);
         _heldThrowable = throwable;
     }
 
@@ -58,8 +68,15 @@ public class PlayerHand : MonoBehaviour
         if (_heldThrowable == null) return;
 
         Debug.Log("Parou de segurar " + _heldThrowable.name);
-        _heldThrowable.transform.parent = null;
+        _heldThrowable.RemoveParent();
         _heldThrowable = null;
     }
 
+
+    private void OnDrawGizmos()
+    {
+        if (_mainCameraTransform == null) return;
+
+        Gizmos.DrawLine(_mainCameraTransform.position, _mainCameraTransform.position + _mainCameraTransform.forward * _interactionDistance);
+    }
 }

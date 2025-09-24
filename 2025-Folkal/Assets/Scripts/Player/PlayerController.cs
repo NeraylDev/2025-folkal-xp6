@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _moveDirection;
 
     private PlayerMovement _playerMovement;
+    private PlayerHand _playerHand;
 
     public Vector2 GetMoveDirection => _moveDirection;
     public Vector2 GetMouseSensibility => _mouseSensibility;
@@ -24,18 +25,18 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _playerMovement = PlayerMovement.instance;
+        _playerHand = PlayerHand.instance;
     }
 
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        _moveDirection = context.ReadValue<Vector2>();
-        Debug.Log(_moveDirection);
-    }
+    public void OnMove(InputAction.CallbackContext context) => _moveDirection = context.ReadValue<Vector2>();
 
     public void OnStartRun(InputAction.CallbackContext context) { Debug.Log("Start Run"); }
     public void OnStopRun(InputAction.CallbackContext context) { Debug.Log("Stop Run"); }
 
-    public void OnInteract(InputAction.CallbackContext context) { Debug.Log("Interact"); }
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        _playerHand.TryInteract();
+    }
 
     public void OnMouseDelta(InputAction.CallbackContext context)
     {
