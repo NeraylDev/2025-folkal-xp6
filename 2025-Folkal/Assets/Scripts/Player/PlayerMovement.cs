@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         _playerController = PlayerController.instance;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
     }
@@ -41,13 +41,13 @@ public class PlayerMovement : MonoBehaviour
         Vector3 finalDirection = (transform.right * _playerController.GetMoveDirection.x
                             + transform.forward * _playerController.GetMoveDirection.y).normalized;
 
-        Vector3 finalVelocity = finalDirection * _moveSpeed * Time.deltaTime;
+        Vector3 finalVelocity = finalDirection * _moveSpeed * Time.fixedDeltaTime;
         _rigidBody.velocity = finalVelocity;
     }
 
     public float ResetMoveSpeed() => _moveSpeed = _defaultMoveSpeed;
 
-    public void Rotate(float delta)
+    public void RotateY(float delta)
     {
         transform.Rotate(Vector3.up, delta * _playerController.GetMouseSensibility.x * Time.deltaTime);
     }

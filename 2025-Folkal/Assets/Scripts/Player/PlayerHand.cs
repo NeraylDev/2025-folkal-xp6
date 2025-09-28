@@ -31,11 +31,11 @@ public class PlayerHand : MonoBehaviour
         _mainCameraTransform = Camera.main.transform;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_mainCameraTransform == null) return;
 
-        transform.position = Vector3.Lerp(transform.position, _handPosition.position, Time.deltaTime * _handPositionSpeed);
+        transform.position = Vector3.Lerp(transform.position, _handPosition.position, Time.fixedDeltaTime * _handPositionSpeed);
         transform.LookAt(transform.position + _mainCameraTransform.forward);
     }
 

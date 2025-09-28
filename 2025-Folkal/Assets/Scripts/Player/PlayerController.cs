@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerMovement _playerMovement;
     private PlayerHand _playerHand;
+    private PlayerCamera _playerCamera;
 
     public Vector2 GetMoveDirection => _moveDirection;
     public Vector2 GetMouseSensibility => _mouseSensibility;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerMovement = PlayerMovement.instance;
         _playerHand = PlayerHand.instance;
+        _playerCamera = PlayerCamera.instance;
     }
 
     public void OnMove(InputAction.CallbackContext context) => _moveDirection = context.ReadValue<Vector2>();
@@ -40,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMouseDelta(InputAction.CallbackContext context)
     {
-        _playerMovement.Rotate(context.ReadValue<Vector2>().x);
+        _playerMovement.RotateY(context.ReadValue<Vector2>().x);
     }
 
     public void OnLeftShiftDown(InputAction.CallbackContext context) { Debug.Log("LeftShift Down"); }

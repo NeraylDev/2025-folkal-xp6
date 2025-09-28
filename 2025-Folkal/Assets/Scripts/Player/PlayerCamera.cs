@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
+    [SerializeField] private float _minAngle;
+    [SerializeField] private float _maxAngle;
     private CinemachineVirtualCamera _virtualCamera;
-    private CinemachinePOV _cinemachinePOV;
 
     private PlayerController _playerController;
 
@@ -18,16 +19,10 @@ public class PlayerCamera : MonoBehaviour
         instance = this;
 
         _virtualCamera = GetComponent<CinemachineVirtualCamera>();
-        _cinemachinePOV = _virtualCamera.GetCinemachineComponent<CinemachinePOV>();
     }
 
     private void Start()
     {
         _playerController = PlayerController.instance;
-    }
-
-    private void Update()
-    {
-        _cinemachinePOV.m_VerticalAxis.m_MaxSpeed = _playerController.GetMouseSensibility.y;
     }
 }
