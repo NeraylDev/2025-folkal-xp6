@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    [SerializeField] private float _minAngle;
-    [SerializeField] private float _maxAngle;
-    private CinemachineVirtualCamera _virtualCamera;
+
+    [SerializeField] private Transform _cameraPoint;
 
     private PlayerController _playerController;
 
@@ -17,12 +16,15 @@ public class PlayerCamera : MonoBehaviour
         if (instance != null)
             Destroy(gameObject);
         instance = this;
-
-        _virtualCamera = GetComponent<CinemachineVirtualCamera>();
     }
 
     private void Start()
     {
         _playerController = PlayerController.instance;
+    }
+
+    private void Update()
+    {
+        //_cameraPoint = _playerController
     }
 }

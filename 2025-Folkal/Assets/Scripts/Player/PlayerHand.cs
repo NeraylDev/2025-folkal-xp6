@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -35,8 +36,10 @@ public class PlayerHand : MonoBehaviour
     {
         if (_mainCameraTransform == null) return;
 
-        transform.position = Vector3.Lerp(transform.position, _handPosition.position, Time.fixedDeltaTime * _handPositionSpeed);
-        transform.LookAt(transform.position + _mainCameraTransform.forward);
+        //transform.position = Vector3.Lerp(transform.position, _handPosition.position, Time.fixedDeltaTime * _handPositionSpeed);
+        transform.DOLocalMove(_handPosition.position, 0.1f);
+        //transform.LookAt(transform.position + _mainCameraTransform.forward);
+        transform.DOLookAt(transform.position + _mainCameraTransform.forward, 0.1f);
     }
 
     public void TryInteract()

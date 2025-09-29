@@ -5,12 +5,14 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Vector2 _mouseSensibility;
     private Vector2 _moveDirection;
+    private Vector2 _mouseDelta;
 
     private PlayerMovement _playerMovement;
     private PlayerHand _playerHand;
     private PlayerCamera _playerCamera;
 
     public Vector2 GetMoveDirection => _moveDirection;
+    public Vector2 GetMouseDelta => _mouseDelta;
     public Vector2 GetMouseSensibility => _mouseSensibility;
 
     public static PlayerController instance;
@@ -42,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMouseDelta(InputAction.CallbackContext context)
     {
-        _playerMovement.RotateY(context.ReadValue<Vector2>().x);
+        _mouseDelta = context.ReadValue<Vector2>();
     }
 
     public void OnLeftShiftDown(InputAction.CallbackContext context) { Debug.Log("LeftShift Down"); }

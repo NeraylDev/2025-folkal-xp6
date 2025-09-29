@@ -31,6 +31,11 @@ public class PlayerMovement : MonoBehaviour
         _playerController = PlayerController.instance;
     }
 
+    private void Update()
+    {
+        RotateY(_playerController.GetMouseDelta.x);
+    }
+
     private void FixedUpdate()
     {
         Move();
