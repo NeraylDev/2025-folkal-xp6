@@ -3,16 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Vector2 _mouseSensibility;
     private Vector2 _moveDirection;
     private Vector2 _mouseDelta;
 
-    private PlayerMovement _playerMovement;
+    private PlayerCamera _playerCamera;
     private PlayerHand _playerHand;
 
     public Vector2 GetMoveDirection => _moveDirection;
     public Vector2 GetMouseDelta => _mouseDelta;
-    public Vector2 GetMouseSensibility => _mouseSensibility;
 
     public static PlayerController instance;
 
@@ -26,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _playerMovement = PlayerMovement.instance;
+        _playerCamera = PlayerCamera.instance;
         _playerHand = PlayerHand.instance;
     }
 
@@ -37,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        _playerHand.TryInteract();
+        _playerCamera.TryInteract();
     }
 
     public void OnMouseDelta(InputAction.CallbackContext context) { Debug.Log("Mouse Delta"); }
@@ -45,8 +43,12 @@ public class PlayerController : MonoBehaviour
     public void OnLeftShiftDown(InputAction.CallbackContext context) { Debug.Log("LeftShift Down"); }
     public void OnLeftShiftUp(InputAction.CallbackContext context) { Debug.Log("LeftShift Up"); }
 
-    public void OnLeftMouseDown(InputAction.CallbackContext context) { Debug.Log("Left Mouse Down"); }
-    public void OnLeftMouseUp(InputAction.CallbackContext context) { Debug.Log("Left Mouse Up"); }
+    public void OnLeftMouseDown(InputAction.CallbackContext context)
+    {
+        _playerCamera.TryInteract();
+        _playerHand.TryStartThrowing();
+    }
+    public void OnLeftMouseUp(InputAction.CallbackContext context) { _playerHand.TryThrow(); }
 
     public void OnRightMouseDown(InputAction.CallbackContext context) { Debug.Log("Right Mouse Down"); }
     public void OnRightMouseUp(InputAction.CallbackContext context) { Debug.Log("Right Mouse Up"); }

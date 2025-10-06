@@ -47,4 +47,10 @@ public class PlayerInput : MonoBehaviour
         _inputAsset.Enable();
         _inputAsset.Player.Enable();
     }
+
+    private void OnDisable()
+    {
+        _inputAsset.Player.Disable();
+        _inputAsset.Disable();
+    }
 }

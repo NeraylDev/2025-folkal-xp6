@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
 
     public static PlayerMovement instance;
 
+
+    #region MonoBehaviour Methods
+
     private void Awake()
     {
         // --- Singleton ---
@@ -43,6 +46,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
     }
+
+    #endregion
+
 
     public void Move()
     {
