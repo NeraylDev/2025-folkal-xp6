@@ -28,6 +28,8 @@ public class PlayerHand : MonoBehaviour
 
     public static PlayerHand instance;
 
+    public Throwable GetHeldThrowable => _heldThrowable;
+
 
     #region MonoBehaviour Methods
 
@@ -93,6 +95,7 @@ public class PlayerHand : MonoBehaviour
 
         // Apply throwing force on the object
         Throwable throwable = RemoveHeldThrowable();
+        throwable.OnThrown();
         throwable.GetComponent<Rigidbody>().AddForce(throwable.transform.forward * _currentThrowingForce);
 
         _loadingThrowing = false;

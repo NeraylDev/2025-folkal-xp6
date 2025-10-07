@@ -8,7 +8,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private LayerMask _interactableMask;
 
     public static PlayerCamera instance;
-
+    
     private void Awake()
     {
         // --- Singleton ---

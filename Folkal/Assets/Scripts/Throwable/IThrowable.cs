@@ -5,7 +5,7 @@ public interface IThrowable
     void SetParent(Transform newParent);
     void RemoveParent();
 
-    void SetCoreRoot(CoreRoot root);
+    void SetCoreTree(CoreTree root);
     void RemoveFromRoot();
 
     abstract void OnHeld();
