@@ -16,7 +16,7 @@ public class PlayerHand : MonoBehaviour
     [SerializeField] private Throwable _heldThrowable;
     [SerializeField] private float _minThrowingForce;
     [SerializeField] private float _maxThrowingForce;
-    [SerializeField] private float _throwingLoadTime;
+    [SerializeField] private float _throwingLoadDuration;
     [SerializeField] private float _throwingLoadOffsetZ;
     private float _throwingLoadTimer;
     private float _currentThrowingForce;
@@ -88,8 +88,6 @@ public class PlayerHand : MonoBehaviour
 
     public void TryStartThrowing()
     {
-        Debug.Log("Tenta arremessar");
-
         if (_heldThrowable == null || _loadingThrowing || !_canThrow)
             return;
 
@@ -100,7 +98,14 @@ public class PlayerHand : MonoBehaviour
 
     private void UpdateThrowingForce()
     {
-        _throwingLoadTimer += Time.deltaTime;
+        DOTween.To
+        (
+            () => _throwingLoadTimer,
+            x => _throwingLoadTimer = x,
+            1, _throwingLoadDuration
+        )
+        .SetEase(Ease.OutQuad);
+
         _throwingLoadTimer = Mathf.Clamp01(_throwingLoadTimer);
 
         // Visual feedback of throwing force

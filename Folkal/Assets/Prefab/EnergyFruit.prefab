@@ -151,7 +151,6 @@ GameObject:
   - component: {fileID: 2995892961281268769}
   - component: {fileID: 4754621665044105000}
   - component: {fileID: 6507206554754581588}
-  - component: {fileID: 8475348132710294040}
   - component: {fileID: 4884213056745806751}
   - component: {fileID: 8572062396461489180}
   - component: {fileID: 3129897136392375892}
@@ -241,23 +240,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxFruitsDistance: 10
---- !u!114 &8475348132710294040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2528474266645533014}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a917d04689fcc44c8990e0058ab83ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxSiblingLineLength: 8
-  _maxTreeLineLength: 7.5
-  _siblingLine: {fileID: 5344849445886023592}
-  _treeLine: {fileID: 221728629776985615}
-  _treeLineWidthRange: {x: 0.01, y: 0.1}
 --- !u!114 &4884213056745806751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineRenderer: {fileID: 221728629776985615}
-  _maxLineLength: 7.5
+  _maxLineLength: 5
 --- !u!114 &8572062396461489180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,7 +282,7 @@ SpringJoint:
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_Spring: 10
+  m_Spring: 5
   m_Damper: 0.2
   m_MinDistance: 0
   m_MaxDistance: 0

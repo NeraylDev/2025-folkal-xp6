@@ -17,16 +17,16 @@ public abstract class LineManager : MonoBehaviour
     protected abstract void CalculateLineLength();
     protected abstract void OnReachMaxLength();
 
-    private void SetWidthMultiplier(float multiplier)
+    protected void SetWidthMultiplier(float multiplier)
         => _lineRenderer.widthMultiplier = multiplier;
 
-    private void SetColor(Color color)
+    protected void SetColor(Color color)
     {
         _lineRenderer.startColor = color;
         _lineRenderer.endColor = color;
     }
 
-    private void SetColorGradient(Color a, Color b)
+    protected void SetColorGradient(Color a, Color b)
     {
         _lineRenderer.startColor = a;
         _lineRenderer.endColor = b;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnergySiblingFruitLine : LineManager
@@ -24,6 +25,7 @@ public class EnergySiblingFruitLine : LineManager
             return;
 
         UpdateLinePosition(transform.position, _fruit.GetNextSibling.transform.position);
+        FindEnergyTrigger();
     }
 
     protected override void CalculateLineLength()
@@ -35,10 +37,10 @@ public class EnergySiblingFruitLine : LineManager
         float distanceToNextSibling = Vector3.Distance(transform.position, nextSiblingPosition);
         float greaterDistanceToSibling = distanceToPreviousSibling > distanceToNextSibling ? distanceToPreviousSibling : distanceToNextSibling;
 
-        if (_playerHand.IsHoldingThrowable)
+        if (_playerHand.IsHoldingThrowable && _playerHand.GetHeldThrowable == _fruit)
         {
             // Modifica velocidade do Player de acordo com a distância até SiblingFruit
-            float speedModifier = Mathf.Lerp(1, 0.25f, greaterDistanceToSibling / _maxLineLength);
+            float speedModifier = Mathf.Lerp(1, 0.25f, distanceToNextSibling / _maxLineLength);
 
             // Define o uso do modificador de acordo com a direção que o Player está se movendo
             Vector3 fruitToSiblingDirection = nextSiblingPosition - transform.position;
@@ -58,4 +60,19 @@ public class EnergySiblingFruitLine : LineManager
         _playerMovement.ResetMoveSpeedModifier();
     }
 
+    private void FindEnergyTrigger()
+    {
+        RaycastHit hit;
+        if (Physics.Linecast(transform.position, _fruit.GetNextSibling.transform.position, out hit))
+        {
+            if (hit.collider.CompareTag("EnergyTrigger") && hit.collider.TryGetComponent(out EnergyTrigger energyTrigger))
+                ActivateEnergyTrigger(energyTrigger);
+        }
+    }
+
+    private void ActivateEnergyTrigger(EnergyTrigger energyTrigger)
+        => energyTrigger.Activate();
+
+    private void DeactivateEnergyTrigger(EnergyTrigger energyTrigger)
+        => energyTrigger.Deactivate();
 }

@@ -33,16 +33,8 @@ public class PlayerInput : MonoBehaviour
 
         _inputAsset.Player.Interact.started += _playerController.OnInteract;
 
-        _inputAsset.Player.Shift.performed += _playerController.OnStartRun;
-        _inputAsset.Player.Shift.canceled += _playerController.OnStopRun;
-
-        _inputAsset.Player.MouseDelta.performed += _playerController.OnMouseDelta;
-
         _inputAsset.Player.LeftMouse.started += _playerController.OnLeftMouseDown;
         _inputAsset.Player.LeftMouse.canceled += _playerController.OnLeftMouseUp;
-
-        _inputAsset.Player.RightMouse.started += _playerController.OnRightMouseDown;
-        _inputAsset.Player.RightMouse.canceled += _playerController.OnRightMouseUp;
 
         _inputAsset.Enable();
         _inputAsset.Player.Enable();

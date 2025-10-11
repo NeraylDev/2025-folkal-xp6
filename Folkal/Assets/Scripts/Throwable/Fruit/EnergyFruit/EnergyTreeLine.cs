@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnergyTreeLine : LineManager
 {
     private EnergyTree _energyTree;
+    private EnergyFruit _fruit;
 
     private PlayerHand _playerHand;
     private PlayerMovement _playerMovement;
@@ -10,6 +11,7 @@ public class EnergyTreeLine : LineManager
     private void Awake()
     {
         _energyTree = GetComponentInParent<EnergyTree>();
+        _fruit = GetComponent<EnergyFruit>();
     }
 
     private void Start()
@@ -25,13 +27,10 @@ public class EnergyTreeLine : LineManager
 
     protected override void CalculateLineLength()
     {
-        float distanceToFruit = Vector3.Distance
-        (
-            transform.position,
-            _energyTree.GetTreetopRig.transform.position
-        );
+        Vector3 treetopRigPosition = _energyTree.GetTreetopRig.transform.position;
+        float distanceToTree = Vector3.Distance(transform.position, treetopRigPosition);
 
-        if (distanceToFruit >= _maxLineLength)
+        if (distanceToTree >= _maxLineLength)
             OnReachMaxLength();
     }
 
@@ -41,7 +40,7 @@ public class EnergyTreeLine : LineManager
         {
             _energyTree.ResetFruitsPosition();
 
-            if (_playerHand.IsHoldingThrowable)
+            if (_playerHand.IsHoldingThrowable && _playerHand.GetHeldThrowable == _fruit)
             {
                 _playerHand.RemoveHeldThrowable();
                 _playerMovement.ResetMoveSpeedModifier();

@@ -8,7 +8,6 @@ using UnityEngine;
 [RequireComponent(typeof(SpringJoint))]
 public class EnergyFruit : Fruit
 {
-    [SerializeField] private float _maxFruitsDistance;
     private EnergyFruit _previousSibling;
     private EnergyFruit _nextSibling;
     private Vector3 _defaultPosition;

@@ -30,28 +30,17 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context) => _moveDirection = context.ReadValue<Vector2>();
 
-    public void OnStartRun(InputAction.CallbackContext context) { Debug.Log("Start Run"); }
-    public void OnStopRun(InputAction.CallbackContext context) { Debug.Log("Stop Run"); }
-
     public void OnInteract(InputAction.CallbackContext context)
     {
         _playerCamera.TryInteract();
     }
-
-    public void OnMouseDelta(InputAction.CallbackContext context) { Debug.Log("Mouse Delta"); }
-
-    public void OnLeftShiftDown(InputAction.CallbackContext context) { Debug.Log("LeftShift Down"); }
-    public void OnLeftShiftUp(InputAction.CallbackContext context) { Debug.Log("LeftShift Up"); }
 
     public void OnLeftMouseDown(InputAction.CallbackContext context)
     {
         _playerCamera.TryInteract();
         _playerHand.TryStartThrowing();
     }
+
     public void OnLeftMouseUp(InputAction.CallbackContext context) { _playerHand.TryThrow(); }
-
-    public void OnRightMouseDown(InputAction.CallbackContext context) { Debug.Log("Right Mouse Down"); }
-    public void OnRightMouseUp(InputAction.CallbackContext context) { Debug.Log("Right Mouse Up"); }
-
 
 }
