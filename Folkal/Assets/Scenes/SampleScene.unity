@@ -442,7 +442,7 @@ PrefabInstance:
     - target: {fileID: 8282708515969865348, guid: c9b2012ffaa8a8349920d5d400e31c9f, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: 945997cfab0c65246a0dcfaa5aa70b8c, type: 2}
+      objectReference: {fileID: 2100000, guid: 6b92c4a8f8daae643b63061e0fae55af, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -669,7 +669,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fruitList: []
   _treetop: {fileID: 347209670}
-  _treetopMinHeight: 2.5
+  _treetopRig: {fileID: 936022124}
+  _treetopMinHeight: 1.5
+  _treetopMovementDuration: 0.1
+  _treetopMovementDelay: 0.1
+  _treetopMovementCurve: 9
 --- !u!4 &405393197
 Transform:
   m_ObjectHideFlags: 0
@@ -912,7 +916,7 @@ Transform:
   m_GameObject: {fileID: 540580993}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 5}
+  m_LocalPosition: {x: 0, y: 4, z: 4}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2155,7 +2159,7 @@ Transform:
   m_GameObject: {fileID: 2041202053}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: -5}
+  m_LocalPosition: {x: 0, y: 4, z: -4}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

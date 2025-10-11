@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class EnergyTree : FruitTree
@@ -5,10 +6,16 @@ public class EnergyTree : FruitTree
 
     [Header("Treetop Settings")]
     [SerializeField] private Transform _treetop;
+    [SerializeField] private Transform _treetopRig;
     [SerializeField] private float _treetopMinHeight;
+    [Space]
+    [SerializeField] private float _treetopMovementDuration = 0.25f;
+    [SerializeField] private float _treetopMovementDelay = 0.05f;
+    [SerializeField] private Ease _treetopMovementCurve;
     private Bounds _fruitsBound;
 
     public Transform GetTreetop => _treetop;
+    public Transform GetTreetopRig => _treetopRig;
 
     private void Awake()
     {
@@ -26,7 +33,7 @@ public class EnergyTree : FruitTree
         if (finalPosition.y < _treetopMinHeight)
             finalPosition = new Vector3(finalPosition.x, _treetopMinHeight, finalPosition.z);
 
-        _treetop.position = finalPosition;
+        _treetop.DOMove(finalPosition, _treetopMovementDuration).SetEase(_treetopMovementCurve).SetDelay(_treetopMovementDelay);
     }
 
     private Vector3 GetFruitsCenterPoint()

@@ -152,6 +152,8 @@ GameObject:
   - component: {fileID: 4754621665044105000}
   - component: {fileID: 6507206554754581588}
   - component: {fileID: 8475348132710294040}
+  - component: {fileID: 4884213056745806751}
+  - component: {fileID: 8572062396461489180}
   - component: {fileID: 3129897136392375892}
   m_Layer: 3
   m_Name: EnergyFruit
@@ -246,16 +248,44 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2528474266645533014}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a917d04689fcc44c8990e0058ab83ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSiblingLineLength: 10
+  _maxSiblingLineLength: 8
   _maxTreeLineLength: 7.5
   _siblingLine: {fileID: 5344849445886023592}
   _treeLine: {fileID: 221728629776985615}
   _treeLineWidthRange: {x: 0.01, y: 0.1}
+--- !u!114 &4884213056745806751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2528474266645533014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f799cda5a0e0ce4fac26eba1bcda2ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lineRenderer: {fileID: 221728629776985615}
+  _maxLineLength: 7.5
+--- !u!114 &8572062396461489180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2528474266645533014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d78898746603c41884d40105bb82f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lineRenderer: {fileID: 5344849445886023592}
+  _maxLineLength: 8
 --- !u!145 &3129897136392375892
 SpringJoint:
   m_ObjectHideFlags: 0

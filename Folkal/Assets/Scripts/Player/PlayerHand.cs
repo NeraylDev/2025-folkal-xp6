@@ -32,6 +32,7 @@ public class PlayerHand : MonoBehaviour
     public static PlayerHand instance;
 
     public Throwable GetHeldThrowable => _heldThrowable;
+    public bool IsHoldingThrowable { get { return _heldThrowable != null; } }
 
 
     #region MonoBehaviour Methods

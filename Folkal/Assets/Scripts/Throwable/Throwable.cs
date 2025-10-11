@@ -26,11 +26,10 @@ public abstract class Throwable : MonoBehaviour, IThrowable
 
     public void EnableRigidbody()
     {
-        _rigidBody.angularVelocity = Vector3.zero;
-        _rigidBody.linearVelocity = Vector3.zero;
-
         _rigidBody.isKinematic = false;
         _rigidBody.useGravity = true;
+        _rigidBody.angularVelocity = Vector3.zero;
+        _rigidBody.linearVelocity = Vector3.zero;
         _rigidBody.constraints = RigidbodyConstraints.None;
 
         if (TryGetComponent(out Collider collider))
