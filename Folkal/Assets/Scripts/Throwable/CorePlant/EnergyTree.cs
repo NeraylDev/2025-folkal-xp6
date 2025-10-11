@@ -1,11 +1,43 @@
 using UnityEngine;
 
-public class EnergyTree : CoreTree
+public class EnergyTree : FruitTree
 {
+
+    [Header("Treetop Settings")]
+    [SerializeField] private Transform _treetop;
+    [SerializeField] private float _treetopMinHeight;
+    private Bounds _fruitsBound;
+
+    public Transform GetTreetop => _treetop;
 
     private void Awake()
     {
         ConnectFruits();
+    }
+
+    private void Update()
+    {
+        UpdateTreetopPosition();
+    }
+
+    private void UpdateTreetopPosition()
+    {
+        Vector3 finalPosition = GetFruitsCenterPoint();
+        if (finalPosition.y < _treetopMinHeight)
+            finalPosition = new Vector3(finalPosition.x, _treetopMinHeight, finalPosition.z);
+
+        _treetop.position = finalPosition;
+    }
+
+    private Vector3 GetFruitsCenterPoint()
+    {
+        _fruitsBound = new Bounds(_fruitList[0].transform.position, Vector3.zero);
+        for (int i = 1; i < _fruitList.Count; i++)
+        {
+            _fruitsBound.Encapsulate(_fruitList[i].transform.position);
+        }
+
+        return _fruitsBound.center;
     }
 
     private void ConnectFruits()

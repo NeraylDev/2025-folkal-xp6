@@ -7,8 +7,10 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
     private float _defaultMoveSpeed;
+    private float _moveSpeedModifier = 1f;
+    private Vector3 _moveDirection;
 
-    public float SetMoveSpeed { set { _moveSpeed = value; } }
+    public Vector3 GetMoveDirection => _moveDirection;
 
     private PlayerController _playerController;
 
@@ -52,14 +54,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move()
     {
-        Vector3 finalDirection = (transform.right * _playerController.GetMoveDirection.x
+        _moveDirection = (transform.right * _playerController.GetMoveDirection.x
                             + transform.forward * _playerController.GetMoveDirection.y).normalized;
 
-        Vector3 finalVelocity = finalDirection * _moveSpeed * Time.fixedDeltaTime;
+        Vector3 finalVelocity = _moveDirection * _moveSpeed * _moveSpeedModifier * Time.fixedDeltaTime;
         _rigidBody.linearVelocity = finalVelocity;
     }
 
-    public float ResetMoveSpeed() => _moveSpeed = _defaultMoveSpeed;
+    public void SetMoveSpeed(float speed) => _moveSpeed = speed;
+    public void SetMoveSpeedModifier(float modifier) => _moveSpeedModifier = modifier;
+
+    public void ResetMoveSpeed() => _moveSpeed = _defaultMoveSpeed;
+    public void ResetMoveSpeedModifier() => _moveSpeedModifier = 1f;
 
     public void UpdateRotation()
     {

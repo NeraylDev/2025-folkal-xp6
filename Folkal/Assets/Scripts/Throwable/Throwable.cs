@@ -3,20 +3,11 @@ using UnityEngine;
 [RequireComponent (typeof(Rigidbody))]
 public abstract class Throwable : MonoBehaviour, IThrowable
 {
-    protected CoreTree _root;
-
-    private Rigidbody _rigidBody;
-
-    public CoreTree GetRoot => _root;
+    protected Rigidbody _rigidBody;
 
     protected virtual void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
-
-        if (transform.parent.TryGetComponent(out CoreTree root))
-        {
-            SetCoreTree(root);
-        }
     }
 
     public void SetParent(Transform newParent)
@@ -33,20 +24,11 @@ public abstract class Throwable : MonoBehaviour, IThrowable
         transform.parent = null;
     }
 
-    public void SetCoreTree(CoreTree root) => _root = root;
-
-    public void RemoveFromRoot()
-    {
-        if (_root == null) return;
-
-        Debug.Log("Retira do root");
-
-        _root.RemoveFruit(this);
-        _root = null;
-    }
-
     public void EnableRigidbody()
     {
+        _rigidBody.angularVelocity = Vector3.zero;
+        _rigidBody.linearVelocity = Vector3.zero;
+
         _rigidBody.isKinematic = false;
         _rigidBody.useGravity = true;
         _rigidBody.constraints = RigidbodyConstraints.None;
@@ -74,7 +56,6 @@ public abstract class Throwable : MonoBehaviour, IThrowable
     public virtual void OnThrown()
     {
         Debug.Log("Arremessado");
-        EnableRigidbody();
     }
 
     public abstract void OnCollide();

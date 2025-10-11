@@ -22,6 +22,9 @@ public class PlayerHand : MonoBehaviour
     private float _currentThrowingForce;
     private bool _loadingThrowing;
 
+    private float _throwInputDelayTimer;
+    private bool _canThrow;
+
     [Header("Interaction Settings")]
     [SerializeField] private float _interactionDistance = 10f;
     [SerializeField] private LayerMask _interactableMask;
@@ -50,27 +53,43 @@ public class PlayerHand : MonoBehaviour
 
     private void Update()
     {
+        if (!_canThrow)
+        {
+            _throwInputDelayTimer += Time.deltaTime;
+            if (_throwInputDelayTimer >= 0.1f)
+                _canThrow = true;
+        }
+
         if (_loadingThrowing)
             UpdateThrowingForce();
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
-        if (_mainCameraTransform == null) return;
-
-        transform.DOLocalMove(_handPosition.position + _offset, _handMovementDuration);
-        transform.DOLookAt(transform.position + _mainCameraTransform.forward + _offset, _handMovementDuration);
+        if (_heldThrowable != null)
+        {
+            UpdateThrowablePosition();
+        }
     }
 
     #endregion
 
+
+    private void UpdateThrowablePosition()
+    {
+        if (_mainCameraTransform != null)
+        {
+            _heldThrowable.transform.DOMove(transform.position + _offset, _handMovementDuration).SetEase(Ease.InBounce).SetUpdate(UpdateType.Fixed);
+            _heldThrowable.transform.DOLookAt(transform.position + _mainCameraTransform.forward + _offset, _handMovementDuration).SetEase(Ease.InBounce).SetUpdate(UpdateType.Fixed);
+        }
+    }
 
 
     public void TryStartThrowing()
     {
         Debug.Log("Tenta arremessar");
 
-        if (_heldThrowable == null || _loadingThrowing)
+        if (_heldThrowable == null || _loadingThrowing || !_canThrow)
             return;
 
         _currentThrowingForce = 0;
@@ -107,11 +126,13 @@ public class PlayerHand : MonoBehaviour
     {
         if (_heldThrowable != null) return;
 
-        Debug.Log("Começou a segurar " + throwable.name);
         _offset = _defaultOffset;
-
-        throwable.SetParent(transform);
         _heldThrowable = throwable;
+        _heldThrowable.OnHeld();
+
+        // Reseta delay do input de arremesso
+        _throwInputDelayTimer = 0;
+        _canThrow = false;
     }
 
     public Throwable RemoveHeldThrowable()
@@ -119,9 +140,7 @@ public class PlayerHand : MonoBehaviour
         if (_heldThrowable == null) return null;
 
         Throwable temp = _heldThrowable;
-
-        Debug.Log("Parou de segurar " + _heldThrowable.name);
-        _heldThrowable.RemoveParent();
+        _heldThrowable.EnableRigidbody();
         _heldThrowable = null;
 
         return temp;

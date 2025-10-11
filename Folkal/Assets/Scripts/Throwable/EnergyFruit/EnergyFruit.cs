@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(SpringJoint))]
-public class EnergyFruit : Throwable
+public class EnergyFruit : Fruit
 {
     [SerializeField] private float _maxFruitsDistance;
     private EnergyFruit _previousSibling;
@@ -15,7 +15,6 @@ public class EnergyFruit : Throwable
     private bool _wasThrown;
     private bool _isActive;
 
-    private EnergyFruitLine _line;
     private SpringJoint _lineJoint;
 
 
@@ -31,7 +30,6 @@ public class EnergyFruit : Throwable
     {
         base.Awake();
 
-        _line = GetComponentInChildren<EnergyFruitLine>();
         _lineJoint = GetComponent<SpringJoint>();
         _defaultPosition = transform.position;
     }
@@ -51,6 +49,8 @@ public class EnergyFruit : Throwable
     public override void OnThrown()
     {
         base.OnThrown();
+
+        PlayerMovement.instance.ResetMoveSpeedModifier();
 
         if (!_wasThrown)
             _wasThrown = true;
@@ -90,7 +90,7 @@ public class EnergyFruit : Throwable
             _isActive = true;
             DisableRigidbody();
 
-            EnergyTree energyTree = _root as EnergyTree;
+            EnergyTree energyTree = _tree as EnergyTree;
             if (energyTree.isAllFruitsActive())
                 energyTree.ResetFruitsPosition();
         }
