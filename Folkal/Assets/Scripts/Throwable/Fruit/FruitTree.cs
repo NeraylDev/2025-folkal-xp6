@@ -6,16 +6,15 @@ using UnityEngine;
 public abstract class FruitTree : MonoBehaviour, IFruitTree
 {
     [Header("Fruit Tree Info")]
-    [SerializeField][ReadOnly(true)] protected List<Throwable> _fruitList = new List<Throwable>();
+    [SerializeField][ReadOnly(true)] protected List<Fruit> _fruitList = new List<Fruit>();
     
-    public List<Throwable> GetFruitList => _fruitList;
+    public List<Fruit> GetFruitList => _fruitList;
 
     public void AddFruit(Fruit fruit)
     {
         if (_fruitList.Contains(fruit))
             return;
 
-        Debug.Log("Fruto " + fruit.name + " foi adicionado");
         _fruitList.Add(fruit);
     }
 
@@ -24,7 +23,6 @@ public abstract class FruitTree : MonoBehaviour, IFruitTree
         if (!_fruitList.Contains(fruit))
             return;
 
-        Debug.Log("Fruto " + fruit.name + " foi removido");
         fruit.RemoveFromTree();
         _fruitList.Remove(fruit);
     }

@@ -120,8 +120,11 @@ public class PlayerHand : MonoBehaviour
 
         // Apply throwing force on the object
         Throwable throwable = RemoveHeldThrowable();
-        throwable.OnThrown();
-        throwable.GetComponent<Rigidbody>().AddForce(throwable.transform.forward * _currentThrowingForce);
+        if (throwable != null)
+        {
+            throwable.OnThrown();
+            throwable.GetComponent<Rigidbody>().AddForce(throwable.transform.forward * _currentThrowingForce);
+        }
 
         _loadingThrowing = false;
     }

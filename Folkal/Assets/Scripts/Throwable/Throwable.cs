@@ -10,20 +10,6 @@ public abstract class Throwable : MonoBehaviour, IThrowable
         _rigidBody = GetComponent<Rigidbody>();
     }
 
-    public void SetParent(Transform newParent)
-    {
-        DisableRigidbody();
-        transform.parent = newParent;
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
-    }
-
-    public void RemoveParent()
-    {
-        EnableRigidbody();
-        transform.parent = null;
-    }
-
     public void EnableRigidbody()
     {
         _rigidBody.isKinematic = false;
@@ -32,8 +18,7 @@ public abstract class Throwable : MonoBehaviour, IThrowable
         _rigidBody.linearVelocity = Vector3.zero;
         _rigidBody.constraints = RigidbodyConstraints.None;
 
-        if (TryGetComponent(out Collider collider))
-            collider.enabled = true;
+        EnableCollider();
     }
 
     public void DisableRigidbody()
@@ -41,21 +26,26 @@ public abstract class Throwable : MonoBehaviour, IThrowable
         _rigidBody.isKinematic = true;
         _rigidBody.useGravity = false;
         _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+    }
 
+    public void EnableCollider()
+    {
+        if (TryGetComponent(out Collider collider))
+            collider.enabled = true;
+    }
+
+    public void DisableCollider()
+    {
         if (TryGetComponent(out Collider collider))
             collider.enabled = false;
     }
 
     public virtual void OnHeld()
     {
-        Debug.Log("Segurado");
         DisableRigidbody();
     }
 
-    public virtual void OnThrown()
-    {
-        Debug.Log("Arremessado");
-    }
+    public virtual void OnThrown() { }
 
     public abstract void OnCollide();
 

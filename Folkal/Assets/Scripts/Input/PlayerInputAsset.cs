@@ -80,6 +80,15 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""R"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba76851e-8bb7-49ba-8fe6-298dfc2bbbde"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -192,6 +201,17 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
                     ""action"": ""MouseDelta"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""025709b4-8482-4570-82a9-97c5170b7ed3"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""R"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -223,6 +243,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
         m_Player_RightMouse = m_Player.FindAction("RightMouse", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Shift = m_Player.FindAction("Shift", throwIfNotFound: true);
+        m_Player_R = m_Player.FindAction("R", throwIfNotFound: true);
     }
 
     ~@PlayerInputAsset()
@@ -295,6 +316,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RightMouse;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Shift;
+    private readonly InputAction m_Player_R;
     public struct PlayerActions
     {
         private @PlayerInputAsset m_Wrapper;
@@ -305,6 +327,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
         public InputAction @RightMouse => m_Wrapper.m_Player_RightMouse;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Shift => m_Wrapper.m_Player_Shift;
+        public InputAction @R => m_Wrapper.m_Player_R;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -332,6 +355,9 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
             @Shift.started += instance.OnShift;
             @Shift.performed += instance.OnShift;
             @Shift.canceled += instance.OnShift;
+            @R.started += instance.OnR;
+            @R.performed += instance.OnR;
+            @R.canceled += instance.OnR;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -354,6 +380,9 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
             @Shift.started -= instance.OnShift;
             @Shift.performed -= instance.OnShift;
             @Shift.canceled -= instance.OnShift;
+            @R.started -= instance.OnR;
+            @R.performed -= instance.OnR;
+            @R.canceled -= instance.OnR;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -388,5 +417,6 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
         void OnRightMouse(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnShift(InputAction.CallbackContext context);
+        void OnR(InputAction.CallbackContext context);
     }
 }

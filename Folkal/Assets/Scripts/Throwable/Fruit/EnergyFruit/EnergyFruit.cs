@@ -67,7 +67,7 @@ public class EnergyFruit : Fruit
     {
         if (_nextSibling != null)
             return;
-        
+
         _nextSibling = sibling;
     }
 
@@ -88,10 +88,12 @@ public class EnergyFruit : Fruit
         {
             _isActive = true;
             DisableRigidbody();
+            DisableCollider();
 
             EnergyTree energyTree = _tree as EnergyTree;
             if (energyTree.isAllFruitsActive())
                 energyTree.ResetFruitsPosition();
         }
     }
+
 }

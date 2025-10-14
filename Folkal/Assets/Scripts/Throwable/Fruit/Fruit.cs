@@ -10,7 +10,7 @@ public class Fruit : Throwable
     {
         base.Awake();
 
-        if (transform.parent.TryGetComponent(out FruitTree rootTree))
+        if (transform.parent != null && transform.parent.TryGetComponent(out FruitTree rootTree))
         {
             SetTree(rootTree);
         }

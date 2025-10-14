@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -35,6 +37,10 @@ public class PlayerInput : MonoBehaviour
 
         _inputAsset.Player.LeftMouse.started += _playerController.OnLeftMouseDown;
         _inputAsset.Player.LeftMouse.canceled += _playerController.OnLeftMouseUp;
+
+        // PARA PROTOTIPAÇÃO
+        _inputAsset.Player.R.started += (InputAction.CallbackContext context)
+            => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         _inputAsset.Enable();
         _inputAsset.Player.Enable();

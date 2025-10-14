@@ -8,6 +8,11 @@ public class EnergySiblingFruitLine : LineManager
     private PlayerHand _playerHand;
     private PlayerMovement _playerMovement;
 
+    // Lista dos EnergyTriggers atingidos por RayCast no frame anterior
+    private List<EnergyTrigger> _previousCollidedTriggers = new List<EnergyTrigger>();
+
+    #region MonoBehaviour Methods
+
     private void Awake()
     {
         _fruit = GetComponent<EnergyFruit>();
@@ -27,6 +32,9 @@ public class EnergySiblingFruitLine : LineManager
         UpdateLinePosition(transform.position, _fruit.GetNextSibling.transform.position);
         FindEnergyTrigger();
     }
+
+    #endregion
+
 
     protected override void CalculateLineLength()
     {
@@ -62,17 +70,57 @@ public class EnergySiblingFruitLine : LineManager
 
     private void FindEnergyTrigger()
     {
-        RaycastHit hit;
-        if (Physics.Linecast(transform.position, _fruit.GetNextSibling.transform.position, out hit))
+        Vector3 siblingPosition = _fruit.GetNextSibling.transform.position;
+        Vector3 directionToSibling = (siblingPosition - transform.position).normalized;
+        float distanceToSibling = Vector3.Distance(transform.position, siblingPosition);
+
+        List<EnergyTrigger> _currentCollidedTriggers = new List<EnergyTrigger>();
+
+        RaycastHit[] hitArray = Physics.RaycastAll(transform.position, directionToSibling, distanceToSibling);
+        foreach (RaycastHit hit in hitArray)
         {
-            if (hit.collider.CompareTag("EnergyTrigger") && hit.collider.TryGetComponent(out EnergyTrigger energyTrigger))
-                ActivateEnergyTrigger(energyTrigger);
+            if (hit.collider.CompareTag("EnergyTrigger") && hit.collider.TryGetComponent(out EnergyTrigger trigger))
+            {
+                _currentCollidedTriggers.Add(trigger);
+
+                //if (!_previousCollidedTriggers.Contains(trigger))
+                OnEnergyTriggerEnter(trigger);
+            }
         }
+
+        foreach (EnergyTrigger oldTrigger in _previousCollidedTriggers)
+        {
+            if (!_currentCollidedTriggers.Contains(oldTrigger))
+                OnEnergyTriggerExit(oldTrigger);
+        }
+
+        _previousCollidedTriggers.Clear();
+        foreach (EnergyTrigger trigger in _currentCollidedTriggers)
+            _previousCollidedTriggers.Add(trigger);
     }
 
-    private void ActivateEnergyTrigger(EnergyTrigger energyTrigger)
-        => energyTrigger.Activate();
+    private void OnEnergyTriggerEnter(EnergyTrigger energyTrigger)
+    {
+       energyTrigger.Activate();
+    }
 
-    private void DeactivateEnergyTrigger(EnergyTrigger energyTrigger)
-        => energyTrigger.Deactivate();
+    private void OnEnergyTriggerExit(EnergyTrigger energyTrigger)
+    {
+        energyTrigger.Deactivate();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying)
+            return;
+
+        Vector3 siblingPosition = _fruit.GetNextSibling.transform.position;
+        Vector3 directionToSibling = (siblingPosition - transform.position).normalized;
+        float distanceToSibling = Vector3.Distance(transform.position, siblingPosition);
+
+        List<EnergyTrigger> _currentCollidedTriggers = new List<EnergyTrigger>();
+
+        Gizmos.DrawLine(transform.position, directionToSibling * distanceToSibling);
+    }
+
 }

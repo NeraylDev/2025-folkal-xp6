@@ -5,6 +5,13 @@ public abstract class LineManager : MonoBehaviour
     [Header("Line Manager Settings")]
     [SerializeField] protected LineRenderer _lineRenderer;
     [SerializeField] protected float _maxLineLength;
+    [Space]
+    [SerializeField] protected Color _lineColor;
+
+    private void Start()
+    {
+        SetColor(_lineColor);
+    }
 
     protected virtual void UpdateLinePosition(Vector3 a, Vector3 b)
     {

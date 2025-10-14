@@ -17,10 +17,26 @@ public class PlayerCamera : MonoBehaviour
         instance = this;
     }
 
+    private void Update()
+    {
+        UpdateCameraRaycast();
+    }
+
+    private void UpdateCameraRaycast()
+    {
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactionDistance, _interactableMask)
+            && !PlayerHand.instance.IsHoldingThrowable)
+        {
+            HUDManager.instance.SetCrosshair(HUDManager.CrosshairType.Interaction);
+        }
+        else
+        {
+            HUDManager.instance.SetCrosshair(HUDManager.CrosshairType.Default);
+        }
+    }
+
     public void TryInteract()
     {
-        Debug.Log("Tenta interagir");
-
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactionDistance, _interactableMask))
         {
             if (hit.collider.TryGetComponent(out Throwable throwable))
