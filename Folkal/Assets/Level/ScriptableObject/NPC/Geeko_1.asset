@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Geeko_1
   m_EditorClassIdentifier: 
   _lineList:
-  - text: "Ent\xE3o, tem que descobrir umas coisas <color=yellow>DESSE</color> mundo"
+  - text: "Ent\xE3o, tem que descobrir umas coisas desse mundo"
+    _options: []
+  - text: "Mas assim, tu pode descobrir novas falas tamb\xE9m, vai que"
     _options: []

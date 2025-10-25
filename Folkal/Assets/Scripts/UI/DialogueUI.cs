@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 using System.Collections;
+using DG.Tweening;
 
 public class DialogueUI : Speech<DialogueData>
 {
@@ -30,6 +31,14 @@ public class DialogueUI : Speech<DialogueData>
             return;
 
         _npcData = npcData;
+        
+        Color initialNameColor = _npcNameText.color;
+        initialNameColor.a = 0;
+        Color finalNameColor = initialNameColor;
+        finalNameColor.a = 1;
+
+        _npcNameText.color = initialNameColor;
+        _npcNameText.DOColor(finalNameColor, 0.5f).SetEase(Ease.InExpo);
         _npcNameText.text = _npcData.GetName;
 
         StartSpeech(dialogueData);

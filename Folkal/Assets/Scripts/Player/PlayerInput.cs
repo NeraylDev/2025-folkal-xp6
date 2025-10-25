@@ -29,11 +29,24 @@ public class PlayerInput : MonoBehaviour
     private void Start()
     {
         _playerController = PlayerController.instance;
+        ActivateInputs();
+    }
 
+    private void OnDisable()
+    {
+        _inputAsset.Player.Disable();
+        _inputAsset.Disable();
+    }
+
+    private void ActivateInputs()
+    {
         _inputAsset.Player.Move.performed += _playerController.OnMove;
         _inputAsset.Player.Move.canceled += _playerController.OnMove;
 
-        _inputAsset.Player.Interact.started += _playerController.OnInteract;
+        _inputAsset.Player.Run.started += _playerController.OnActivateRunning;
+        _inputAsset.Player.Run.canceled += _playerController.OnDeactivateRunning;
+
+        _inputAsset.Player.Interact.canceled += _playerController.OnInteract;
 
         _inputAsset.Player.LeftMouse.started += _playerController.OnLeftMouseDown;
         _inputAsset.Player.LeftMouse.canceled += _playerController.OnLeftMouseUp;
@@ -44,11 +57,5 @@ public class PlayerInput : MonoBehaviour
 
         _inputAsset.Enable();
         _inputAsset.Player.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _inputAsset.Player.Disable();
-        _inputAsset.Disable();
     }
 }

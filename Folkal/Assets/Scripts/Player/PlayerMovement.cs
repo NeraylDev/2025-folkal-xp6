@@ -6,12 +6,15 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _runningSpeed;
+    [SerializeField] private float _throwingSpeed;
     private float _defaultMoveSpeed;
     private float _moveSpeedModifier = 1f;
     private Vector3 _moveDirection;
     private bool _canMove;
+    private bool _isRunning;
 
-private PlayerController _playerController;
+    private PlayerController _playerController;
 
     private Camera _playerCamera;
     private Rigidbody _rigidBody;
@@ -74,10 +77,22 @@ private PlayerController _playerController;
         if (!_canMove)
             return;
 
-        _moveDirection = (transform.right * _playerController.GetMoveDirection.x
-                            + transform.forward * _playerController.GetMoveDirection.y).normalized;
+        _moveDirection = (transform.right * _playerController.GetMoveDirection.x)
+                            + (transform.forward * _playerController.GetMoveDirection.y);
 
-        Vector3 finalVelocity = _moveDirection * _moveSpeed * _moveSpeedModifier * Time.fixedDeltaTime;
+        if (_moveDirection.magnitude > 1)
+            _moveDirection = _moveDirection.normalized;
+
+        Vector3 finalVelocity = _moveDirection * _moveSpeedModifier * Time.fixedDeltaTime;
+        if (PlayerHand.instance != null && PlayerHand.instance.IsLoadingThrow)
+        {
+            finalVelocity *= _throwingSpeed;
+        }
+        else
+        {
+            finalVelocity *= (_isRunning ? _runningSpeed : _moveSpeed);
+        }
+
         _rigidBody.linearVelocity = finalVelocity;
     }
 
@@ -94,6 +109,8 @@ private PlayerController _playerController;
             _rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
+
+    public bool SetIsRunning(bool value) => _isRunning = value;
 
     public void SetMoveSpeed(float speed) => _moveSpeed = speed;
     public void SetMoveSpeedModifier(float modifier) => _moveSpeedModifier = modifier;

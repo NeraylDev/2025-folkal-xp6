@@ -20,7 +20,7 @@ public class PlayerHand : MonoBehaviour
     [SerializeField] private float _throwingLoadOffsetZ;
     private float _throwingLoadTimer;
     private float _currentThrowingForce;
-    private bool _loadingThrowing;
+    private bool _loadingThrow;
 
     private float _throwInputDelayTimer;
     private bool _canThrow;
@@ -29,6 +29,7 @@ public class PlayerHand : MonoBehaviour
 
     public Throwable GetHeldThrowable => _heldThrowable;
     public bool IsHoldingThrowable { get { return _heldThrowable != null; } }
+    public bool IsLoadingThrow => _loadingThrow;
 
 
     #region MonoBehaviour Methods
@@ -57,7 +58,7 @@ public class PlayerHand : MonoBehaviour
                 _canThrow = true;
         }
 
-        if (_loadingThrowing)
+        if (_loadingThrow)
             UpdateThrowingForce();
     }
 
@@ -84,12 +85,18 @@ public class PlayerHand : MonoBehaviour
 
     public void TryStartThrowing()
     {
-        if (_heldThrowable == null || _loadingThrowing || !_canThrow || !PlayerMovement.instance.CanMove)
+        if (_heldThrowable == null || _loadingThrow || !_canThrow || !PlayerMovement.instance.CanMove)
             return;
+
+        if (PlayerCamera.instance != null)
+        {
+            PlayerCamera.instance.SetCameraFOV(PlayerCamera.FOV.Throwing);
+            PlayerCamera.instance.SetCameraShake(PlayerCamera.Shake.None);
+        }
 
         _currentThrowingForce = 0;
         _throwingLoadTimer = 0;
-        _loadingThrowing = true;
+        _loadingThrow = true;
     }
 
     private void UpdateThrowingForce()
@@ -111,8 +118,14 @@ public class PlayerHand : MonoBehaviour
 
     public void TryThrow()
     {
-        if (!_loadingThrowing)
+        if (!_loadingThrow)
             return;
+
+        if (PlayerCamera.instance != null)
+        {
+            PlayerCamera.instance.SetCameraFOV(PlayerCamera.FOV.Default);
+            PlayerCamera.instance.SetCameraShake(PlayerCamera.Shake.Default);
+        }
 
         // Apply throwing force on the object
         Throwable throwable = RemoveHeldThrowable();
@@ -122,7 +135,7 @@ public class PlayerHand : MonoBehaviour
             throwable.GetComponent<Rigidbody>().AddForce(throwable.transform.forward * _currentThrowingForce);
         }
 
-        _loadingThrowing = false;
+        _loadingThrow = false;
     }
 
 
