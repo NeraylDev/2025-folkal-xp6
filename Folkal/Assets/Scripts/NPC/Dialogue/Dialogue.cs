@@ -4,21 +4,13 @@ using UnityEngine.Events;
 using TMPro;
 using System.Collections;
 
-public class Dialogue : MonoBehaviour
+public class Dialogue : Speech<DialogueData>
 {
 
-    [SerializeField] private GameObject _dialogueBox;
-    [Space]
-    [SerializeField] private TMP_Text _dialogueText;
-    [SerializeField] private float _timePerLetter = 0.1f;
+    [Header("Dialogue Settings")]
+    [SerializeField] private TMP_Text _npcNameText;
     private NPCData _npcData;
     private DialogueData _dialogueData;
-    private int _lineIndex;
-    public bool runningDialogue;
-    private bool _typingText;
-
-    private float _timeToClick = 0.1f;
-    private float _currentTimeToClick;
 
     public static Dialogue instance;
 
@@ -31,94 +23,62 @@ public class Dialogue : MonoBehaviour
             Destroy(gameObject);
         instance = this;
 
-        onStartDialogue.AddListener(ShowDialogueBox);
-        onFinishDialogue.AddListener(HideDialogueBox);
+        onStartDialogue.AddListener(ShowSpeechBox);
     }
 
-    private void Update()
+    private void Start()
     {
-        if (runningDialogue)
-            _currentTimeToClick += Time.deltaTime;
-
-        if(_currentTimeToClick >= _timeToClick && Input.GetKeyUp(KeyCode.E))
+        PlayerMovement playerMovement = PlayerMovement.instance;
+        if (playerMovement != null)
         {
-            if (!_typingText)
-            {
-                _lineIndex++;
-                if (_lineIndex < _dialogueData.Length)
-                {
-                    UpdateText();
-                }
-                else
-                {
-                    onFinishDialogue.Invoke();
-                }
-            }
-            else
-            {
-                StopAllCoroutines();
-                _typingText = false;
-
-                UpdateText(true);
-            }
-
-            _currentTimeToClick = 0;
+            onStartDialogue.AddListener(() => playerMovement.SetCanMove(false));
+            onFinishDialogue.AddListener(() => playerMovement.SetCanMove(true));
         }
     }
 
-    public void StartDialogue(DialogueData dialogueData, NPCData NPCData)
+    public void StartSpeech(DialogueData dialogueData, NPCData npcData)
     {
-        if (runningDialogue)
+        if (IsExecutingSpeech)
             return;
 
-        _npcData = NPCData;
-        _dialogueData = dialogueData;
-        _lineIndex = 0;
+        _npcData = npcData;
+        _npcNameText.text = _npcData.GetName;
+
+        StartSpeech(dialogueData);
+    }
+
+    public override void StartSpeech(DialogueData data)
+    {
+        _dialogueData = data;
+        lineIndex = 0;
 
         onStartDialogue.Invoke();
     }
 
-    private void UpdateText(bool instantaneously = false)
+    protected override void UpdateText(bool instantaneously = false)
     {
-        DialogueData.DialogueLine dialogueLine = _dialogueData.GetLine(_lineIndex);
+        DialogueData.DialogueLine dialogueLine = _dialogueData.GetLine(lineIndex);
+        if (dialogueLine == null)
+            return;
 
         if (instantaneously)
         {
-            _dialogueText.text = dialogueLine.GetText;
+            GetSpeechText.text = dialogueLine.GetText;
         }
         else
         {
-            _dialogueText.text = "";
+            GetSpeechText.text = "";
             StartCoroutine(TypeText(dialogueLine.GetText));
         }
     }
 
-    private void ShowDialogueBox()
+    protected override void HideSpeechBox()
     {
-        _dialogueBox.SetActive(true);
-        UpdateText();
-
-        _currentTimeToClick = 0;
-        runningDialogue = true;
+        base.HideSpeechBox();
+        onFinishDialogue.Invoke();
     }
 
-    private void HideDialogueBox()
-    {
-        _dialogueBox.SetActive(false);
-        runningDialogue = false;
-    }
+    protected override bool IsDialogueFinished()
+        => !(lineIndex < _dialogueData.Length);
 
-
-    private IEnumerator TypeText(string text)
-    {
-        _typingText = true;
-
-        foreach (char l in text)
-        {
-            _dialogueText.text += l;
-            yield return new WaitForSeconds(_timePerLetter);
-        }
-
-        _typingText = false;
-    }
 }

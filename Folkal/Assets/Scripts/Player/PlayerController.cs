@@ -33,6 +33,12 @@ public class PlayerController : MonoBehaviour
     public void OnInteract(InputAction.CallbackContext context)
     {
         _playerCamera.TryInteract();
+
+        Dialogue dialogue = Dialogue.instance;
+        if (dialogue == null)
+            return;
+
+        dialogue.TryUpdateSpeech();
     }
 
     public void OnLeftMouseDown(InputAction.CallbackContext context)

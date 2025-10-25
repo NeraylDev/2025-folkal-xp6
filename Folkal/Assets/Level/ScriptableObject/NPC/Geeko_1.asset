@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Geeko_1
   m_EditorClassIdentifier: 
   _lineList:
-  - _text: "Bom dia, b\xE3o?"
+  - _text: "Bom dia, b\xE3o? Eu sou aquele cara l\xE1, o <color=yellow>Geeko</color>."
     _options: []

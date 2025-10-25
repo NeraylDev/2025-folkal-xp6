@@ -9,13 +9,15 @@ public class PlayerMovement : MonoBehaviour
     private float _defaultMoveSpeed;
     private float _moveSpeedModifier = 1f;
     private Vector3 _moveDirection;
+    private bool _canMove;
 
-    public Vector3 GetMoveDirection => _moveDirection;
-
-    private PlayerController _playerController;
+private PlayerController _playerController;
 
     private Camera _playerCamera;
     private Rigidbody _rigidBody;
+
+    public bool CanMove => _canMove;
+    public Vector3 GetMoveDirection => _moveDirection;
 
     public static PlayerMovement instance;
 
@@ -31,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
         _rigidBody = GetComponent<Rigidbody>();
         _defaultMoveSpeed = _moveSpeed;
+        _canMove = true;
     }
 
     private void Start()
@@ -54,11 +57,28 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move()
     {
+        if (!_canMove)
+            return;
+
         _moveDirection = (transform.right * _playerController.GetMoveDirection.x
                             + transform.forward * _playerController.GetMoveDirection.y).normalized;
 
         Vector3 finalVelocity = _moveDirection * _moveSpeed * _moveSpeedModifier * Time.fixedDeltaTime;
         _rigidBody.linearVelocity = finalVelocity;
+    }
+
+    public void SetCanMove(bool value)
+    {
+        _canMove = value;
+        if (!_canMove)
+        {
+            _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+            _rigidBody.linearVelocity = Vector3.zero;
+        }
+        else
+        {
+            _rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        }
     }
 
     public void SetMoveSpeed(float speed) => _moveSpeed = speed;

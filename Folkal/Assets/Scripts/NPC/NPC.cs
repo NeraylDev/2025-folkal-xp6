@@ -15,10 +15,10 @@ public class NPC : MonoBehaviour
 
     public void TryStartDialogue()
     {
-        if (Dialogue.instance.runningDialogue || _allowInteraction == false)
+        if (Dialogue.instance.IsExecutingSpeech || _allowInteraction == false)
             return;
 
-        Dialogue.instance.StartDialogue(_dialogueList[_dialogueIndex], _data);
+        Dialogue.instance.StartSpeech(_dialogueList[_dialogueIndex], _data);
         Dialogue.instance.onFinishDialogue.AddListener(UpdateDialogueIndex);
         _allowInteraction = false;
     }

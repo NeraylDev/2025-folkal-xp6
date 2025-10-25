@@ -11,7 +11,11 @@ public class DialogueData : ScriptableObject
     public int Length => _lineList.Count;
 
     public DialogueLine GetLine(int index)
-        => _lineList[index];
+    {
+        if (_lineList.Count >= index + 1)
+            return _lineList[index];
+        return null;
+    }
 
     [Serializable]
     public class DialogueLine

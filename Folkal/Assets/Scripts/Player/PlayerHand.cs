@@ -84,7 +84,7 @@ public class PlayerHand : MonoBehaviour
 
     public void TryStartThrowing()
     {
-        if (_heldThrowable == null || _loadingThrowing || !_canThrow)
+        if (_heldThrowable == null || _loadingThrowing || !_canThrow || !PlayerMovement.instance.CanMove)
             return;
 
         _currentThrowingForce = 0;
