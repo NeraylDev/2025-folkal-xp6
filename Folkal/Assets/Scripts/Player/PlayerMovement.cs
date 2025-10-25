@@ -40,6 +40,20 @@ private PlayerController _playerController;
     {
         _playerController = PlayerController.instance;
         _playerCamera = Camera.main;
+
+        DialogueUI dialogueUI = DialogueUI.instance;    
+        if (dialogueUI != null)
+        {
+            dialogueUI.onStartSpeech.AddListener(() => SetCanMove(false));
+            dialogueUI.onFinishSpeech.AddListener(() => SetCanMove(true));
+        }
+
+        SignUI signUI = SignUI.instance;
+        if (signUI != null)
+        {
+            signUI.onStartSpeech.AddListener(() => SetCanMove(false));
+            signUI.onFinishSpeech.AddListener(() => SetCanMove(true));
+        }
     }
 
     private void Update()

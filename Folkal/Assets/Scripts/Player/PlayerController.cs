@@ -34,11 +34,13 @@ public class PlayerController : MonoBehaviour
     {
         _playerCamera.TryInteract();
 
-        Dialogue dialogue = Dialogue.instance;
-        if (dialogue == null)
-            return;
+        DialogueUI dialogueUI = DialogueUI.instance;
+        if (dialogueUI != null)
+            dialogueUI.TryUpdateSpeech();
 
-        dialogue.TryUpdateSpeech();
+        SignUI signUI = SignUI.instance;
+        if (signUI != null)
+            signUI.TryUpdateSpeech();
     }
 
     public void OnLeftMouseDown(InputAction.CallbackContext context)

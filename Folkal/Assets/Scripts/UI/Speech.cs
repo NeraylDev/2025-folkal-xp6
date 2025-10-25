@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Speech<Data> : MonoBehaviour
 {
@@ -16,9 +17,17 @@ public abstract class Speech<Data> : MonoBehaviour
     private float _currentTimeToClick;
     private bool _typingText;
 
+    [HideInInspector] public UnityEvent onStartSpeech;
+    [HideInInspector] public UnityEvent onFinishSpeech;
+
     public bool IsExecutingSpeech => _executingSpeech;
     protected GameObject GetSpeechBox => _speechBox;
     protected TMP_Text GetSpeechText => _speechText;
+
+    protected virtual void Awake()
+    {
+        onStartSpeech.AddListener(ShowSpeechBox);
+    }
 
     private void Update()
     {
@@ -67,6 +76,7 @@ public abstract class Speech<Data> : MonoBehaviour
     {
         _speechBox.SetActive(false);
         _executingSpeech = false;
+        onFinishSpeech.Invoke();
     }
 
     protected IEnumerator TypeText(string text)

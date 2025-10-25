@@ -15,12 +15,16 @@ public class NPC : MonoBehaviour
 
     public void TryStartDialogue()
     {
-        if (Dialogue.instance.IsExecutingSpeech || _allowInteraction == false)
+        DialogueUI dialogueUI = DialogueUI.instance;
+        if (dialogueUI == null || !_allowInteraction)
             return;
 
-        Dialogue.instance.StartSpeech(_dialogueList[_dialogueIndex], _data);
-        Dialogue.instance.onFinishDialogue.AddListener(UpdateDialogueIndex);
-        _allowInteraction = false;
+        if (!dialogueUI.IsExecutingSpeech)
+        {
+            dialogueUI.StartSpeech(_dialogueList[_dialogueIndex], _data);
+            dialogueUI.onFinishSpeech.AddListener(UpdateDialogueIndex);
+            _allowInteraction = false;
+        }
     }
 
     public void UpdateDialogueIndex()
@@ -30,8 +34,13 @@ public class NPC : MonoBehaviour
             _dialogueIndex++;
         }
 
-        Dialogue.instance.onFinishDialogue.RemoveListener(UpdateDialogueIndex);
         StartCoroutine(ActivateInteraction());
+
+        DialogueUI dialogueUI = DialogueUI.instance;
+        if (dialogueUI == null)
+            return;
+
+        dialogueUI.onFinishSpeech.RemoveListener(UpdateDialogueIndex);
     }
 
     private IEnumerator ActivateInteraction()

@@ -47,6 +47,10 @@ public class PlayerCamera : MonoBehaviour
             {
                 npc.TryStartDialogue();
             }
+            else if (hit.collider.TryGetComponent(out Sign sign))
+            {
+                sign.TryStartReading();
+            }
         }
     }
 

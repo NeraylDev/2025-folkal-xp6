@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bcc75e52ba2f1341ba029feef8eecc6, type: 3}
-  m_Name: Geeko_1
+  m_Script: {fileID: 11500000, guid: db652b338c94d6a4c95a47e15c52eff0, type: 3}
+  m_Name: Sign_0
   m_EditorClassIdentifier: 
   _lineList:
-  - text: "Ent\xE3o, tem que descobrir umas coisas <color=yellow>DESSE</color> mundo"
-    _options: []
+  - text: Testando uns textos
+  - text: Fazer mais um pra ter certeza

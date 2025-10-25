@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObject/DialogueData")]
 public class DialogueData : ScriptableObject
 {
-    [SerializeField] private List<DialogueLine> _lineList;
+    [SerializeField] protected List<DialogueLine> _lineList;
 
     public int Length => _lineList.Count;
 
@@ -14,16 +14,16 @@ public class DialogueData : ScriptableObject
     {
         if (_lineList.Count >= index + 1)
             return _lineList[index];
-        return null;
+        return default;
     }
 
     [Serializable]
     public class DialogueLine
     {
-        [SerializeField][TextArea] private string _text;
-        [SerializeField] List<DialogueOption> _options;
+        [SerializeField][TextArea] protected string text;
+        [SerializeField] private List<DialogueOption> _options;
 
-        public string GetText => _text;
+        public string GetText => text;
     }
 
     [Serializable]

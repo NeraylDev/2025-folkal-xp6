@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using TMPro;
 using System.Collections;
 
-public class Dialogue : Speech<DialogueData>
+public class DialogueUI : Speech<DialogueData>
 {
 
     [Header("Dialogue Settings")]
@@ -12,28 +12,16 @@ public class Dialogue : Speech<DialogueData>
     private NPCData _npcData;
     private DialogueData _dialogueData;
 
-    public static Dialogue instance;
+    public static DialogueUI instance;
 
-    public UnityEvent onStartDialogue;
-    public UnityEvent onFinishDialogue;
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
+        // --- Singleton ---
         if (instance != null)
             Destroy(gameObject);
         instance = this;
-
-        onStartDialogue.AddListener(ShowSpeechBox);
-    }
-
-    private void Start()
-    {
-        PlayerMovement playerMovement = PlayerMovement.instance;
-        if (playerMovement != null)
-        {
-            onStartDialogue.AddListener(() => playerMovement.SetCanMove(false));
-            onFinishDialogue.AddListener(() => playerMovement.SetCanMove(true));
-        }
     }
 
     public void StartSpeech(DialogueData dialogueData, NPCData npcData)
@@ -52,7 +40,7 @@ public class Dialogue : Speech<DialogueData>
         _dialogueData = data;
         lineIndex = 0;
 
-        onStartDialogue.Invoke();
+        onStartSpeech.Invoke();
     }
 
     protected override void UpdateText(bool instantaneously = false)
@@ -70,12 +58,6 @@ public class Dialogue : Speech<DialogueData>
             GetSpeechText.text = "";
             StartCoroutine(TypeText(dialogueLine.GetText));
         }
-    }
-
-    protected override void HideSpeechBox()
-    {
-        base.HideSpeechBox();
-        onFinishDialogue.Invoke();
     }
 
     protected override bool IsDialogueFinished()
