@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Fruit : Throwable
+public abstract class Fruit : Throwable
 {
     protected FruitTree _tree;
 

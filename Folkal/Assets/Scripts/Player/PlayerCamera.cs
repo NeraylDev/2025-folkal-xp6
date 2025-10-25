@@ -43,6 +43,10 @@ public class PlayerCamera : MonoBehaviour
             {
                 PlayerHand.instance.SetHeldThrowable(throwable);
             }
+            else if (hit.collider.TryGetComponent(out NPC npc))
+            {
+                npc.TryStartDialogue();
+            }
         }
     }
 

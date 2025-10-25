@@ -25,10 +25,6 @@ public class PlayerHand : MonoBehaviour
     private float _throwInputDelayTimer;
     private bool _canThrow;
 
-    [Header("Interaction Settings")]
-    [SerializeField] private float _interactionDistance = 10f;
-    [SerializeField] private LayerMask _interactableMask;
-
     public static PlayerHand instance;
 
     public Throwable GetHeldThrowable => _heldThrowable;

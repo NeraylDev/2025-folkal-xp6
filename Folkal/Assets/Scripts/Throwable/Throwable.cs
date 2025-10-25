@@ -45,7 +45,7 @@ public abstract class Throwable : MonoBehaviour, IThrowable
         DisableRigidbody();
     }
 
-    public virtual void OnThrown() { }
+    public abstract void OnThrown();
 
     public abstract void OnCollide();
 
