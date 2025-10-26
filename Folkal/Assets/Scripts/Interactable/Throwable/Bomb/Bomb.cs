@@ -11,6 +11,11 @@ public class Bomb : Throwable
     [SerializeField][Min(0)] private int _explosionDamage;
     private bool _wasThrown;
 
+    [Header("Explosion Shake Settings")]
+    [SerializeField] private float _shakeAmplitude = 0.25f;
+    [SerializeField] private float _shakeFrequency = 5f;
+    [SerializeField] private float _shakeDuration = 0.2f;
+
     public override void OnThrown()
     {
         if (!_wasThrown)
@@ -22,6 +27,18 @@ public class Bomb : Throwable
         if (!_wasThrown)
             return;
 
+        CalculateExplosion();
+        ActivateParticles();
+
+        PlayerCamera playerCamera = PlayerCamera.instance;
+        if (playerCamera != null)
+            playerCamera.SetCameraShake(_shakeAmplitude, _shakeFrequency, _shakeDuration);
+
+        Destroy(gameObject);
+    }
+
+    private void CalculateExplosion()
+    {
         Collider[] colliderArray = Physics.OverlapSphere(transform.position, _explosionRadius, _explosionMask);
 
         if (colliderArray == null)
@@ -45,9 +62,6 @@ public class Bomb : Throwable
                 ApplyExplosionForce(hittedTransform, _explosionForce * distanceModifier);
             }
         }
-
-        ActivateParticles();
-        Destroy(gameObject);
     }
 
     private void ApplyExplosionForce(Transform hittedTransform, float force)

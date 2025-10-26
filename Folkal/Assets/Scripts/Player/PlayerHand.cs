@@ -91,7 +91,7 @@ public class PlayerHand : MonoBehaviour
         if (PlayerCamera.instance != null)
         {
             PlayerCamera.instance.SetCameraFOV(PlayerCamera.FOV.Throwing);
-            PlayerCamera.instance.SetCameraShake(PlayerCamera.Shake.None);
+            PlayerCamera.instance.SetCameraNoise(PlayerCamera.Noise.None);
         }
 
         _currentThrowingForce = 0;
@@ -124,7 +124,7 @@ public class PlayerHand : MonoBehaviour
         if (PlayerCamera.instance != null)
         {
             PlayerCamera.instance.SetCameraFOV(PlayerCamera.FOV.Default);
-            PlayerCamera.instance.SetCameraShake(PlayerCamera.Shake.Default);
+            PlayerCamera.instance.SetCameraNoise(PlayerCamera.Noise.Default);
         }
 
         // Apply throwing force on the object

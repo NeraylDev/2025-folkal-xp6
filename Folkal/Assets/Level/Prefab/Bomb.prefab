@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362997142037052012}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &361935526049634456
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e90861fe1e91f24787a0a33029cc84e, type: 2}
+  - {fileID: 2100000, guid: 2769e168edb837f4eac888876a71bbc0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -188,10 +188,13 @@ MonoBehaviour:
     m_Bits: 8
   _wallMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   _explosionRadius: 5
-  _explosionForce: 3
-  _explosionDamage: 0
+  _explosionForce: 10
+  _explosionDamage: 2
+  _shakeAmplitude: 1.85
+  _shakeFrequency: 4.75
+  _shakeDuration: 0.125
 --- !u!1001 &3285272365908007109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -203,7 +206,7 @@ PrefabInstance:
     - target: {fileID: 3198297252305745105, guid: a5a0d0392ff0261418c9519cf9e4bc87, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2769e168edb837f4eac888876a71bbc0, type: 2}
+      objectReference: {fileID: 2100000, guid: 67d0ba629f41d2d4f933cb085030c926, type: 2}
     - target: {fileID: 4061487583235928155, guid: a5a0d0392ff0261418c9519cf9e4bc87, type: 3}
       propertyPath: m_Name
       value: ExplosionVFX

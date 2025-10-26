@@ -38,7 +38,7 @@ public class DialogueUI : Speech<DialogueData>
         finalNameColor.a = 1;
 
         _npcNameText.color = initialNameColor;
-        _npcNameText.DOColor(finalNameColor, 0.5f).SetEase(Ease.InExpo);
+        _npcNameText.DOColor(finalNameColor, 0.5f);
         _npcNameText.text = _npcData.GetName;
 
         StartSpeech(dialogueData);
