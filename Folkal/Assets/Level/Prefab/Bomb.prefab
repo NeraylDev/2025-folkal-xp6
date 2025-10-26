@@ -185,7 +185,7 @@ MonoBehaviour:
   _explosionVFX: {fileID: 1570327728299010206}
   _explosionMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1024
   _wallMask:
     serializedVersion: 2
     m_Bits: 128

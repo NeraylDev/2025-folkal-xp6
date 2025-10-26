@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -25,9 +28,9 @@ public class PlayerCamera : MonoBehaviour
     [Header("Camera Noise")]
     [SerializeField] private NoiseSettings[] _noiseProfiles;
     private Noise _currentNoise;
+    private List<Tweener> _activeTweeners = new List<Tweener>();
     private float _timeToStopShaking;
     private float _currentTimeToStopShaking;
-
     private bool _isShaking;
 
     private CinemachineCamera _cinemachineCamera;
@@ -126,7 +129,16 @@ public class PlayerCamera : MonoBehaviour
         SetCameraNoise(_currentNoise);
     }
 
-    public void SetCameraFOV(FOV fov)
+    public void SetCameraEffects(FOV fov, Noise noise)
+    {
+        _activeTweeners.ForEach((x) => x.Kill());
+        _activeTweeners.Clear();
+
+        SetCameraFOV(fov);
+        SetCameraNoise(noise);
+    }
+
+    private void SetCameraFOV(FOV fov)
     {
         float transitionDuration = 0.25f;
         switch (fov)
@@ -136,16 +148,18 @@ public class PlayerCamera : MonoBehaviour
                 break;
         }
 
-        DOTween.To
+        Tweener fovTween = DOTween.To
         (
             () => _cinemachineCamera.Lens.FieldOfView,
             x => _cinemachineCamera.Lens.FieldOfView = x,
             (int)fov,
             transitionDuration
         );
+
+        _activeTweeners.Add(fovTween);
     }
 
-    public void SetCameraNoise(Noise noise)
+    private void SetCameraNoise(Noise noise)
     {
         if (_currentNoise != noise)
             _currentNoise = noise;
@@ -169,7 +183,7 @@ public class PlayerCamera : MonoBehaviour
                 break;
         }
 
-        DOTween.To
+        Tweener amplitudeTween = DOTween.To
         (
             () => _cinemachineNoise.AmplitudeGain,
             x => _cinemachineNoise.AmplitudeGain = x,
@@ -177,13 +191,16 @@ public class PlayerCamera : MonoBehaviour
             transitionDuration
         );
 
-        DOTween.To
+        Tweener frequencyTweener = DOTween.To
         (
             () => _cinemachineNoise.FrequencyGain,
             x => _cinemachineNoise.FrequencyGain = x,
             frequencyGain,
             transitionDuration
         );
+
+        _activeTweeners.Add(amplitudeTween);
+        _activeTweeners.Add(frequencyTweener);
     }
 
 }

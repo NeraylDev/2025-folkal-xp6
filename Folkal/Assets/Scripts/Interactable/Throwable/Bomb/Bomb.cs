@@ -57,7 +57,7 @@ public class Bomb : Throwable
                 float distanceModifier = Mathf.Lerp(1f, 0f, Mathf.Clamp01(distanceToHittedObject / _explosionRadius));
 
                 if (hittedTransform.TryGetComponent(out Destructible destructible))
-                    destructible.ApplyDamage(Mathf.CeilToInt(_explosionDamage * distanceModifier));
+                    destructible.ApplyDamage();
 
                 ApplyExplosionForce(hittedTransform, _explosionForce * distanceModifier);
             }

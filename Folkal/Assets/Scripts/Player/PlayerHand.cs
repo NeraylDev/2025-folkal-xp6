@@ -82,7 +82,6 @@ public class PlayerHand : MonoBehaviour
         }
     }
 
-
     public void TryStartThrowing()
     {
         if (_heldThrowable == null || _loadingThrow || !_canThrow || !PlayerMovement.instance.CanMove)
@@ -90,8 +89,7 @@ public class PlayerHand : MonoBehaviour
 
         if (PlayerCamera.instance != null)
         {
-            PlayerCamera.instance.SetCameraFOV(PlayerCamera.FOV.Throwing);
-            PlayerCamera.instance.SetCameraNoise(PlayerCamera.Noise.None);
+            PlayerCamera.instance.SetCameraEffects(PlayerCamera.FOV.Throwing, PlayerCamera.Noise.None);
         }
 
         _currentThrowingForce = 0;
@@ -123,8 +121,7 @@ public class PlayerHand : MonoBehaviour
 
         if (PlayerCamera.instance != null)
         {
-            PlayerCamera.instance.SetCameraFOV(PlayerCamera.FOV.Default);
-            PlayerCamera.instance.SetCameraNoise(PlayerCamera.Noise.Default);
+            PlayerCamera.instance.SetCameraEffects(PlayerCamera.FOV.Default, PlayerCamera.Noise.Default);
         }
 
         // Apply throwing force on the object

@@ -37,7 +37,8 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context) => _moveDirection = context.ReadValue<Vector2>();
     public void OnActivateRunning(InputAction.CallbackContext context)
     {
-        if (!_playerMovement.CanMove || _moveDirection == Vector2.zero || _playerHand.IsLoadingThrow)
+        if (!_playerMovement.CanMove || _moveDirection == Vector2.zero || _playerHand.IsLoadingThrow
+            || Vector2.Dot(_moveDirection, Vector2.up) <= 0)
             return;
 
         _playerMovement.SetIsRunning(true);
