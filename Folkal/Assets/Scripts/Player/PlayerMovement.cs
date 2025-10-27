@@ -82,7 +82,7 @@ public class PlayerMovement : PlayerSubsystem
             _moveDirection = _moveDirection.normalized;
 
         Vector3 finalVelocity = _moveDirection * _moveSpeedModifier * Time.fixedDeltaTime;
-        if (_playerController.GetPlayerHand.IsLoadingThrow)
+        if (_playerManager.GetPlayerThrowing.IsLoadingThrow)
         {
             finalVelocity *= _throwingSpeed;
         }
@@ -115,7 +115,7 @@ public class PlayerMovement : PlayerSubsystem
     {
         if (!_canMove || _inputDirection == Vector2.zero
             || Vector2.Dot(_inputDirection, Vector2.up) <= 0
-            || _playerController.GetPlayerHand.IsLoadingThrow)
+            || _playerManager.GetPlayerThrowing.IsLoadingThrow)
             return;
 
         _isRunning = true;
@@ -123,7 +123,7 @@ public class PlayerMovement : PlayerSubsystem
 
     public void DeactivateRunning()
     {
-        if (_playerController.GetPlayerHand.IsLoadingThrow)
+        if (_playerManager.GetPlayerThrowing.IsLoadingThrow)
             return;
 
         _isRunning = false;

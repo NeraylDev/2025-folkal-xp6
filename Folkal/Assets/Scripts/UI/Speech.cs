@@ -53,12 +53,7 @@ public abstract class Speech<Data> : MonoBehaviour
 
     public void TryUpdateSpeech()
     {
-        PlayerController playerController = PlayerController.instance;
-        if (!_executingSpeech || _currentTimeToClick < _timeToAllowClick
-            || playerController == null)
-            return;
-
-        if (playerController.GetPlayerHand.IsLoadingThrow)
+        if (!_executingSpeech || _currentTimeToClick < _timeToAllowClick)
             return;
 
         if (_typingText)

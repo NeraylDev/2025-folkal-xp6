@@ -76,7 +76,7 @@ public class PlayerCamera : PlayerSubsystem
     private void UpdateCameraRaycast()
     {
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactionDistance, _interactableMask)
-            && !_playerController.GetPlayerHand.IsHoldingThrowable)
+            && !_playerManager.GetPlayerHand.IsHoldingThrowable)
         {
             HUDManager.instance.SetCrosshair(HUDManager.CrosshairType.Interaction);
         }

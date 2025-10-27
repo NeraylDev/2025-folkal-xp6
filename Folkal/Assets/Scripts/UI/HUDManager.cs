@@ -27,6 +27,9 @@ public class HUDManager : MonoBehaviour
         instance = this;
 
         _currentCrosshair = CrosshairType.Default;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void SetCrosshair(CrosshairType type)

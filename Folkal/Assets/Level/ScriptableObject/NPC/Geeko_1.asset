@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: Geeko_1
   m_EditorClassIdentifier: 
   _lineList:
-  - text: "Ent\xE3o, tem que descobrir umas coisas desse mundo"
+  - text: "Que curioso, h\xE1 tempos n\xE3o vejo algu\xE9m como voc\xEA."
     _options: []
-  - text: "Mas assim, tu pode descobrir novas falas tamb\xE9m, vai que"
+  - text: "Me chamo Geeko. Iniciei hoje minha jornada para aprender as <color=#FDE16A>Tr\xEAs
+      Sabedorias</color>."
+    _options: []
+  - text: "Ap\xF3s a <color=#FDE16A>1\xAA Morte do Mundo</color> meu povo criou as
+      <color=#FDE16A>Tr\xEAs Sabedorias</color> e, desde ent\xE3o, aprend\xEA-las
+      se tornou uma tradi\xE7\xE3o."
     _options: []

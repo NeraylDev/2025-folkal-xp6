@@ -697,7 +697,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6367016363764214c8182a6b6634ea20, type: 2}
   m_sharedMaterial: {fileID: -1112382882906538449, guid: 6367016363764214c8182a6b6634ea20, type: 2}
@@ -881,8 +881,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 50}
-  m_SizeDelta: {x: 1175, y: 225}
+  m_AnchoredPosition: {x: 0, y: 75}
+  m_SizeDelta: {x: 1175, y: 275}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &284579903
 MonoBehaviour:
@@ -923,7 +923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1532463, g: 0.14573693, b: 0.23584908, a: 0.19607843}
+  m_Color: {r: 0.15686275, g: 0.18140575, b: 0.22745098, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1014,7 +1014,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 500, y: -116.87215}
+  m_AnchoredPosition: {x: 587.5, y: -142.5}
   m_SizeDelta: {x: 1000, y: 85}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &325671518
@@ -2312,7 +2312,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 737481522}
-  - component: {fileID: 737481527}
   - component: {fileID: 737481526}
   - component: {fileID: 737481525}
   - component: {fileID: 737481528}
@@ -2420,29 +2419,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerMovement: {fileID: 737481525}
-  _playerHand: {fileID: 1482357746}
   _playerCamera: {fileID: 387339250}
   _playerInteraction: {fileID: 737481528}
-  onStartRun:
-    m_PersistentCalls:
-      m_Calls: []
-  onStopRun:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &737481527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 737481521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25997720607853c439e207ec76f3bbc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showCursor: 0
-  _lockCursor: 1
+  _playerHand: {fileID: 1482357746}
+  _playerThrowing: {fileID: 1482357747}
 --- !u!114 &737481528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3340,8 +3320,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 500, y: -168.12784}
-  m_SizeDelta: {x: 1000, y: 51.2557}
+  m_AnchoredPosition: {x: 587.5, y: -217.5}
+  m_SizeDelta: {x: 1000, y: 75}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1182515576
 MonoBehaviour:
@@ -3891,6 +3871,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1482357745}
   - component: {fileID: 1482357746}
+  - component: {fileID: 1482357747}
   m_Layer: 0
   m_Name: PlayerHand
   m_TagString: Untagged
@@ -3926,9 +3907,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _handPosition: {fileID: 0}
+  _heldThrowable: {fileID: 0}
   _handMovementDuration: 0.1
   _offset: {x: 0, y: 0, z: 0}
-  _heldThrowable: {fileID: 0}
+--- !u!114 &1482357747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482357744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab13650aa92bf8489eb9545c51dab0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _minThrowingForce: 150
   _maxThrowingForce: 500
   _throwingLoadDuration: 1

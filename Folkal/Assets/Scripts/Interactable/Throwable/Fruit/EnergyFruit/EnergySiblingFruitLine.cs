@@ -6,7 +6,7 @@ public class EnergySiblingFruitLine : LineManager
     private EnergyFruit _fruit;
 
     private PlayerHand _playerHand;
-    private PlayerController _playerController;
+    private PlayerManager _playerController;
 
     // Lista dos EnergyTriggers atingidos por RayCast no frame anterior
 
@@ -20,7 +20,7 @@ public class EnergySiblingFruitLine : LineManager
     private void Start()
     {
         _playerHand = PlayerHand.instance;
-        _playerController = PlayerController.instance;
+        _playerController = PlayerManager.instance;
     }
 
     private void Update()

@@ -3,19 +3,19 @@ using UnityEngine.InputSystem;
 
 public abstract class PlayerSubsystem : MonoBehaviour
 {
-    protected PlayerController _playerController;
-    public PlayerController GetPlayerController => _playerController;
+    protected PlayerManager _playerManager;
+    public PlayerManager GetPlayerManager => _playerManager;
 
-    public void Initialize(PlayerController playerController, InputActionAsset actionAsset)
+    public virtual void Initialize(PlayerManager playerManager, InputActionAsset actionAsset)
     {
-        if (_playerController != null)
+        if (_playerManager != null)
             return;
 
-        _playerController = playerController;
+        _playerManager = playerManager;
 
         if (actionAsset != null)
             SetEvents(actionAsset);
     }
 
-    protected abstract void SetEvents(InputActionAsset actionAsset);
+    protected virtual void SetEvents(InputActionAsset actionAsset) { }
 }

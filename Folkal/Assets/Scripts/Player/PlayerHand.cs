@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -8,29 +9,17 @@ using UnityEngine.InputSystem;
 public class PlayerHand : PlayerSubsystem
 {
     [SerializeField] private Transform _handPosition;
+    [SerializeField] private Throwable _heldThrowable;
     [SerializeField] private float _handMovementDuration;
     [SerializeField] private Vector3 _offset;
+    private Vector3 _offsetModifier;
     private Transform _mainCameraTransform;
     private Vector3 _defaultOffset;
-
-    [Header("Throwing Settings")]
-    [SerializeField] private Throwable _heldThrowable;
-    [SerializeField] private float _minThrowingForce;
-    [SerializeField] private float _maxThrowingForce;
-    [SerializeField] private float _throwingLoadDuration;
-    [SerializeField] private float _throwingLoadOffsetZ;
-    private float _throwingLoadTimer;
-    private float _currentThrowingForce;
-    private bool _loadingThrow;
-
-    private float _throwInputDelayTimer;
-    private bool _canThrow;
 
     public static PlayerHand instance;
 
     public Throwable GetHeldThrowable => _heldThrowable;
     public bool IsHoldingThrowable { get { return _heldThrowable != null; } }
-    public bool IsLoadingThrow => _loadingThrow;
 
 
     #region MonoBehaviour Methods
@@ -50,19 +39,6 @@ public class PlayerHand : PlayerSubsystem
         _mainCameraTransform = Camera.main.transform;
     }
 
-    private void Update()
-    {
-        if (!_canThrow)
-        {
-            _throwInputDelayTimer += Time.deltaTime;
-            if (_throwInputDelayTimer >= 0.1f)
-                _canThrow = true;
-        }
-
-        if (_loadingThrow)
-            UpdateThrowingForce();
-    }
-
     private void FixedUpdate()
     {
         if (_heldThrowable != null)
@@ -73,69 +49,17 @@ public class PlayerHand : PlayerSubsystem
 
     #endregion
 
-    protected override void SetEvents(InputActionAsset actionAsset)
-    {
-        actionAsset.FindAction("Action").started += (InputAction.CallbackContext context) => TryStartThrowing();
-        actionAsset.FindAction("Action").canceled += (InputAction.CallbackContext context) => TryThrow();
-    }
+    public void SetOffsetModifier(Vector3 offset)
+        => _offsetModifier = offset;
 
     private void UpdateThrowablePosition()
     {
         if (_mainCameraTransform != null)
         {
-            _heldThrowable.transform.DOMove(transform.position + _offset, _handMovementDuration).SetEase(Ease.InBounce).SetUpdate(UpdateType.Fixed);
-            _heldThrowable.transform.DOLookAt(transform.position + _mainCameraTransform.forward + _offset, _handMovementDuration).SetEase(Ease.InBounce).SetUpdate(UpdateType.Fixed);
+            _heldThrowable.transform.DOMove(transform.position + _offset + _offsetModifier, _handMovementDuration).SetEase(Ease.InBounce).SetUpdate(UpdateType.Fixed);
+            _heldThrowable.transform.DOLookAt(transform.position + _mainCameraTransform.forward + _offset + _offsetModifier, _handMovementDuration).SetEase(Ease.InBounce).SetUpdate(UpdateType.Fixed);
         }
     }
-
-    public void TryStartThrowing()
-    {
-        if (_heldThrowable == null || _loadingThrow || !_canThrow || !_playerController.GetPlayerMovement.CanMove)
-            return;
-
-        _playerController.GetPlayerCamera.SetCameraEffects(PlayerCamera.FOV.Throwing, PlayerCamera.Noise.None);
-
-        _currentThrowingForce = 0;
-        _throwingLoadTimer = 0;
-        _loadingThrow = true;
-    }
-
-    private void UpdateThrowingForce()
-    {
-        DOTween.To
-        (
-            () => _throwingLoadTimer,
-            x => _throwingLoadTimer = x,
-            1, _throwingLoadDuration
-        )
-        .SetEase(Ease.OutQuad);
-
-        _throwingLoadTimer = Mathf.Clamp01(_throwingLoadTimer);
-
-        // Visual feedback of throwing force
-        _currentThrowingForce = Mathf.Lerp(_minThrowingForce, _maxThrowingForce, _throwingLoadTimer);
-        _offset = Vector3.Lerp(_defaultOffset, _defaultOffset + transform.forward * _throwingLoadOffsetZ, _throwingLoadTimer);
-    }
-
-    public void TryThrow()
-    {
-        if (!_loadingThrow)
-            return;
-
-        _playerController.GetPlayerCamera.SetCameraEffects(PlayerCamera.FOV.Default, PlayerCamera.Noise.Default);
-
-        // Apply throwing force on the object
-        Throwable throwable = RemoveHeldThrowable();
-        if (throwable != null)
-        {
-            throwable.OnThrown();
-            throwable.GetComponent<Rigidbody>().AddForce(throwable.transform.forward * _currentThrowingForce);
-        }
-
-        _loadingThrow = false;
-    }
-
-
 
     public void SetHeldThrowable(Throwable throwable)
     {
@@ -145,9 +69,7 @@ public class PlayerHand : PlayerSubsystem
         _heldThrowable = throwable;
         _heldThrowable.OnHeld();
 
-        // Reseta delay do input de arremesso
-        _throwInputDelayTimer = 0;
-        _canThrow = false;
+        _playerManager.GetPlayerThrowing.ResetInputDelayTimer();
     }
 
     public Throwable RemoveHeldThrowable()

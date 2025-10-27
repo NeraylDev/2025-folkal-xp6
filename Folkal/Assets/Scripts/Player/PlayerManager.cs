@@ -2,20 +2,21 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _playerMovement;
-    [SerializeField] private PlayerHand _playerHand;
     [SerializeField] private PlayerCamera _playerCamera;
     [SerializeField] private PlayerInteraction _playerInteraction;
+    [SerializeField] private PlayerHand _playerHand;
+    [SerializeField] private PlayerThrowing _playerThrowing;
 
     public PlayerMovement GetPlayerMovement => _playerMovement;
-    public PlayerHand GetPlayerHand => _playerHand;
     public PlayerCamera GetPlayerCamera => _playerCamera;
     public PlayerInteraction GetPlayerInteraction => _playerInteraction;
+    public PlayerHand GetPlayerHand => _playerHand;
+    public PlayerThrowing GetPlayerThrowing => _playerThrowing;
 
-
-    public static PlayerController instance;
+    public static PlayerManager instance;
 
 
     #region MonoBehaviour Methods
@@ -26,15 +27,14 @@ public class PlayerController : MonoBehaviour
         if (instance != null)
             Destroy(gameObject);
         instance = this;
-    }
 
-    private void Start()
-    {
+        // --- Subsystems Initialization ---
         InputActionAsset actionAsset = InputSystem.actions;
-        _playerCamera.Initialize(this, actionAsset);
-        _playerHand.Initialize(this, actionAsset);
-        _playerInteraction.Initialize(this, actionAsset);
         _playerMovement.Initialize(this, actionAsset);
+        _playerCamera.Initialize(this, actionAsset);
+        _playerInteraction.Initialize(this, actionAsset);
+        _playerHand.Initialize(this, actionAsset);
+        _playerThrowing.Initialize(this, actionAsset);
     }
 
     #endregion

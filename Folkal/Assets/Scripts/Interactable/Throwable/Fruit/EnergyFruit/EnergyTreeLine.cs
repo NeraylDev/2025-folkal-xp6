@@ -6,7 +6,7 @@ public class EnergyTreeLine : LineManager
     private EnergyFruit _fruit;
 
     private PlayerHand _playerHand;
-    private PlayerController _playerMovement;
+    private PlayerManager _playerMovement;
 
     private void Awake()
     {
@@ -17,7 +17,7 @@ public class EnergyTreeLine : LineManager
     private void Start()
     {
         _playerHand = PlayerHand.instance;
-        _playerMovement = PlayerController.instance;
+        _playerMovement = PlayerManager.instance;
     }
 
     private void Update()

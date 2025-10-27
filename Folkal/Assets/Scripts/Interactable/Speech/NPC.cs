@@ -20,12 +20,12 @@ public class NPC : MonoBehaviour, IInteractable
 
     public void TryStartDialogue()
     {
-        PlayerController playerController = PlayerController.instance;
+        PlayerManager playerController = PlayerManager.instance;
         DialogueUI dialogueUI = DialogueUI.instance;
         if (dialogueUI == null || playerController == null || !_allowInteraction)
             return;
 
-        if (!dialogueUI.IsExecutingSpeech && !playerController.GetPlayerHand.IsLoadingThrow)
+        if (!dialogueUI.IsExecutingSpeech && !playerController.GetPlayerThrowing.IsLoadingThrow)
         {
             dialogueUI.StartSpeech(_dialogueList[_dialogueIndex], _data);
             dialogueUI.onFinishSpeech.AddListener(UpdateDialogueIndex);
