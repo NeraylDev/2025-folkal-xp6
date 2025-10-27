@@ -1,10 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
-public class Sign : MonoBehaviour
+public class Sign : MonoBehaviour, IInteractable
 {
     [SerializeField] private SignData _data;
     private bool _allowInteraction = true;
+
+    public void Interact(PlayerInteraction playerInteraction)
+    {
+        TryStartReading();
+    }
 
     public void TryStartReading()
     {

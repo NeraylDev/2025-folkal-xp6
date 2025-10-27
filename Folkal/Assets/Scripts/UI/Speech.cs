@@ -1,11 +1,16 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public abstract class Speech<Data> : MonoBehaviour
 {
+    [SerializeField] protected UIEvents _uiEvents;
+
     [Header("Speech Settings")]
     [SerializeField] protected GameObject _speechBox;
     [SerializeField] protected TMP_Text _speechText;
@@ -27,6 +32,7 @@ public abstract class Speech<Data> : MonoBehaviour
     protected virtual void Awake()
     {
         onStartSpeech.AddListener(ShowSpeechBox);
+        SetEvents();
     }
 
     private void Update()
@@ -35,9 +41,24 @@ public abstract class Speech<Data> : MonoBehaviour
             _currentTimeToClick += Time.deltaTime;
     }
 
+    public void SetEvents()
+    {
+        InputActionAsset inputAsset = InputSystem.actions;
+        if (inputAsset == null)
+            return;
+
+        inputAsset.FindAction("Interact").canceled += (InputAction.CallbackContext context)
+            => TryUpdateSpeech();
+    }
+
     public void TryUpdateSpeech()
     {
-        if (!_executingSpeech || _currentTimeToClick < _timeToAllowClick)
+        PlayerController playerController = PlayerController.instance;
+        if (!_executingSpeech || _currentTimeToClick < _timeToAllowClick
+            || playerController == null)
+            return;
+
+        if (playerController.GetPlayerHand.IsLoadingThrow)
             return;
 
         if (_typingText)
@@ -50,7 +71,7 @@ public abstract class Speech<Data> : MonoBehaviour
         else
         {
             lineIndex++;
-            if (IsDialogueFinished())
+            if (IsSpeechFinished())
                 HideSpeechBox();
             else
                 UpdateText();
@@ -59,7 +80,7 @@ public abstract class Speech<Data> : MonoBehaviour
         _currentTimeToClick = 0;
     }
 
-    protected abstract bool IsDialogueFinished();
+    protected abstract bool IsSpeechFinished();
     public abstract void StartSpeech(Data data);
     protected abstract void UpdateText(bool instantaneously = false);
 
@@ -70,13 +91,23 @@ public abstract class Speech<Data> : MonoBehaviour
 
         _currentTimeToClick = 0;
         _executingSpeech = true;
+
+        if (_uiEvents == null)
+            return;
+
+        _uiEvents.RaiseSpeechStart();
     }
 
     protected virtual void HideSpeechBox()
     {
-        _speechBox.SetActive(false);
-        _executingSpeech = false;
         onFinishSpeech.Invoke();
+        _executingSpeech = false;
+        _speechBox.SetActive(false);
+
+        if (_uiEvents == null)
+            return;
+
+        _uiEvents.RaiseSpeechEnd();
     }
 
     protected IEnumerator TypeText(string text)

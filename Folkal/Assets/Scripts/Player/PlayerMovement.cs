@@ -1,39 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : PlayerSubsystem
 {
+    [SerializeField] private UIEvents _uiEvents;
+    [Space]
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _runningSpeed;
     [SerializeField] private float _throwingSpeed;
     private float _defaultMoveSpeed;
     private float _moveSpeedModifier = 1f;
+    private Vector2 _inputDirection;
     private Vector3 _moveDirection;
     private bool _canMove;
     private bool _isRunning;
 
-    private PlayerController _playerController;
-
-    private Camera _playerCamera;
+    private Camera _camera;
     private Rigidbody _rigidBody;
 
     public bool CanMove => _canMove;
     public Vector3 GetMoveDirection => _moveDirection;
-
-    public static PlayerMovement instance;
 
 
     #region MonoBehaviour Methods
 
     private void Awake()
     {
-        // --- Singleton ---
-        if (instance != null)
-            Destroy(gameObject);
-        instance = this;
-
         _rigidBody = GetComponent<Rigidbody>();
         _defaultMoveSpeed = _moveSpeed;
         _canMove = true;
@@ -41,22 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        _playerController = PlayerController.instance;
-        _playerCamera = Camera.main;
-
-        DialogueUI dialogueUI = DialogueUI.instance;    
-        if (dialogueUI != null)
-        {
-            dialogueUI.onStartSpeech.AddListener(() => SetCanMove(false));
-            dialogueUI.onFinishSpeech.AddListener(() => SetCanMove(true));
-        }
-
-        SignUI signUI = SignUI.instance;
-        if (signUI != null)
-        {
-            signUI.onStartSpeech.AddListener(() => SetCanMove(false));
-            signUI.onFinishSpeech.AddListener(() => SetCanMove(true));
-        }
+        _camera = Camera.main;
     }
 
     private void Update()
@@ -71,20 +51,38 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    protected override void SetEvents(InputActionAsset actionAsset)
+    {
+        if (_uiEvents == null)
+            return;
+
+        actionAsset.FindAction("Move").performed += (InputAction.CallbackContext context)
+            => SetInputDirection(context.ReadValue<Vector2>());
+        actionAsset.FindAction("Move").canceled += (InputAction.CallbackContext context)
+            => SetInputDirection(context.ReadValue<Vector2>());
+
+        actionAsset.FindAction("Run").started += (InputAction.CallbackContext context)
+            => ActivateRunning();
+        actionAsset.FindAction("Run").canceled += (InputAction.CallbackContext context)
+            => DeactivateRunning();
+
+        _uiEvents.onSpeechStart += () => SetCanMove(false);
+        _uiEvents.onSpeechEnd += () => SetCanMove(true);
+    }
 
     public void Move()
     {
         if (!_canMove)
             return;
 
-        _moveDirection = (transform.right * _playerController.GetMoveDirection.x)
-                            + (transform.forward * _playerController.GetMoveDirection.y);
+        _moveDirection = (transform.right * _inputDirection.x)
+                         + (transform.forward * _inputDirection.y);
 
         if (_moveDirection.magnitude > 1)
             _moveDirection = _moveDirection.normalized;
 
         Vector3 finalVelocity = _moveDirection * _moveSpeedModifier * Time.fixedDeltaTime;
-        if (PlayerHand.instance != null && PlayerHand.instance.IsLoadingThrow)
+        if (_playerController.GetPlayerHand.IsLoadingThrow)
         {
             finalVelocity *= _throwingSpeed;
         }
@@ -95,6 +93,9 @@ public class PlayerMovement : MonoBehaviour
 
         _rigidBody.linearVelocity = finalVelocity;
     }
+
+    private void SetInputDirection(Vector2 direction)
+        => _inputDirection = direction;
 
     public void SetCanMove(bool value)
     {
@@ -110,7 +111,23 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public bool SetIsRunning(bool value) => _isRunning = value;
+    public void ActivateRunning()
+    {
+        if (!_canMove || _inputDirection == Vector2.zero
+            || Vector2.Dot(_inputDirection, Vector2.up) <= 0
+            || _playerController.GetPlayerHand.IsLoadingThrow)
+            return;
+
+        _isRunning = true;
+    }
+
+    public void DeactivateRunning()
+    {
+        if (_playerController.GetPlayerHand.IsLoadingThrow)
+            return;
+
+        _isRunning = false;
+    }
 
     public void SetMoveSpeed(float speed) => _moveSpeed = speed;
     public void SetMoveSpeedModifier(float modifier) => _moveSpeedModifier = modifier;
@@ -120,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void UpdateRotation()
     {
-        Vector3 finalRotation = _playerCamera.transform.rotation.eulerAngles;
+        Vector3 finalRotation = _camera.transform.rotation.eulerAngles;
         finalRotation.x = 0;
         finalRotation.z = 0;
 

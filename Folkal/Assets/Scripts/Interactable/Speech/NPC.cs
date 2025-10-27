@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class NPC : MonoBehaviour
+public class NPC : MonoBehaviour, IInteractable
 {
     [Header("NPC Settings")]
     [SerializeField] private NPCData _data;
@@ -13,13 +13,19 @@ public class NPC : MonoBehaviour
 
     public NPCData GetData => _data;
 
+    public void Interact(PlayerInteraction playerInteraction)
+    {
+        TryStartDialogue();
+    }
+
     public void TryStartDialogue()
     {
+        PlayerController playerController = PlayerController.instance;
         DialogueUI dialogueUI = DialogueUI.instance;
-        if (dialogueUI == null || !_allowInteraction)
+        if (dialogueUI == null || playerController == null || !_allowInteraction)
             return;
 
-        if (!dialogueUI.IsExecutingSpeech)
+        if (!dialogueUI.IsExecutingSpeech && !playerController.GetPlayerHand.IsLoadingThrow)
         {
             dialogueUI.StartSpeech(_dialogueList[_dialogueIndex], _data);
             dialogueUI.onFinishSpeech.AddListener(UpdateDialogueIndex);

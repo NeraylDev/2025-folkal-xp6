@@ -4,10 +4,10 @@ using UnityEngine.Events;
 using TMPro;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.InputSystem;
 
 public class DialogueUI : Speech<DialogueData>
 {
-
     [Header("Dialogue Settings")]
     [SerializeField] private TMP_Text _npcNameText;
     private NPCData _npcData;
@@ -42,6 +42,11 @@ public class DialogueUI : Speech<DialogueData>
         _npcNameText.text = _npcData.GetName;
 
         StartSpeech(dialogueData);
+
+        if (_uiEvents == null)
+            return;
+
+        _uiEvents.RaiseSpeechStart();
     }
 
     public override void StartSpeech(DialogueData data)
@@ -69,7 +74,7 @@ public class DialogueUI : Speech<DialogueData>
         }
     }
 
-    protected override bool IsDialogueFinished()
+    protected override bool IsSpeechFinished()
         => !(lineIndex < _dialogueData.Length);
 
 }

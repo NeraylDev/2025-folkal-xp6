@@ -47,7 +47,7 @@ public class EnergyFruit : Fruit
 
     public override void OnThrown()
     {
-        PlayerMovement.instance.ResetMoveSpeedModifier();
+        PlayerController.instance.GetPlayerMovement.ResetMoveSpeedModifier();
 
         if (!_wasThrown)
             _wasThrown = true;

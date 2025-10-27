@@ -40,16 +40,13 @@ public class PlayerInput : MonoBehaviour
 
     private void ActivateInputs()
     {
-        _inputAsset.Player.Move.performed += _playerController.OnMove;
-        _inputAsset.Player.Move.canceled += _playerController.OnMove;
+        //_inputAsset.Player.Move.performed += _playerController.OnMove;
+        //_inputAsset.Player.Move.canceled += _playerController.OnMove;
 
-        _inputAsset.Player.Run.started += _playerController.OnActivateRunning;
-        _inputAsset.Player.Run.canceled += _playerController.OnDeactivateRunning;
+        //_inputAsset.Player.Run.started += _playerController.OnActivateRunning;
+        //_inputAsset.Player.Run.canceled += _playerController.OnDeactivateRunning;
 
-        _inputAsset.Player.Interact.canceled += _playerController.OnInteract;
-
-        _inputAsset.Player.LeftMouse.started += _playerController.OnLeftMouseDown;
-        _inputAsset.Player.LeftMouse.canceled += _playerController.OnLeftMouseUp;
+        //_inputAsset.Player.Interact.canceled += _playerController.OnInteract;
 
         // PARA PROTOTIPAÇÃO
         _inputAsset.Player.R.started += (InputAction.CallbackContext context)

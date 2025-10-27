@@ -1,13 +1,18 @@
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody))]
-public abstract class Throwable : MonoBehaviour, IThrowable
+public abstract class Throwable : MonoBehaviour, IInteractable
 {
     protected Rigidbody _rigidBody;
 
     protected virtual void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
+    }
+
+    public void Interact(PlayerInteraction playerInteraction)
+    {
+        PlayerHand.instance.SetHeldThrowable(this);
     }
 
     public void EnableRigidbody()

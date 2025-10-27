@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PlayerHand : MonoBehaviour
+public class PlayerHand : PlayerSubsystem
 {
     [SerializeField] private Transform _handPosition;
     [SerializeField] private float _handMovementDuration;
@@ -72,6 +73,11 @@ public class PlayerHand : MonoBehaviour
 
     #endregion
 
+    protected override void SetEvents(InputActionAsset actionAsset)
+    {
+        actionAsset.FindAction("Action").started += (InputAction.CallbackContext context) => TryStartThrowing();
+        actionAsset.FindAction("Action").canceled += (InputAction.CallbackContext context) => TryThrow();
+    }
 
     private void UpdateThrowablePosition()
     {
@@ -84,13 +90,10 @@ public class PlayerHand : MonoBehaviour
 
     public void TryStartThrowing()
     {
-        if (_heldThrowable == null || _loadingThrow || !_canThrow || !PlayerMovement.instance.CanMove)
+        if (_heldThrowable == null || _loadingThrow || !_canThrow || !_playerController.GetPlayerMovement.CanMove)
             return;
 
-        if (PlayerCamera.instance != null)
-        {
-            PlayerCamera.instance.SetCameraEffects(PlayerCamera.FOV.Throwing, PlayerCamera.Noise.None);
-        }
+        _playerController.GetPlayerCamera.SetCameraEffects(PlayerCamera.FOV.Throwing, PlayerCamera.Noise.None);
 
         _currentThrowingForce = 0;
         _throwingLoadTimer = 0;
@@ -119,10 +122,7 @@ public class PlayerHand : MonoBehaviour
         if (!_loadingThrow)
             return;
 
-        if (PlayerCamera.instance != null)
-        {
-            PlayerCamera.instance.SetCameraEffects(PlayerCamera.FOV.Default, PlayerCamera.Noise.Default);
-        }
+        _playerController.GetPlayerCamera.SetCameraEffects(PlayerCamera.FOV.Default, PlayerCamera.Noise.Default);
 
         // Apply throwing force on the object
         Throwable throwable = RemoveHeldThrowable();

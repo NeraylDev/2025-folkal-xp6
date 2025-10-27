@@ -46,7 +46,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""LeftMouse"",
+                    ""name"": ""Action"",
                     ""type"": ""Button"",
                     ""id"": ""b76dc21a-8831-4a74-b8cc-2ff2d818dbfb"",
                     ""expectedControlType"": """",
@@ -209,7 +209,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard and Mouse"",
-                    ""action"": ""LeftMouse"",
+                    ""action"": ""Action"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -220,7 +220,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LeftMouse"",
+                    ""action"": ""Action"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -327,7 +327,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_MouseDelta = m_Player.FindAction("MouseDelta", throwIfNotFound: true);
-        m_Player_LeftMouse = m_Player.FindAction("LeftMouse", throwIfNotFound: true);
+        m_Player_Action = m_Player.FindAction("Action", throwIfNotFound: true);
         m_Player_RightMouse = m_Player.FindAction("RightMouse", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
@@ -400,7 +400,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_MouseDelta;
-    private readonly InputAction m_Player_LeftMouse;
+    private readonly InputAction m_Player_Action;
     private readonly InputAction m_Player_RightMouse;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Run;
@@ -411,7 +411,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
         public PlayerActions(@PlayerInputAsset wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
-        public InputAction @LeftMouse => m_Wrapper.m_Player_LeftMouse;
+        public InputAction @Action => m_Wrapper.m_Player_Action;
         public InputAction @RightMouse => m_Wrapper.m_Player_RightMouse;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Run => m_Wrapper.m_Player_Run;
@@ -431,9 +431,9 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
             @MouseDelta.started += instance.OnMouseDelta;
             @MouseDelta.performed += instance.OnMouseDelta;
             @MouseDelta.canceled += instance.OnMouseDelta;
-            @LeftMouse.started += instance.OnLeftMouse;
-            @LeftMouse.performed += instance.OnLeftMouse;
-            @LeftMouse.canceled += instance.OnLeftMouse;
+            @Action.started += instance.OnAction;
+            @Action.performed += instance.OnAction;
+            @Action.canceled += instance.OnAction;
             @RightMouse.started += instance.OnRightMouse;
             @RightMouse.performed += instance.OnRightMouse;
             @RightMouse.canceled += instance.OnRightMouse;
@@ -456,9 +456,9 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
             @MouseDelta.started -= instance.OnMouseDelta;
             @MouseDelta.performed -= instance.OnMouseDelta;
             @MouseDelta.canceled -= instance.OnMouseDelta;
-            @LeftMouse.started -= instance.OnLeftMouse;
-            @LeftMouse.performed -= instance.OnLeftMouse;
-            @LeftMouse.canceled -= instance.OnLeftMouse;
+            @Action.started -= instance.OnAction;
+            @Action.performed -= instance.OnAction;
+            @Action.canceled -= instance.OnAction;
             @RightMouse.started -= instance.OnRightMouse;
             @RightMouse.performed -= instance.OnRightMouse;
             @RightMouse.canceled -= instance.OnRightMouse;
@@ -501,7 +501,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
-        void OnLeftMouse(InputAction.CallbackContext context);
+        void OnAction(InputAction.CallbackContext context);
         void OnRightMouse(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);

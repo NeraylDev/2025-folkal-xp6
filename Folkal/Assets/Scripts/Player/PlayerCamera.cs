@@ -4,8 +4,9 @@ using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PlayerCamera : MonoBehaviour
+public class PlayerCamera : PlayerSubsystem
 {
     public enum FOV
     {
@@ -49,18 +50,6 @@ public class PlayerCamera : MonoBehaviour
         _cinemachineNoise = _cinemachineCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();
     }
 
-    private void Start()
-    {
-        PlayerController playerController = PlayerController.instance;
-        if (playerController != null)
-        {
-            playerController.onStartRun.AddListener(() => SetCameraFOV(FOV.Running));
-            playerController.onStartRun.AddListener(() => SetCameraNoise(Noise.Running));
-            playerController.onStopRun.AddListener(() => SetCameraFOV(FOV.Default));
-            playerController.onStopRun.AddListener(() => SetCameraNoise(Noise.Default));
-        } 
-    }
-
     private void Update()
     {
         UpdateCameraRaycast();
@@ -76,35 +65,24 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
+    protected override void SetEvents(InputActionAsset actionAsset)
+    {
+        actionAsset.FindAction("Run").started += (InputAction.CallbackContext context)
+            => SetCameraEffects(FOV.Running, Noise.Running);
+        actionAsset.FindAction("Run").canceled += (InputAction.CallbackContext context)
+            => SetCameraEffects(FOV.Default, Noise.Default);
+    }
+
     private void UpdateCameraRaycast()
     {
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactionDistance, _interactableMask)
-            && !PlayerHand.instance.IsHoldingThrowable)
+            && !_playerController.GetPlayerHand.IsHoldingThrowable)
         {
             HUDManager.instance.SetCrosshair(HUDManager.CrosshairType.Interaction);
         }
         else
         {
             HUDManager.instance.SetCrosshair(HUDManager.CrosshairType.Default);
-        }
-    }
-
-    public void TryInteract()
-    {
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactionDistance, _interactableMask))
-        {
-            if (hit.collider.TryGetComponent(out Throwable throwable))
-            {
-                PlayerHand.instance.SetHeldThrowable(throwable);
-            }
-            else if (hit.collider.TryGetComponent(out NPC npc))
-            {
-                npc.TryStartDialogue();
-            }
-            else if (hit.collider.TryGetComponent(out Sign sign))
-            {
-                sign.TryStartReading();
-            }
         }
     }
 

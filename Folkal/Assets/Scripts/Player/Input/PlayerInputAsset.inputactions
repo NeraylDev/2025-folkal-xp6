@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LeftMouse",
+                    "name": "Action",
                     "type": "Button",
                     "id": "b76dc21a-8831-4a74-b8cc-2ff2d818dbfb",
                     "expectedControlType": "",
@@ -187,7 +187,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard and Mouse",
-                    "action": "LeftMouse",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -198,7 +198,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LeftMouse",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

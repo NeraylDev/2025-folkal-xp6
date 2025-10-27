@@ -42,6 +42,6 @@ public class SignUI : Speech<SignData>
         }
     }
 
-    protected override bool IsDialogueFinished()
+    protected override bool IsSpeechFinished()
         => !(lineIndex < _signData.Length);
 }

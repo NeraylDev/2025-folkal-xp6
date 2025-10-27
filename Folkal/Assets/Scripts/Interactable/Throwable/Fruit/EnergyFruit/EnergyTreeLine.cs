@@ -6,7 +6,7 @@ public class EnergyTreeLine : LineManager
     private EnergyFruit _fruit;
 
     private PlayerHand _playerHand;
-    private PlayerMovement _playerMovement;
+    private PlayerController _playerMovement;
 
     private void Awake()
     {
@@ -17,7 +17,7 @@ public class EnergyTreeLine : LineManager
     private void Start()
     {
         _playerHand = PlayerHand.instance;
-        _playerMovement = PlayerMovement.instance;
+        _playerMovement = PlayerController.instance;
     }
 
     private void Update()
@@ -43,7 +43,7 @@ public class EnergyTreeLine : LineManager
             if (_playerHand.IsHoldingThrowable && _playerHand.GetHeldThrowable == _fruit)
             {
                 _playerHand.RemoveHeldThrowable();
-                _playerMovement.ResetMoveSpeedModifier();
+                _playerMovement.GetPlayerMovement.ResetMoveSpeedModifier();
             }
         }
     }
