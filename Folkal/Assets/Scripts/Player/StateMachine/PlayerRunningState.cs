@@ -9,6 +9,8 @@ public class PlayerRunningState : PlayerBaseState
     public override void Enter()
     {
         GetPlayerManager.GetEvents.RaiseRunStart(GetPlayerManager);
+
+        GetPlayerManager.GetPlayerMovement.SetMoveSpeed(375f);
         GetPlayerManager.GetPlayerCamera.SetCameraEffects
         (
             PlayerCamera.FOV.Running,
@@ -18,20 +20,22 @@ public class PlayerRunningState : PlayerBaseState
 
     public override void Execute()
     {
-        if (GetPlayerManager.GetPlayerMovement.CanMove)
-        {
-            if (GetPlayerManager.GetPlayerMovement.GetInputDirection != Vector2.zero)
-            {
-                GetPlayerStateMachine.SetState(new PlayerWalkingState(GetPlayerStateMachine, GetPlayerManager));
-            }
-            else
-            {
-                GetPlayerStateMachine.SetState(new PlayerIdleState(GetPlayerStateMachine, GetPlayerManager));
-            }
-        }
-        else
+        if (GetPlayerManager.GetPlayerMovement.CanMove == false
+            || GetPlayerManager.GetPlayerMovement.GetInputDirection == Vector2.zero)
         {
             GetPlayerStateMachine.SetState(new PlayerIdleState(GetPlayerStateMachine, GetPlayerManager));
+            return;
+        }
+
+        if (GetPlayerManager.GetPlayerThrowing.IsLoadingThrow)
+        {
+            GetPlayerStateMachine.SetState(new PlayerThrowingState(GetPlayerStateMachine, GetPlayerManager));
+            return;
+        }
+
+        if (GetPlayerManager.GetPlayerMovement.IsRunning == false)
+        {
+            GetPlayerStateMachine.SetState(new PlayerWalkingState(GetPlayerStateMachine, GetPlayerManager));
         }
     }
 

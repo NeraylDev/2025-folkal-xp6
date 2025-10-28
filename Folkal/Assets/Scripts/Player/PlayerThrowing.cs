@@ -58,13 +58,6 @@ public class PlayerThrowing : PlayerSubsystem
             || !_playerManager.GetPlayerMovement.CanMove)
             return;
 
-        //_playerManager.GetEvents.RaiseThrowingStart(_playerManager);
-        /*_playerManager.GetPlayerCamera.SetCameraEffects
-        (
-            PlayerCamera.FOV.Throwing,
-            PlayerCamera.Noise.None
-        );*/
-
         _currentThrowingForce = 0;
         _throwingLoadTimer = 0;
         _isLoadingThrow = true;
@@ -97,13 +90,6 @@ public class PlayerThrowing : PlayerSubsystem
     {
         if (!_isLoadingThrow || !_playerManager.GetPlayerHand.IsHoldingThrowable)
             return;
-
-        //_playerManager.GetEvents.RaiseThrow(_playerManager);
-        /*_playerManager.GetPlayerCamera.SetCameraEffects
-        (
-            PlayerCamera.FOV.Default,
-            PlayerCamera.Noise.None
-        );*/
 
         _throwingLoadTween.Kill();
         _throwingLoadTween = null;

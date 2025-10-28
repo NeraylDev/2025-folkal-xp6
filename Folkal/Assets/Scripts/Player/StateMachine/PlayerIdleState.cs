@@ -24,14 +24,14 @@ public class PlayerIdleState : PlayerBaseState
             return;
         }
 
-        if (GetPlayerManager.GetPlayerMovement.GetInputDirection == Vector2.zero)
+        if (GetPlayerManager.GetPlayerMovement.GetInputDirection != Vector2.zero)
         {
             if (GetPlayerManager.GetPlayerMovement.IsRunning)
             {
                 GetPlayerStateMachine.SetState(new PlayerRunningState(GetPlayerStateMachine, GetPlayerManager));
                 return;
             }
-
+            
             GetPlayerStateMachine.SetState(new PlayerWalkingState(GetPlayerStateMachine, GetPlayerManager));
         }
     }

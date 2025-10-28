@@ -7,6 +7,8 @@ public class PlayerThrowingState : PlayerBaseState
     public override void Enter()
     {
         GetPlayerManager.GetEvents.RaiseThrowingStart(GetPlayerManager);
+
+        GetPlayerManager.GetPlayerMovement.SetMoveSpeed(200f);
         GetPlayerManager.GetPlayerCamera.SetCameraEffects
         (
             PlayerCamera.FOV.Throwing,
@@ -18,10 +20,7 @@ public class PlayerThrowingState : PlayerBaseState
     {
         if (GetPlayerManager.GetPlayerThrowing.HasThrewObject)
         {
-            GetPlayerStateMachine.SetState
-            (
-                new PlayerIdleState(GetPlayerStateMachine, GetPlayerManager)
-            );
+            GetPlayerStateMachine.SetState(new PlayerIdleState(GetPlayerStateMachine, GetPlayerManager));
         }
     }
 

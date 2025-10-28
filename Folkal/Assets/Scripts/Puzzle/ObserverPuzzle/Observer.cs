@@ -19,19 +19,24 @@ public class Observer : MonoBehaviour
 
     private void VerifyPlayerView()
     {
-        if (_playerCamera == null || _isActive)
+        if (_playerCamera == null || _isActive == false)
             return;
 
         Vector3 direction = (transform.position - _playerCamera.transform.position).normalized;
         float dotResult = Vector3.Dot(_playerCamera.transform.forward, direction);
 
         if (dotResult >= 0.95f)
-            OnActivate();
+            Debug.Log("Encontrou observador");
     }
 
-    private void OnActivate()
+    public void Activate()
     {
-        
+        _isActive = true;
+    }
+
+    public void Deactivate()
+    {
+        _isActive = false;
     }
 
 }

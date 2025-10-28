@@ -16,6 +16,7 @@ public class PlayerMovement : PlayerSubsystem
     private Vector2 _inputDirection;
     private Vector3 _moveDirection;
     private bool _canMove;
+
     private bool _isRunning;
 
     private Camera _camera;
@@ -84,14 +85,7 @@ public class PlayerMovement : PlayerSubsystem
             _moveDirection = _moveDirection.normalized;
 
         Vector3 finalVelocity = _moveDirection * _moveSpeedModifier * Time.fixedDeltaTime;
-        if (_playerManager.GetPlayerThrowing.IsLoadingThrow)
-        {
-            finalVelocity *= _throwingSpeed;
-        }
-        else
-        {
-            finalVelocity *= (_isRunning ? _runningSpeed : _moveSpeed);
-        }
+        finalVelocity *= _moveSpeed;
 
         _rigidBody.linearVelocity = finalVelocity;
     }

@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private PlayerThrowing _playerThrowing;
 
     private PlayerStateMachine _playerStateMachine;
+    private InputActionAsset _playerInputActions;
 
     public PlayerEvents GetEvents => _playerEvents;
 
@@ -24,8 +25,8 @@ public class PlayerManager : MonoBehaviour
     public PlayerHand GetPlayerHand => _playerHand;
     public PlayerThrowing GetPlayerThrowing => _playerThrowing;
 
-
     public PlayerStateMachine GetPlayerStateMachine => _playerStateMachine;
+    public InputActionAsset GetPlayerInputActions => _playerInputActions;
 
     public static PlayerManager instance;
 
@@ -50,6 +51,9 @@ public class PlayerManager : MonoBehaviour
         // --- State Machine ---
         _playerStateMachine = new PlayerStateMachine();
         _playerStateMachine.Initialize(new PlayerIdleState(_playerStateMachine, this));
+    
+        // --- InputActions ---
+        _playerInputActions = InputSystem.actions;
     }
 
     private void Update()
