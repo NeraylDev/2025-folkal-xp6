@@ -21,7 +21,9 @@ public class PlayerMovement : PlayerSubsystem
     private Camera _camera;
     private Rigidbody _rigidBody;
 
+    public bool IsRunning => _isRunning;
     public bool CanMove => _canMove;
+    public Vector2 GetInputDirection => _inputDirection;
     public Vector3 GetMoveDirection => _moveDirection;
 
 

@@ -1490,8 +1490,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NoiseProfile: {fileID: 11400000, guid: dc406f07659f3e14694c843ea4bcfb7b, type: 2}
   PivotOffset: {x: 0, y: 0, z: 0}
-  AmplitudeGain: 0.4
-  FrequencyGain: 0.35
+  AmplitudeGain: 0
+  FrequencyGain: 0
   m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &406816963
 GameObject:
@@ -2315,6 +2315,8 @@ GameObject:
   - component: {fileID: 737481526}
   - component: {fileID: 737481525}
   - component: {fileID: 737481528}
+  - component: {fileID: 737481529}
+  - component: {fileID: 737481530}
   - component: {fileID: 737481524}
   - component: {fileID: 737481523}
   m_Layer: 6
@@ -2418,11 +2420,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdca6f4fa67705a47b6f9fcae8f86115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerEvents: {fileID: 11400000, guid: 44787cd90cb683c449cce5059f93ba63, type: 2}
   _playerMovement: {fileID: 737481525}
   _playerCamera: {fileID: 387339250}
   _playerInteraction: {fileID: 737481528}
-  _playerHand: {fileID: 1482357746}
-  _playerThrowing: {fileID: 1482357747}
+  _playerHand: {fileID: 737481530}
+  _playerThrowing: {fileID: 737481529}
 --- !u!114 &737481528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2439,6 +2442,37 @@ MonoBehaviour:
   _interactableMask:
     serializedVersion: 2
     m_Bits: 776
+--- !u!114 &737481529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737481521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab13650aa92bf8489eb9545c51dab0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minThrowingForce: 150
+  _maxThrowingForce: 500
+  _throwingLoadDuration: 1
+  _throwingLoadOffsetZ: -0.4
+--- !u!114 &737481530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737481521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130f42b3f70063c409004697475486e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _handPoint: {fileID: 1482357745}
+  _heldThrowable: {fileID: 0}
+  _handMovementDuration: 0.1
 --- !u!1 &840147847
 GameObject:
   m_ObjectHideFlags: 0
@@ -2861,7 +2895,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1100104348
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3870,8 +3904,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1482357745}
-  - component: {fileID: 1482357746}
-  - component: {fileID: 1482357747}
   m_Layer: 0
   m_Name: PlayerHand
   m_TagString: Untagged
@@ -3894,38 +3926,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 387339255}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1482357746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482357744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 130f42b3f70063c409004697475486e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _handPosition: {fileID: 0}
-  _heldThrowable: {fileID: 0}
-  _handMovementDuration: 0.1
-  _offset: {x: 0, y: 0, z: 0}
---- !u!114 &1482357747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482357744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aab13650aa92bf8489eb9545c51dab0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _minThrowingForce: 150
-  _maxThrowingForce: 500
-  _throwingLoadDuration: 1
-  _throwingLoadOffsetZ: -0.4
 --- !u!1 &1525088822
 GameObject:
   m_ObjectHideFlags: 0

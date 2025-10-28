@@ -36,16 +36,9 @@ public class PlayerCamera : PlayerSubsystem
 
     private CinemachineCamera _cinemachineCamera;
     private CinemachineBasicMultiChannelPerlin _cinemachineNoise;
-
-    public static PlayerCamera instance;
     
     private void Awake()
     {
-        // --- Singleton ---
-        if (instance != null)
-            Destroy(gameObject);
-        instance = this;
-
         _cinemachineCamera = GetComponent<CinemachineCamera>();
         _cinemachineNoise = _cinemachineCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();
     }
@@ -67,10 +60,15 @@ public class PlayerCamera : PlayerSubsystem
 
     protected override void SetEvents(InputActionAsset actionAsset)
     {
-        actionAsset.FindAction("Run").started += (InputAction.CallbackContext context)
-            => SetCameraEffects(FOV.Running, Noise.Running);
-        actionAsset.FindAction("Run").canceled += (InputAction.CallbackContext context)
+        _playerManager.GetEvents.onThrowingStart += (PlayerManager playerManager)
+            => SetCameraEffects(FOV.Throwing, Noise.None);
+        _playerManager.GetEvents.onThrow += (PlayerManager playerManager)
             => SetCameraEffects(FOV.Default, Noise.Default);
+
+        /*_playerManager.GetEvents.onRunStart += (PlayerManager playerManager)
+            => SetCameraEffects(FOV.Running, Noise.Running);
+        _playerManager.GetEvents.onRunStop += (PlayerManager playerManager)
+            => SetCameraEffects(FOV.Default, Noise.Default);*/
     }
 
     private void UpdateCameraRaycast()

@@ -13,19 +13,18 @@ public class NPC : MonoBehaviour, IInteractable
 
     public NPCData GetData => _data;
 
-    public void Interact(PlayerInteraction playerInteraction)
+    public void Interact(PlayerManager playerManager)
     {
-        TryStartDialogue();
+        TryStartDialogue(playerManager);
     }
 
-    public void TryStartDialogue()
+    public void TryStartDialogue(PlayerManager playerManager)
     {
-        PlayerManager playerController = PlayerManager.instance;
         DialogueUI dialogueUI = DialogueUI.instance;
-        if (dialogueUI == null || playerController == null || !_allowInteraction)
+        if (dialogueUI == null || !_allowInteraction)
             return;
 
-        if (!dialogueUI.IsExecutingSpeech && !playerController.GetPlayerThrowing.IsLoadingThrow)
+        if (!dialogueUI.IsExecutingSpeech && playerManager.CanStartDialogue())
         {
             dialogueUI.StartSpeech(_dialogueList[_dialogueIndex], _data);
             dialogueUI.onFinishSpeech.AddListener(UpdateDialogueIndex);

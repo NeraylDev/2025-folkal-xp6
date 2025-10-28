@@ -5,8 +5,7 @@ public class EnergySiblingFruitLine : LineManager
 {
     private EnergyFruit _fruit;
 
-    private PlayerHand _playerHand;
-    private PlayerManager _playerController;
+    private PlayerManager _playerManager;
 
     // Lista dos EnergyTriggers atingidos por RayCast no frame anterior
 
@@ -19,8 +18,7 @@ public class EnergySiblingFruitLine : LineManager
 
     private void Start()
     {
-        _playerHand = PlayerHand.instance;
-        _playerController = PlayerManager.instance;
+        _playerManager = PlayerManager.instance;
     }
 
     private void Update()
@@ -43,17 +41,17 @@ public class EnergySiblingFruitLine : LineManager
         float distanceToNextSibling = Vector3.Distance(transform.position, nextSiblingPosition);
         float greaterDistanceToSibling = distanceToPreviousSibling > distanceToNextSibling ? distanceToPreviousSibling : distanceToNextSibling;
 
-        if (_playerHand.IsHoldingThrowable && _playerHand.GetHeldThrowable == _fruit)
+        if (_playerManager.GetPlayerHand.IsHoldingThrowable && _playerManager.GetPlayerHand.GetHeldThrowable == _fruit)
         {
             // Modifica velocidade do Player de acordo com a distância até SiblingFruit
             float speedModifier = Mathf.Lerp(1, 0.25f, distanceToNextSibling / _maxLineLength);
 
             // Define o uso do modificador de acordo com a direção que o Player está se movendo
             Vector3 fruitToSiblingDirection = nextSiblingPosition - transform.position;
-            Vector3 playerMovementDirection = _playerController.GetPlayerMovement.GetMoveDirection;
+            Vector3 playerMovementDirection = _playerManager.GetPlayerMovement.GetMoveDirection;
             float directionModifier = Mathf.Clamp01(Vector3.Dot(playerMovementDirection, fruitToSiblingDirection));
 
-            _playerController.GetPlayerMovement.SetMoveSpeedModifier(Mathf.Lerp(speedModifier, 1, directionModifier));
+            _playerManager.GetPlayerMovement.SetMoveSpeedModifier(Mathf.Lerp(speedModifier, 1, directionModifier));
 
             if (greaterDistanceToSibling > _maxLineLength)
                 OnReachMaxLength();
@@ -62,8 +60,8 @@ public class EnergySiblingFruitLine : LineManager
 
     protected override void OnReachMaxLength()
     {
-        _playerHand.RemoveHeldThrowable();
-        _playerController.GetPlayerMovement.ResetMoveSpeedModifier();
+        _playerManager.GetPlayerHand.RemoveHeldThrowable();
+        _playerManager.GetPlayerMovement.ResetMoveSpeedModifier();
     }
 
 }

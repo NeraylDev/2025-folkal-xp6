@@ -6,18 +6,18 @@ public class Sign : MonoBehaviour, IInteractable
     [SerializeField] private SignData _data;
     private bool _allowInteraction = true;
 
-    public void Interact(PlayerInteraction playerInteraction)
+    public void Interact(PlayerManager playerManager)
     {
-        TryStartReading();
+        TryStartReading(playerManager);
     }
 
-    public void TryStartReading()
+    public void TryStartReading(PlayerManager playerManager)
     {
         SignUI signUI = SignUI.instance;
         if (signUI == null || !_allowInteraction)
             return;
 
-        if (!signUI.IsExecutingSpeech)
+        if (!signUI.IsExecutingSpeech && playerManager.CanReadSign())
         {
             signUI.StartSpeech(_data);
             signUI.onFinishSpeech.AddListener(UpdateInteraction);

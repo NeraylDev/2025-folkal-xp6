@@ -30,7 +30,7 @@ public class Bomb : Throwable
         CalculateExplosion();
         ActivateParticles();
 
-        PlayerCamera playerCamera = PlayerCamera.instance;
+        PlayerCamera playerCamera = PlayerManager.instance.GetPlayerCamera;
         if (playerCamera != null)
             playerCamera.SetCameraShake(_shakeAmplitude, _shakeFrequency, _shakeDuration);
 

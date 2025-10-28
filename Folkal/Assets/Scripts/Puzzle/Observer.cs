@@ -9,7 +9,7 @@ public class Observer : MonoBehaviour
 
     private void Start()
     {
-        _playerCamera = PlayerCamera.instance;
+        _playerCamera = PlayerManager.instance.GetPlayerCamera;
     }
 
     private void Update()

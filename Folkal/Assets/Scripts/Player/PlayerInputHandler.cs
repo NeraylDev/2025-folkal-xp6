@@ -1,10 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputHandler : PlayerSubsystem
+public class PlayerInputHandler : MonoBehaviour
 {
-    protected override void SetEvents(InputActionAsset actionAsset)
+    private InputActionAsset _inputActions;
+
+    private void Awake()
     {
-        throw new System.NotImplementedException();
+        _inputActions = InputSystem.actions;
     }
+
+    private void Start()
+    {
+        
+    }
+
 }

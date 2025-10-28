@@ -4,9 +4,8 @@ using UnityEngine.InputSystem;
 public abstract class PlayerSubsystem : MonoBehaviour
 {
     protected PlayerManager _playerManager;
-    public PlayerManager GetPlayerManager => _playerManager;
 
-    public virtual void Initialize(PlayerManager playerManager, InputActionAsset actionAsset)
+    public virtual void Initialize(PlayerManager playerManager, InputActionAsset actionAsset = null)
     {
         if (_playerManager != null)
             return;

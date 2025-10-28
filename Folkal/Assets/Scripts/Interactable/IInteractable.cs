@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interact(PlayerInteraction playerInteractiona);
+    void Interact(PlayerManager playerManager);
 }

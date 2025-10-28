@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,14 +8,17 @@ public class PlayerThrowing : PlayerSubsystem
     [SerializeField] private float _maxThrowingForce;
     [SerializeField] private float _throwingLoadDuration;
     [SerializeField] private float _throwingLoadOffsetZ;
-    private List<Tweener> _activeTweeners = new List<Tweener>();
     private float _currentThrowingForce;
     private float _throwInputDelayTimer;
     private float _throwingLoadTimer;
     private bool _isLoadingThrow;
+    private bool _hasThrewObject;
     private bool _canThrow;
 
+    private Tweener _throwingLoadTween;
+
     public bool IsLoadingThrow => _isLoadingThrow;
+    public bool HasThrewObject => _hasThrewObject;
 
 
     #region MonoBehaviour Methods
@@ -45,6 +47,7 @@ public class PlayerThrowing : PlayerSubsystem
     public void ResetInputDelayTimer()
     {
         _throwInputDelayTimer = 0;
+        _hasThrewObject = false;
         _canThrow = false;
     }
 
@@ -55,11 +58,12 @@ public class PlayerThrowing : PlayerSubsystem
             || !_playerManager.GetPlayerMovement.CanMove)
             return;
 
-        _playerManager.GetPlayerCamera.SetCameraEffects
+        //_playerManager.GetEvents.RaiseThrowingStart(_playerManager);
+        /*_playerManager.GetPlayerCamera.SetCameraEffects
         (
             PlayerCamera.FOV.Throwing,
             PlayerCamera.Noise.None
-        );
+        );*/
 
         _currentThrowingForce = 0;
         _throwingLoadTimer = 0;
@@ -68,22 +72,25 @@ public class PlayerThrowing : PlayerSubsystem
 
     private void UpdateThrowingForce()
     {
-        Tweener throwLoadingTween = DOTween.To
-        (
-            () => _throwingLoadTimer,
-            x => _throwingLoadTimer = x,
-            1, _throwingLoadDuration
-        )
-        .SetEase(Ease.OutQuad);
+        if (_throwingLoadTween == null)
+        {
+            Tweener throwingLoadTween = DOTween.To
+            (
+                () => _throwingLoadTimer,
+                x => _throwingLoadTimer = x,
+                1, _throwingLoadDuration
+            )
+            .SetEase(Ease.OutQuad);
 
-        _activeTweeners.Add(throwLoadingTween);
+            _throwingLoadTween = throwingLoadTween;
+        }
 
         _currentThrowingForce = Mathf.Lerp(_minThrowingForce, _maxThrowingForce, _throwingLoadTimer);
         
         PlayerHand playerHand = _playerManager.GetPlayerHand;
-        Vector3 throwableOffset = Vector3.Lerp(Vector3.zero, playerHand.transform.forward * _throwingLoadOffsetZ, _throwingLoadTimer);
+        float throwableOffset = Mathf.Lerp(0, _throwingLoadOffsetZ, _throwingLoadTimer);
         
-        _playerManager.GetPlayerHand.SetOffsetModifier(throwableOffset);
+        _playerManager.GetPlayerHand.SetZOffset(throwableOffset);
     }
 
     private void TryThrow()
@@ -91,19 +98,22 @@ public class PlayerThrowing : PlayerSubsystem
         if (!_isLoadingThrow || !_playerManager.GetPlayerHand.IsHoldingThrowable)
             return;
 
-        _playerManager.GetPlayerCamera.SetCameraEffects
+        //_playerManager.GetEvents.RaiseThrow(_playerManager);
+        /*_playerManager.GetPlayerCamera.SetCameraEffects
         (
             PlayerCamera.FOV.Default,
             PlayerCamera.Noise.None
-        );
+        );*/
 
-        _activeTweeners.ForEach((x) => x.Kill());
-        _activeTweeners.Clear();
+        _throwingLoadTween.Kill();
+        _throwingLoadTween = null;
+        _playerManager.GetPlayerHand.SetZOffset(0);
 
-        Throwable throwable = _playerManager.GetPlayerHand.RemoveHeldThrowable();
+        Throwable throwable = _playerManager.DropThrowable();
         ApplyForce(throwable);
 
         _isLoadingThrow = false;
+        _hasThrewObject = true;
     }
 
     private void ApplyForce(Throwable throwable)
