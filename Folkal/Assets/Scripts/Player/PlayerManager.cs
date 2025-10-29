@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private PlayerInteraction _playerInteraction;
     [SerializeField] private PlayerHand _playerHand;
     [SerializeField] private PlayerThrowing _playerThrowing;
+    [SerializeField] private PlayerBreathing _playerBreathing;
 
     private PlayerStateMachine _playerStateMachine;
     private InputActionAsset _playerInputActions;
@@ -24,6 +25,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerInteraction GetPlayerInteraction => _playerInteraction;
     public PlayerHand GetPlayerHand => _playerHand;
     public PlayerThrowing GetPlayerThrowing => _playerThrowing;
+    public PlayerBreathing GetPlayerBreathing => _playerBreathing;
 
     public PlayerStateMachine GetPlayerStateMachine => _playerStateMachine;
     public InputActionAsset GetPlayerInputActions => _playerInputActions;
@@ -47,6 +49,7 @@ public class PlayerManager : MonoBehaviour
         _playerInteraction.Initialize(this, actionAsset);
         _playerHand.Initialize(this);
         _playerThrowing.Initialize(this, actionAsset);
+        _playerBreathing.Initialize(this, actionAsset);
 
         // --- State Machine ---
         _playerStateMachine = new PlayerStateMachine();
@@ -69,52 +72,16 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
 
-    #region Action Methods
-
-    public void PickUpThrowable(Throwable throwable)
-    {
-        if (CanPickUpThrowable() == false)
-            return;
-
-        _playerHand.SetHeldThrowable(throwable);
-        _playerThrowing.ResetInputDelayTimer();
-
-        _playerEvents.RaisePickUpThrowable(this);
-    }
-
-    public Throwable DropThrowable()
-    {
-        if (CanDropThrowable() == false)
-            return null;
-
-        _playerEvents.RaiseDropThrowable(this);
-
-        return _playerHand.RemoveHeldThrowable();
-    }
-
-    #endregion
-
-
     #region Condition Methods
-
-    public bool CanPickUpThrowable()
-    {
-        return !_playerHand.IsHoldingThrowable;
-    }
-
-    public bool CanDropThrowable()
-    {
-        return _playerHand.IsHoldingThrowable;
-    }
 
     public bool CanStartDialogue()
     {
-        return !_playerThrowing.IsLoadingThrow;
+        return !_playerThrowing.IsChargingThrow;
     }
 
     public bool CanReadSign()
     {
-        return !_playerThrowing.IsLoadingThrow;
+        return !_playerThrowing.IsChargingThrow;
     }
 
     #endregion

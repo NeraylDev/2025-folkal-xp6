@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics;
 using UnityEngine;
 
 public class PlayerRunningState : PlayerBaseState
@@ -20,6 +18,11 @@ public class PlayerRunningState : PlayerBaseState
 
     public override void Execute()
     {
+        TryExit();
+    }
+
+    public override void TryExit()
+    {
         if (GetPlayerManager.GetPlayerMovement.CanMove == false
             || GetPlayerManager.GetPlayerMovement.GetInputDirection == Vector2.zero)
         {
@@ -27,7 +30,7 @@ public class PlayerRunningState : PlayerBaseState
             return;
         }
 
-        if (GetPlayerManager.GetPlayerThrowing.IsLoadingThrow)
+        if (GetPlayerManager.GetPlayerThrowing.IsChargingThrow)
         {
             GetPlayerStateMachine.SetState(new PlayerThrowingState(GetPlayerStateMachine, GetPlayerManager));
             return;

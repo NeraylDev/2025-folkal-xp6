@@ -6,16 +6,30 @@ public class ObserverPlatform : MonoBehaviour
 {
     [SerializeField] private List<Observer> _observerList = new List<Observer>();
     private PlayerManager _playerManager;
-    private bool _isPlayerOnPlatform = false;
+    private bool _isPlayerOnPlatform;
+    private bool _isActive;
+
+    private void Update()
+    {
+        if (_playerManager == null)
+            return;
+
+        if (_isPlayerOnPlatform && _playerManager.GetPlayerBreathing.IsBreathing)
+        {
+            ActivateObservers();
+        }
+    }
 
     private void ActivateObservers()
     {
         _observerList.ForEach((x) => x.Activate());
+        _isActive = true;
     }
 
     private void DeactivateObservers()
     {
         _observerList.ForEach((x) => x.Deactivate());
+        _isActive = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,7 +40,6 @@ public class ObserverPlatform : MonoBehaviour
             if (playerManager == null)
                 return;
 
-            ActivateObservers();
             _playerManager = playerManager;
             _isPlayerOnPlatform = true;
         }
@@ -39,10 +52,12 @@ public class ObserverPlatform : MonoBehaviour
             PlayerManager playerManager = other.GetComponent<PlayerManager>();
             if (playerManager == null)
                 return;
-            
-            DeactivateObservers();
-            _playerManager = playerManager;
+
+            _playerManager = null;
             _isPlayerOnPlatform = false;
+            
+            if (_isActive)
+                DeactivateObservers();
         }
     }
 

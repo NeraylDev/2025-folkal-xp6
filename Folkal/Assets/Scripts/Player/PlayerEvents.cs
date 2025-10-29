@@ -19,6 +19,13 @@ public class PlayerEvents : ScriptableObject
     public event Action<PlayerManager> onThrowingStart;
     public event Action<PlayerManager> onThrow;
 
+
+    // --- Other Events ---
+    public event Action<PlayerManager> onInteract;
+
+    public event Action<PlayerManager> onBreathingStart;
+    public event Action<PlayerManager> onBreathingStop;
+
     
     public void RaiseWalkStart(PlayerManager playerManager)
         => onWalkStart?.Invoke(playerManager);
@@ -35,6 +42,7 @@ public class PlayerEvents : ScriptableObject
 
 
 
+
     public void RaisePickUpThrowable(PlayerManager playerManager)
         => onPickUpThrowable?.Invoke(playerManager);
 
@@ -47,4 +55,15 @@ public class PlayerEvents : ScriptableObject
 
     public void RaiseThrow(PlayerManager playerManager)
         => onThrow?.Invoke(playerManager);
+
+
+
+    public void RaiseInteract(PlayerManager playerManager)
+        => onInteract?.Invoke(playerManager);
+
+    public void RaiseBreathingStart(PlayerManager playerManager)
+        => onBreathingStart?.Invoke(playerManager);
+
+    public void RaiseBreathingStop(PlayerManager playerManager)
+        => onBreathingStop?.Invoke(playerManager);
 }

@@ -11,6 +11,7 @@ public class PlayerCamera : PlayerSubsystem
     public enum FOV
     {
         Default = 65,
+        Walking = 66,
         Running = 72,
         Throwing = 61
     }
@@ -19,6 +20,7 @@ public class PlayerCamera : PlayerSubsystem
     {
         None,
         Default,
+        Walking,
         Running
     }
 
@@ -56,19 +58,6 @@ public class PlayerCamera : PlayerSubsystem
                 DeactivateCameraShake();
             }
         }
-    }
-
-    protected override void SetEvents(InputActionAsset actionAsset)
-    {
-        _playerManager.GetEvents.onThrowingStart += (PlayerManager playerManager)
-            => SetCameraEffects(FOV.Throwing, Noise.None);
-        _playerManager.GetEvents.onThrow += (PlayerManager playerManager)
-            => SetCameraEffects(FOV.Default, Noise.Default);
-
-        /*_playerManager.GetEvents.onRunStart += (PlayerManager playerManager)
-            => SetCameraEffects(FOV.Running, Noise.Running);
-        _playerManager.GetEvents.onRunStop += (PlayerManager playerManager)
-            => SetCameraEffects(FOV.Default, Noise.Default);*/
     }
 
     private void UpdateCameraRaycast()
@@ -151,6 +140,11 @@ public class PlayerCamera : PlayerSubsystem
             case Noise.Default:
                 amplitudeGain = 0.4f;
                 frequencyGain = 0.35f;
+                break;
+
+            case Noise.Walking:
+                amplitudeGain = 0.25f;
+                frequencyGain = 1.25f;
                 break;
 
             case Noise.Running:

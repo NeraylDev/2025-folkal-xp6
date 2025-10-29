@@ -111,7 +111,7 @@ public class PlayerMovement : PlayerSubsystem
     {
         if (!_canMove || _inputDirection == Vector2.zero
             || Vector2.Dot(_inputDirection, Vector2.up) <= 0
-            || _playerManager.GetPlayerThrowing.IsLoadingThrow)
+            || _playerManager.GetPlayerThrowing.IsChargingThrow)
             return;
 
         _isRunning = true;
@@ -119,7 +119,7 @@ public class PlayerMovement : PlayerSubsystem
 
     public void DeactivateRunning()
     {
-        if (_playerManager.GetPlayerThrowing.IsLoadingThrow)
+        if (_playerManager.GetPlayerThrowing.IsChargingThrow)
             return;
 
         _isRunning = false;

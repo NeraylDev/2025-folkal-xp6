@@ -2414,6 +2414,7 @@ GameObject:
   - component: {fileID: 737481528}
   - component: {fileID: 737481529}
   - component: {fileID: 737481530}
+  - component: {fileID: 737481531}
   - component: {fileID: 737481524}
   - component: {fileID: 737481523}
   m_Layer: 6
@@ -2523,6 +2524,7 @@ MonoBehaviour:
   _playerInteraction: {fileID: 737481528}
   _playerHand: {fileID: 737481530}
   _playerThrowing: {fileID: 737481529}
+  _playerBreathing: {fileID: 737481531}
 --- !u!114 &737481528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2553,8 +2555,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minThrowingForce: 150
   _maxThrowingForce: 500
-  _throwingLoadDuration: 1
-  _throwingLoadOffsetZ: -0.4
+  _throwChargeDuration: 1
+  _throwChargeOffsetZ: -0.5
 --- !u!114 &737481530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2570,6 +2572,18 @@ MonoBehaviour:
   _handPoint: {fileID: 1482357745}
   _heldThrowable: {fileID: 0}
   _handMovementDuration: 0.1
+--- !u!114 &737481531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737481521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c6e419385266d4e88f66039460f15c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &840147847
 GameObject:
   m_ObjectHideFlags: 0
@@ -3094,6 +3108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d7a8e517b4e25849939d555c2ad4465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activeMaterial: {fileID: 2100000, guid: 2769e168edb837f4eac888876a71bbc0, type: 2}
 --- !u!1001 &1130508990
 PrefabInstance:
   m_ObjectHideFlags: 0

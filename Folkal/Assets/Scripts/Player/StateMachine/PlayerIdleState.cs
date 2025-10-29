@@ -15,12 +15,17 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void Execute()
     {
+        TryExit();
+    }
+
+    public override void TryExit()
+    {
         if (GetPlayerManager.GetPlayerMovement.CanMove == false)
             return;
 
-        if (GetPlayerManager.GetPlayerThrowing.IsLoadingThrow)
+        if (GetPlayerManager.GetPlayerThrowing.IsChargingThrow)
         {
-            GetPlayerStateMachine.SetState(new PlayerThrowingState(GetPlayerStateMachine, GetPlayerManager));
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetState("Throwing"));
             return;
         }
 
@@ -28,11 +33,11 @@ public class PlayerIdleState : PlayerBaseState
         {
             if (GetPlayerManager.GetPlayerMovement.IsRunning)
             {
-                GetPlayerStateMachine.SetState(new PlayerRunningState(GetPlayerStateMachine, GetPlayerManager));
+                GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetState("Running"));
                 return;
             }
-            
-            GetPlayerStateMachine.SetState(new PlayerWalkingState(GetPlayerStateMachine, GetPlayerManager));
+
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetState("Walking"));
         }
     }
 

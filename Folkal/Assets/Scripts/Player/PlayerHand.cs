@@ -35,7 +35,7 @@ public class PlayerHand : PlayerSubsystem
 
     #endregion
 
-    public void SetZOffset(float z)
+    public void SetOffsetZ(float z)
     {
         _offset = _mainCameraTransform.forward * z;
     }
@@ -60,6 +60,17 @@ public class PlayerHand : PlayerSubsystem
             .SetEase(Ease.InBounce)
             .SetUpdate(UpdateType.Fixed);
         }
+    }
+
+    public void PickUpThrowable(Throwable throwable)
+    {
+        if (IsHoldingThrowable)
+            return;
+
+        SetHeldThrowable(throwable);
+
+        _playerManager.GetPlayerThrowing.ResetInputDelayTimer();
+        _playerManager.GetEvents.RaisePickUpThrowable(_playerManager);
     }
 
     public void SetHeldThrowable(Throwable throwable)

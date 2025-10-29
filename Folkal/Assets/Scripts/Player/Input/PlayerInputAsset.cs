@@ -89,6 +89,15 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Breath"",
+                    ""type"": ""Button"",
+                    ""id"": ""d3ecb566-e740-48d5-90d2-32703ff5467a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -300,6 +309,17 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
                     ""action"": ""R"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f878394-8050-44f9-8ad2-31de95d63d2f"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Breath"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -332,6 +352,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_R = m_Player.FindAction("R", throwIfNotFound: true);
+        m_Player_Breath = m_Player.FindAction("Breath", throwIfNotFound: true);
     }
 
     ~@PlayerInputAsset()
@@ -405,6 +426,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Run;
     private readonly InputAction m_Player_R;
+    private readonly InputAction m_Player_Breath;
     public struct PlayerActions
     {
         private @PlayerInputAsset m_Wrapper;
@@ -416,6 +438,7 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Run => m_Wrapper.m_Player_Run;
         public InputAction @R => m_Wrapper.m_Player_R;
+        public InputAction @Breath => m_Wrapper.m_Player_Breath;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -446,6 +469,9 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
             @R.started += instance.OnR;
             @R.performed += instance.OnR;
             @R.canceled += instance.OnR;
+            @Breath.started += instance.OnBreath;
+            @Breath.performed += instance.OnBreath;
+            @Breath.canceled += instance.OnBreath;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -471,6 +497,9 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
             @R.started -= instance.OnR;
             @R.performed -= instance.OnR;
             @R.canceled -= instance.OnR;
+            @Breath.started -= instance.OnBreath;
+            @Breath.performed -= instance.OnBreath;
+            @Breath.canceled -= instance.OnBreath;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -506,5 +535,6 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnR(InputAction.CallbackContext context);
+        void OnBreath(InputAction.CallbackContext context);
     }
 }

@@ -6,18 +6,18 @@ public class PlayerThrowing : PlayerSubsystem
 {
     [SerializeField] private float _minThrowingForce;
     [SerializeField] private float _maxThrowingForce;
-    [SerializeField] private float _throwingLoadDuration;
-    [SerializeField] private float _throwingLoadOffsetZ;
+    [SerializeField] private float _throwChargeDuration;
+    [SerializeField] private float _throwChargeOffsetZ;
     private float _currentThrowingForce;
     private float _throwInputDelayTimer;
-    private float _throwingLoadTimer;
-    private bool _isLoadingThrow;
+    private bool _isChargingThrow;
     private bool _hasThrewObject;
     private bool _canThrow;
 
-    private Tweener _throwingLoadTween;
+    public float GetThrowChargeDuration => _throwChargeDuration;
+    public float GetThrowChargeOffsetZ => _throwChargeOffsetZ;
 
-    public bool IsLoadingThrow => _isLoadingThrow;
+    public bool IsChargingThrow => _isChargingThrow;
     public bool HasThrewObject => _hasThrewObject;
 
 
@@ -31,9 +31,6 @@ public class PlayerThrowing : PlayerSubsystem
             if (_throwInputDelayTimer >= 0.1f)
                 _canThrow = true;
         }
-
-        if (_isLoadingThrow)
-            UpdateThrowingForce();
     }
 
     #endregion
@@ -44,6 +41,31 @@ public class PlayerThrowing : PlayerSubsystem
         actionAsset.FindAction("Action").canceled += (InputAction.CallbackContext context) => TryThrow();
     }
 
+    private void TryStartThrowing()
+    {
+        if (!_canThrow || _isChargingThrow
+            || !_playerManager.GetPlayerHand.IsHoldingThrowable
+            || !_playerManager.GetPlayerMovement.CanMove)
+            return;
+
+        _currentThrowingForce = 0;
+        _isChargingThrow = true;
+    }
+
+    private void TryThrow()
+    {
+        if (!_isChargingThrow || !_playerManager.GetPlayerHand.IsHoldingThrowable)
+            return;
+
+        _isChargingThrow = false;
+        _hasThrewObject = true;
+    }
+
+    public void SetThrowingForce(float normalizedValue)
+    {
+        _currentThrowingForce = Mathf.Lerp(_minThrowingForce, _maxThrowingForce, normalizedValue);
+    }
+
     public void ResetInputDelayTimer()
     {
         _throwInputDelayTimer = 0;
@@ -51,58 +73,7 @@ public class PlayerThrowing : PlayerSubsystem
         _canThrow = false;
     }
 
-    private void TryStartThrowing()
-    {
-        if (!_canThrow || _isLoadingThrow
-            || !_playerManager.GetPlayerHand.IsHoldingThrowable
-            || !_playerManager.GetPlayerMovement.CanMove)
-            return;
-
-        _currentThrowingForce = 0;
-        _throwingLoadTimer = 0;
-        _isLoadingThrow = true;
-    }
-
-    private void UpdateThrowingForce()
-    {
-        if (_throwingLoadTween == null)
-        {
-            Tweener throwingLoadTween = DOTween.To
-            (
-                () => _throwingLoadTimer,
-                x => _throwingLoadTimer = x,
-                1, _throwingLoadDuration
-            )
-            .SetEase(Ease.OutQuad);
-
-            _throwingLoadTween = throwingLoadTween;
-        }
-
-        _currentThrowingForce = Mathf.Lerp(_minThrowingForce, _maxThrowingForce, _throwingLoadTimer);
-        
-        PlayerHand playerHand = _playerManager.GetPlayerHand;
-        float throwableOffset = Mathf.Lerp(0, _throwingLoadOffsetZ, _throwingLoadTimer);
-        
-        _playerManager.GetPlayerHand.SetZOffset(throwableOffset);
-    }
-
-    private void TryThrow()
-    {
-        if (!_isLoadingThrow || !_playerManager.GetPlayerHand.IsHoldingThrowable)
-            return;
-
-        _throwingLoadTween.Kill();
-        _throwingLoadTween = null;
-        _playerManager.GetPlayerHand.SetZOffset(0);
-
-        Throwable throwable = _playerManager.DropThrowable();
-        ApplyForce(throwable);
-
-        _isLoadingThrow = false;
-        _hasThrewObject = true;
-    }
-
-    private void ApplyForce(Throwable throwable)
+    public void ApplyForce(Throwable throwable)
     {
         if (throwable == null)
             return;
@@ -114,4 +85,5 @@ public class PlayerThrowing : PlayerSubsystem
             rigidbody.AddForce(force);
         }
     }
+
 }

@@ -12,7 +12,7 @@ public abstract class Throwable : MonoBehaviour, IInteractable
 
     public void Interact(PlayerManager playerManager)
     {
-        playerManager.PickUpThrowable(this);
+        playerManager.GetPlayerHand.PickUpThrowable(this);
     }
 
     public void EnableRigidbody()

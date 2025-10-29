@@ -11,20 +11,26 @@ public class PlayerWalkingState : PlayerBaseState
         GetPlayerManager.GetPlayerMovement.ResetMoveSpeed();
         GetPlayerManager.GetPlayerCamera.SetCameraEffects
         (
-            PlayerCamera.FOV.Default,
-            PlayerCamera.Noise.Default
+            PlayerCamera.FOV.Walking,
+            PlayerCamera.Noise.Walking
         );
     }
 
     public override void Execute()
     {
-        if (GetPlayerManager.GetPlayerMovement.CanMove == false)
+        TryExit();
+    }
+
+    public override void TryExit()
+    {
+        if (GetPlayerManager.GetPlayerMovement.CanMove == false
+            || GetPlayerManager.GetPlayerMovement.GetInputDirection == Vector2.zero)
         {
             GetPlayerStateMachine.SetState(new PlayerIdleState(GetPlayerStateMachine, GetPlayerManager));
             return;
         }
 
-        if (GetPlayerManager.GetPlayerThrowing.IsLoadingThrow)
+        if (GetPlayerManager.GetPlayerThrowing.IsChargingThrow)
         {
             GetPlayerStateMachine.SetState(new PlayerThrowingState(GetPlayerStateMachine, GetPlayerManager));
             return;
