@@ -81,7 +81,7 @@ public class PlayerThrowing : PlayerSubsystem
         throwable.OnThrown();
         if (throwable.TryGetComponent(out Rigidbody rigidbody))
         {
-            Vector3 force = _playerManager.GetPlayerCamera.transform.forward * _currentThrowingForce;
+            Vector3 force = _playerManager.GetCameraTransform.forward * _currentThrowingForce;
             rigidbody.AddForce(force);
         }
     }

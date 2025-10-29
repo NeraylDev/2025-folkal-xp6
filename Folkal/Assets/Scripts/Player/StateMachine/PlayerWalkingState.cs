@@ -9,11 +9,7 @@ public class PlayerWalkingState : PlayerBaseState
         GetPlayerManager.GetEvents.RaiseWalkStart(GetPlayerManager);
 
         GetPlayerManager.GetPlayerMovement.ResetMoveSpeed();
-        GetPlayerManager.GetPlayerCamera.SetCameraEffects
-        (
-            PlayerCamera.FOV.Walking,
-            PlayerCamera.Noise.Walking
-        );
+        GetPlayerManager.GetPlayerCamera.SetCameraEffects(66, 0.25f, 1.25f);
     }
 
     public override void Execute()

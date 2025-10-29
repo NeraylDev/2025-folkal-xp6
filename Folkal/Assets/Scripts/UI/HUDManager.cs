@@ -9,6 +9,8 @@ public class HUDManager : MonoBehaviour
         Interaction
     }
 
+    [SerializeField] private PlayerEvents _playerEvents;
+
     [Header("Prototype")]
     [SerializeField] private GameObject _finishedUI;
 
@@ -30,6 +32,32 @@ public class HUDManager : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void Start()
+    {
+        _playerEvents.onStartPointingAtInteractable += (IInteractable interactable)
+            => UpdateCrosshair(interactable);
+        _playerEvents.onStopPointingAtInteractable += ()
+            => UpdateCrosshair();
+    }
+
+    public void UpdateCrosshair(IInteractable interactable = null)
+    {
+        if (interactable == null)
+        {
+            SetCrosshair(CrosshairType.Default);
+            return;
+        }
+
+        if (interactable.CanInteract())
+        {
+            SetCrosshair(CrosshairType.Interaction);
+        }
+        else
+        {
+            SetCrosshair(CrosshairType.Default);
+        }
     }
 
     public void SetCrosshair(CrosshairType type)

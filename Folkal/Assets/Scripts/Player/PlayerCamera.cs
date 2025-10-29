@@ -8,47 +8,36 @@ using UnityEngine.InputSystem;
 
 public class PlayerCamera : PlayerSubsystem
 {
-    public enum FOV
-    {
-        Default = 65,
-        Walking = 66,
-        Running = 72,
-        Throwing = 61
-    }
-
-    public enum Noise
-    {
-        None,
-        Default,
-        Walking,
-        Running
-    }
+    [SerializeField] private CinemachineCamera _cinemachineCamera;
+    private CinemachineBasicMultiChannelPerlin _cinemachineNoise;
 
     [Header("Interaction Settings")]
     [SerializeField] private float _interactionDistance;
     [SerializeField] private LayerMask _interactableMask;
 
-    [Header("Camera Noise")]
+    [Header("Noise Settings")]
     [SerializeField] private NoiseSettings[] _noiseProfiles;
-    private Noise _currentNoise;
-    private List<Tweener> _activeTweeners = new List<Tweener>();
+    private float _currentNoiseAmplitude;
+    private float _currentNoiseFrequency;
+    
     private float _timeToStopShaking;
     private float _currentTimeToStopShaking;
     private bool _isShaking;
-
-    private CinemachineCamera _cinemachineCamera;
-    private CinemachineBasicMultiChannelPerlin _cinemachineNoise;
     
-    private void Awake()
+    private List<Tweener> _activeTweeners = new List<Tweener>();
+
+    public Transform GetCameraTransform => _cinemachineCamera.transform;
+
+
+    #region MonoBehaviour Methods
+
+    private void Start()
     {
-        _cinemachineCamera = GetComponent<CinemachineCamera>();
         _cinemachineNoise = _cinemachineCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();
     }
 
     private void Update()
     {
-        UpdateCameraRaycast();
-
         if (_isShaking)
         {
             _currentTimeToStopShaking += Time.deltaTime;
@@ -60,18 +49,8 @@ public class PlayerCamera : PlayerSubsystem
         }
     }
 
-    private void UpdateCameraRaycast()
-    {
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _interactionDistance, _interactableMask)
-            && !_playerManager.GetPlayerHand.IsHoldingThrowable)
-        {
-            HUDManager.instance.SetCrosshair(HUDManager.CrosshairType.Interaction);
-        }
-        else
-        {
-            HUDManager.instance.SetCrosshair(HUDManager.CrosshairType.Default);
-        }
-    }
+    #endregion
+
 
     public void SetCameraShake(float amplitude, float frequency, float duration)
     {
@@ -91,28 +70,23 @@ public class PlayerCamera : PlayerSubsystem
         if (_noiseProfiles != null)
             _cinemachineNoise.NoiseProfile = _noiseProfiles[0];
 
-        SetCameraNoise(_currentNoise);
+        SetCameraNoise(_currentNoiseAmplitude, _currentNoiseFrequency);
     }
 
-    public void SetCameraEffects(FOV fov, Noise noise)
+    public void SetCameraEffects(int fov, float noiseAmplitude, float noiseFrequency, float transitionDuration = 0.25f)
     {
+        if (_cinemachineNoise == null)
+            return;
+
         _activeTweeners.ForEach((x) => x.Kill());
         _activeTweeners.Clear();
 
-        SetCameraFOV(fov);
-        SetCameraNoise(noise);
+        SetCameraFOV(fov, transitionDuration);
+        SetCameraNoise(noiseAmplitude, noiseFrequency, transitionDuration);
     }
 
-    private void SetCameraFOV(FOV fov)
+    private void SetCameraFOV(int fov, float transitionDuration = 0.25f)
     {
-        float transitionDuration = 0.25f;
-        switch (fov)
-        {
-            case FOV.Throwing:
-                transitionDuration = 1f;
-                break;
-        }
-
         Tweener fovTween = DOTween.To
         (
             () => _cinemachineCamera.Lens.FieldOfView,
@@ -124,40 +98,22 @@ public class PlayerCamera : PlayerSubsystem
         _activeTweeners.Add(fovTween);
     }
 
-    private void SetCameraNoise(Noise noise)
+    private void SetCameraNoise(float amplitude, float frequency, float transitionDuration = 0.25f)
     {
-        if (_currentNoise != noise)
-            _currentNoise = noise;
-
         if (_isShaking || _cinemachineNoise == null)
             return;
 
-        float amplitudeGain = 0;
-        float frequencyGain = 0;
-        float transitionDuration = 0.25f;
-        switch (_currentNoise)
-        {
-            case Noise.Default:
-                amplitudeGain = 0.4f;
-                frequencyGain = 0.35f;
-                break;
+        if (_currentNoiseAmplitude != amplitude)
+            _currentNoiseAmplitude = amplitude;
 
-            case Noise.Walking:
-                amplitudeGain = 0.25f;
-                frequencyGain = 1.25f;
-                break;
-
-            case Noise.Running:
-                amplitudeGain = 0.35f;
-                frequencyGain = 3.5f;
-                break;
-        }
+        if (_currentNoiseFrequency != frequency)
+            _currentNoiseFrequency = frequency;
 
         Tweener amplitudeTween = DOTween.To
         (
             () => _cinemachineNoise.AmplitudeGain,
             x => _cinemachineNoise.AmplitudeGain = x,
-            amplitudeGain,
+            amplitude,
             transitionDuration
         );
 
@@ -165,7 +121,7 @@ public class PlayerCamera : PlayerSubsystem
         (
             () => _cinemachineNoise.FrequencyGain,
             x => _cinemachineNoise.FrequencyGain = x,
-            frequencyGain,
+            frequency,
             transitionDuration
         );
 

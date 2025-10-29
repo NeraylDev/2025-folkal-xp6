@@ -9,11 +9,7 @@ public class PlayerRunningState : PlayerBaseState
         GetPlayerManager.GetEvents.RaiseRunStart(GetPlayerManager);
 
         GetPlayerManager.GetPlayerMovement.SetMoveSpeed(375f);
-        GetPlayerManager.GetPlayerCamera.SetCameraEffects
-        (
-            PlayerCamera.FOV.Running,
-            PlayerCamera.Noise.Running
-        );
+        GetPlayerManager.GetPlayerCamera.SetCameraEffects(72, 0.3f, 3.25f);
     }
 
     public override void Execute()

@@ -28,7 +28,7 @@ public class Observer : MonoBehaviour
         Vector3 direction = (transform.position - _playerCamera.transform.position).normalized;
         float dotResult = Vector3.Dot(_playerCamera.transform.forward, direction);
 
-        if (dotResult >= 0.95f)
+        if (dotResult >= 0.985f)
         {
             GetComponent<Renderer>().material = _activeMaterial;
             Debug.Log("Revela ambiente");

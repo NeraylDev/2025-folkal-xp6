@@ -20,11 +20,7 @@ public class PlayerThrowingState : PlayerBaseState
         GetPlayerManager.GetEvents.RaiseThrowingStart(GetPlayerManager);
 
         GetPlayerManager.GetPlayerMovement.SetMoveSpeed(200f);
-        GetPlayerManager.GetPlayerCamera.SetCameraEffects
-        (
-            PlayerCamera.FOV.Throwing,
-            PlayerCamera.Noise.None
-        );
+        GetPlayerManager.GetPlayerCamera.SetCameraEffects(61, 0f, 0f, _throwChargeDuration);
 
         _throwChargeTimer = 0;
     }

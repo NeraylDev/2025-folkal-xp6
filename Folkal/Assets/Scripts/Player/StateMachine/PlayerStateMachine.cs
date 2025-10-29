@@ -14,6 +14,7 @@ public class PlayerStateMachine
         _states.Add("Walking", new PlayerWalkingState(this, playerManager));
         _states.Add("Running", new PlayerRunningState(this, playerManager));
         _states.Add("Throwing", new PlayerThrowingState(this, playerManager));
+        _states.Add("Breathing", new PlayerBreathingState(this, playerManager));
 
         _currentState = initialState;
         _currentState.Enter();

@@ -13,6 +13,11 @@ public class NPC : MonoBehaviour, IInteractable
 
     public NPCData GetData => _data;
 
+    public bool CanInteract()
+    {
+        return _allowInteraction;
+    }
+
     public void Interact(PlayerManager playerManager)
     {
         TryStartDialogue(playerManager);

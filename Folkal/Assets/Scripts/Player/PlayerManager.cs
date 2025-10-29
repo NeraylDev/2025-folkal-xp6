@@ -26,9 +26,12 @@ public class PlayerManager : MonoBehaviour
     public PlayerHand GetPlayerHand => _playerHand;
     public PlayerThrowing GetPlayerThrowing => _playerThrowing;
     public PlayerBreathing GetPlayerBreathing => _playerBreathing;
-
+    
     public PlayerStateMachine GetPlayerStateMachine => _playerStateMachine;
     public InputActionAsset GetPlayerInputActions => _playerInputActions;
+
+    public Transform GetCameraTransform => _playerCamera.GetCameraTransform;
+
 
     public static PlayerManager instance;
 

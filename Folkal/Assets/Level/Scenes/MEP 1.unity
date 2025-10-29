@@ -1313,11 +1313,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387339249}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d802015d093d5c44a953c65bb24cd33a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cinemachineCamera: {fileID: 0}
   _interactionDistance: 5
   _interactableMask:
     serializedVersion: 2
@@ -1547,6 +1548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c16375ba5c8844f4fb8faf463a0c908b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerEvents: {fileID: 11400000, guid: 44787cd90cb683c449cce5059f93ba63, type: 2}
   _finishedUI: {fileID: 657034144}
   _defaultCrosshair: {fileID: 629308954}
   _interactionCrosshair: {fileID: 1991733868}
@@ -2411,9 +2413,10 @@ GameObject:
   - component: {fileID: 737481522}
   - component: {fileID: 737481526}
   - component: {fileID: 737481525}
+  - component: {fileID: 737481532}
   - component: {fileID: 737481528}
-  - component: {fileID: 737481529}
   - component: {fileID: 737481530}
+  - component: {fileID: 737481529}
   - component: {fileID: 737481531}
   - component: {fileID: 737481524}
   - component: {fileID: 737481523}
@@ -2520,7 +2523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerEvents: {fileID: 11400000, guid: 44787cd90cb683c449cce5059f93ba63, type: 2}
   _playerMovement: {fileID: 737481525}
-  _playerCamera: {fileID: 387339250}
+  _playerCamera: {fileID: 737481532}
   _playerInteraction: {fileID: 737481528}
   _playerHand: {fileID: 737481530}
   _playerThrowing: {fileID: 737481529}
@@ -2571,7 +2574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _handPoint: {fileID: 1482357745}
   _heldThrowable: {fileID: 0}
-  _handMovementDuration: 0.1
+  _handMovementDuration: 0.075
 --- !u!114 &737481531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2584,6 +2587,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c6e419385266d4e88f66039460f15c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _breathingDuration: 5
+--- !u!114 &737481532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737481521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d802015d093d5c44a953c65bb24cd33a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cinemachineCamera: {fileID: 387339254}
+  _interactionDistance: 5
+  _interactableMask:
+    serializedVersion: 2
+    m_Bits: 776
+  _noiseProfiles:
+  - {fileID: 11400000, guid: dc406f07659f3e14694c843ea4bcfb7b, type: 2}
+  - {fileID: 11400000, guid: f748fa039b777a0439c2af75faf34743, type: 2}
 --- !u!1 &840147847
 GameObject:
   m_ObjectHideFlags: 0
@@ -5560,9 +5584,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 249119846}
   - {fileID: 737481522}
+  - {fileID: 387339255}
   - {fileID: 608358919}
   - {fileID: 89476145}
-  - {fileID: 387339255}
   - {fileID: 2091231810}
   - {fileID: 8022824665237910388}
   - {fileID: 1868797942}

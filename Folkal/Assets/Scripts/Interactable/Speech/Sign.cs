@@ -6,6 +6,11 @@ public class Sign : MonoBehaviour, IInteractable
     [SerializeField] private SignData _data;
     private bool _allowInteraction = true;
 
+    public bool CanInteract()
+    {
+        return true;
+    }
+
     public void Interact(PlayerManager playerManager)
     {
         TryStartReading(playerManager);

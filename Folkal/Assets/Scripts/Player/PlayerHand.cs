@@ -11,19 +11,14 @@ public class PlayerHand : PlayerSubsystem
     [SerializeField] private Transform _handPoint;
     [SerializeField] private Throwable _heldThrowable;
     [SerializeField] private float _handMovementDuration;
+    private Transform _cameraTransform;
     private Vector3 _offset;
-    private Transform _mainCameraTransform;
 
     public Throwable GetHeldThrowable => _heldThrowable;
     public bool IsHoldingThrowable { get { return _heldThrowable != null; } }
 
 
     #region MonoBehaviour Methods
-
-    private void Start()
-    {
-        _mainCameraTransform = Camera.main.transform;
-    }
 
     private void FixedUpdate()
     {
@@ -35,14 +30,21 @@ public class PlayerHand : PlayerSubsystem
 
     #endregion
 
+    public override void Initialize(PlayerManager playerManager, InputActionAsset actionAsset = null)
+    {
+        base.Initialize(playerManager, actionAsset);
+
+        _cameraTransform = playerManager.GetCameraTransform;
+    }
+
     public void SetOffsetZ(float z)
     {
-        _offset = _mainCameraTransform.forward * z;
+        _offset = _cameraTransform.forward * z;
     }
 
     private void UpdateThrowablePosition()
     {
-        if (_mainCameraTransform != null)
+        if (_cameraTransform != null)
         {
             _heldThrowable.transform.DOMove
             (
@@ -54,7 +56,7 @@ public class PlayerHand : PlayerSubsystem
 
             _heldThrowable.transform.DOLookAt
             (
-                _handPoint.position + _mainCameraTransform.forward + _offset,
+                _handPoint.position + _cameraTransform.forward + _offset,
                 _handMovementDuration
             )
             .SetEase(Ease.InBounce)

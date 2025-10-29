@@ -6,11 +6,7 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void Enter()
     {
-        GetPlayerManager.GetPlayerCamera.SetCameraEffects
-        (
-            PlayerCamera.FOV.Default,
-            PlayerCamera.Noise.Default
-        );
+        GetPlayerManager.GetPlayerCamera.SetCameraEffects(65, 0.4f, 0.35f);
     }
 
     public override void Execute()
@@ -22,6 +18,12 @@ public class PlayerIdleState : PlayerBaseState
     {
         if (GetPlayerManager.GetPlayerMovement.CanMove == false)
             return;
+
+        if (GetPlayerManager.GetPlayerBreathing.IsBreathing)
+        {
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetState("Breathing"));
+            return;
+        }
 
         if (GetPlayerManager.GetPlayerThrowing.IsChargingThrow)
         {

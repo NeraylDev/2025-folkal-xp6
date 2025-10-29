@@ -10,6 +10,11 @@ public abstract class Throwable : MonoBehaviour, IInteractable
         _rigidBody = GetComponent<Rigidbody>();
     }
 
+    public bool CanInteract()
+    {
+        return true;
+    }
+
     public void Interact(PlayerManager playerManager)
     {
         playerManager.GetPlayerHand.PickUpThrowable(this);
