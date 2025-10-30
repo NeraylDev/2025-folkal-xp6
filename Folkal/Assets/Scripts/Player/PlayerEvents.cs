@@ -20,6 +20,11 @@ public class PlayerEvents : ScriptableObject
     public event Action<PlayerManager> onThrow;
 
 
+    // --- Mental Dimension Events ---
+    public event Action<PlayerManager> onEnterMentalDimension;
+    public event Action<PlayerManager> onExitMentalDimension;
+
+
     // --- Other Events ---
     public event Action<PlayerManager> onInteract;
     public event Action<IInteractable> onStartPointingAtInteractable;
@@ -58,6 +63,13 @@ public class PlayerEvents : ScriptableObject
 
     public void RaiseThrow(PlayerManager playerManager)
         => onThrow?.Invoke(playerManager);
+
+
+
+    public void RaiseEnterMentalDimension(PlayerManager playerManager)
+        => onEnterMentalDimension?.Invoke(playerManager);
+    public void RaiseExitMentalDimension(PlayerManager playerManager)
+        => onExitMentalDimension?.Invoke(playerManager);
 
 
 

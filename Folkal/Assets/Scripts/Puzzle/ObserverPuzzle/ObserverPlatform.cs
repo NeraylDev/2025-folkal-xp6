@@ -14,14 +14,15 @@ public class ObserverPlatform : MonoBehaviour
     private void Awake()
     {
         _playerEvents.onBreathingStop += (PlayerManager playerManager)
-            => TryActivate();
+            => TryActivate(playerManager);
     }
 
-    private void TryActivate()
+    private void TryActivate(PlayerManager playerManager)
     {
         if (_playerManager == null || !_isPlayerOnPlatform)
             return;
 
+        _playerEvents.RaiseEnterMentalDimension(playerManager);
         ActivateObservers();
     }
 
