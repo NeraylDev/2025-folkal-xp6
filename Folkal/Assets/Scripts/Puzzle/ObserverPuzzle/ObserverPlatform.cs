@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class ObserverPlatform : MonoBehaviour
 {
+    [SerializeField] private PlayerEvents _playerEvents;
+    [Space]
     [SerializeField] private List<Observer> _observerList = new List<Observer>();
     private PlayerManager _playerManager;
     private bool _isPlayerOnPlatform;
     private bool _isActive;
 
-    private void Update()
+    private void Awake()
     {
-        if (_playerManager == null)
+        _playerEvents.onBreathingStop += (PlayerManager playerManager)
+            => TryActivate();
+    }
+
+    private void TryActivate()
+    {
+        if (_playerManager == null || !_isPlayerOnPlatform)
             return;
 
-        if (_isPlayerOnPlatform && _playerManager.GetPlayerBreathing.IsBreathing)
-        {
-            ActivateObservers();
-        }
+        ActivateObservers();
     }
 
     private void ActivateObservers()
     {
-        _observerList.ForEach((x) => x.Activate());
+        _observerList.ForEach((x) => x.Activate(_playerManager));
         _isActive = true;
     }
 

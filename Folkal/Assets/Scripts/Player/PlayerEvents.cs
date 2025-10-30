@@ -24,8 +24,9 @@ public class PlayerEvents : ScriptableObject
     public event Action<PlayerManager> onInteract;
     public event Action<IInteractable> onStartPointingAtInteractable;
     public event Action onStopPointingAtInteractable;
-
+    
     public event Action<PlayerManager> onBreathingStart;
+    public event Action<PlayerManager> onBreathingCanceled;
     public event Action<PlayerManager> onBreathingStop;
 
     
@@ -72,6 +73,9 @@ public class PlayerEvents : ScriptableObject
 
     public void RaiseBreathingStart(PlayerManager playerManager)
         => onBreathingStart?.Invoke(playerManager);
+
+    public void RaiseBreathingCanceled(PlayerManager playerManager)
+        => onBreathingCanceled?.Invoke(playerManager);
 
     public void RaiseBreathingStop(PlayerManager playerManager)
         => onBreathingStop?.Invoke(playerManager);

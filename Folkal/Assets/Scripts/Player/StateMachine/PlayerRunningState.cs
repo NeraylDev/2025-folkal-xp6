@@ -26,6 +26,11 @@ public class PlayerRunningState : PlayerBaseState
             return;
         }
 
+        if (GetPlayerManager.GetPlayerBreathing.IsBreathing)
+        {
+            GetPlayerStateMachine.SetState(new PlayerBreathingState(GetPlayerStateMachine, GetPlayerManager));
+        }
+
         if (GetPlayerManager.GetPlayerThrowing.IsChargingThrow)
         {
             GetPlayerStateMachine.SetState(new PlayerThrowingState(GetPlayerStateMachine, GetPlayerManager));

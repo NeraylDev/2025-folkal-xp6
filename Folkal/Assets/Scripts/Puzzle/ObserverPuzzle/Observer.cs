@@ -3,14 +3,9 @@ using UnityEngine;
 public class Observer : MonoBehaviour
 {
     [SerializeField] private Material _activeMaterial;
-    private PlayerCamera _playerCamera;
+    private Transform _playerCameraTransform;
     private bool _wasObserved;
     private bool _isActive;
-
-    private void Start()
-    {
-        _playerCamera = PlayerManager.instance.GetPlayerCamera;
-    }
 
     private void Update()
     {
@@ -22,11 +17,11 @@ public class Observer : MonoBehaviour
 
     private void VerifyPlayerView()
     {
-        if (_playerCamera == null)
+        if (_playerCameraTransform == null)
             return;
 
-        Vector3 direction = (transform.position - _playerCamera.transform.position).normalized;
-        float dotResult = Vector3.Dot(_playerCamera.transform.forward, direction);
+        Vector3 direction = (transform.position - _playerCameraTransform.position).normalized;
+        float dotResult = Vector3.Dot(_playerCameraTransform.forward, direction);
 
         if (dotResult >= 0.985f)
         {
@@ -36,13 +31,15 @@ public class Observer : MonoBehaviour
         }
     }
 
-    public void Activate()
+    public void Activate(PlayerManager playerManager)
     {
+        _playerCameraTransform = playerManager.GetCameraTransform;
         _isActive = true;
     }
 
     public void Deactivate()
     {
+        _playerCameraTransform = null;
         _isActive = false;
     }
 
