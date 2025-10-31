@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Structure1
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: ef76d5d79f3c9e74e9a4ceb2ea334dad, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -30,8 +30,7 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
   m_LockedProperties: 
@@ -115,8 +114,12 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
+    - _NSNoiseScale: 25
+    - _NS_Presence: 0
+    - _NoiseIntensity: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0
@@ -131,6 +134,8 @@ Material:
     - _BaseColor: {r: 0.6981132, g: 0.49477127, b: 0.26014596, a: 1}
     - _Color: {r: 0.6981132, g: 0.49477118, b: 0.26014593, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _NSPrimaryColor: {r: 0.69803923, g: 0.49411765, b: 0.25882354, a: 0}
+    - _NSSecondaryColor: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

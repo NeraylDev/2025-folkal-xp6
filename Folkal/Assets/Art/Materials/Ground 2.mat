@@ -102,6 +102,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _NSNoiseScale: 100
+    - _NS_Presence: 0
     - _NoiseIntensity: 0.5
     - _OcclusionStrength: 1
     - _Parallax: 0.005

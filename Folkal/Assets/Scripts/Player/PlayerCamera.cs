@@ -10,6 +10,7 @@ public class PlayerCamera : PlayerSubsystem
 {
     [SerializeField] private CinemachineCamera _cinemachineCamera;
     private CinemachineBasicMultiChannelPerlin _cinemachineNoise;
+    private Camera _camera;
 
     [Header("Interaction Settings")]
     [SerializeField] private float _interactionDistance;
@@ -23,6 +24,8 @@ public class PlayerCamera : PlayerSubsystem
     private float _timeToStopShaking;
     private float _currentTimeToStopShaking;
     private bool _isShaking;
+
+    private Color _defaultBackgroundColor;
     
     private List<Tweener> _activeTweeners = new List<Tweener>();
 
@@ -34,6 +37,9 @@ public class PlayerCamera : PlayerSubsystem
     private void Start()
     {
         _cinemachineNoise = _cinemachineCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();
+
+        _camera = Camera.main;
+        _defaultBackgroundColor = _camera.backgroundColor;
     }
 
     private void Update()
@@ -128,5 +134,12 @@ public class PlayerCamera : PlayerSubsystem
         _activeTweeners.Add(amplitudeTween);
         _activeTweeners.Add(frequencyTweener);
     }
+
+
+    public void SetBackgroundColor(Color color, float transitionDuration)
+        => _camera.DOColor(color, transitionDuration);
+
+    public void ResetBackgroundColor(float transitionDuration)
+        => SetBackgroundColor(_defaultBackgroundColor, transitionDuration);
 
 }
