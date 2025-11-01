@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bcc75e52ba2f1341ba029feef8eecc6, type: 3}
   m_Name: Geeko_1
   m_EditorClassIdentifier: 
+  _character: 0
   _lineList:
   - text: "Que curioso, h\xE1 tempos n\xE3o vejo algu\xE9m como voc\xEA."
-    _options: []
-  - text: "Me chamo Geeko. Iniciei hoje minha jornada para aprender as <color=#FDE16A>Tr\xEAs
+  - text: "Me chamo Geeko. Inicio hoje minha jornada para aprender as <color=#FDE16A>Tr\xEAs
       Sabedorias</color>."
-    _options: []
   - text: "Ap\xF3s a <color=#FDE16A>1\xAA Morte do Mundo</color> meu povo criou as
       <color=#FDE16A>Tr\xEAs Sabedorias</color> e, desde ent\xE3o, aprend\xEA-las
       se tornou uma tradi\xE7\xE3o."
-    _options: []

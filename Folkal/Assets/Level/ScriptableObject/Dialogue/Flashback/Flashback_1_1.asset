@@ -15,3 +15,7 @@ MonoBehaviour:
   _character: 2
   _lineList:
   - text: "\xC9 saudade o que sente?"
+  - text: "Se n\xE3o h\xE1 mais volta, por que insiste? Por que se exp\xF5e \xE0
+      este sofrimento? Por que revisitar o passado que se foi? "
+  - text: Faz isto em busca de respostas?
+  - text: "Todos se foram, esta \xE9 a resposta."

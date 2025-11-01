@@ -22,7 +22,7 @@ public class ObserverPlatform : MonoBehaviour
         if (_playerManager == null || !_isPlayerOnPlatform)
             return;
 
-        _playerEvents.RaiseEnterMentalDimension(playerManager);
+        _playerEvents.RaiseEnterMentalDimension(playerManager, playerManager.GetPlayerBreathing.GetBreathingOutDuration);
         ActivateObservers();
     }
 
@@ -37,7 +37,7 @@ public class ObserverPlatform : MonoBehaviour
 
     private void DeactivateObservers()
     {
-        _playerEvents.RaiseExitMentalDimension(_playerManager);
+        _playerEvents.RaiseExitMentalDimension(_playerManager, 1f);
 
         _observerList.ForEach((x) => x.Deactivate());
         _isActive = false;

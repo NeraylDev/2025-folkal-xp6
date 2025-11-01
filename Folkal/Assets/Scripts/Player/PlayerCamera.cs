@@ -137,7 +137,7 @@ public class PlayerCamera : PlayerSubsystem
 
 
     public void SetBackgroundColor(Color color, float transitionDuration)
-        => _camera.DOColor(color, transitionDuration);
+        => Camera.main.DOColor(color, transitionDuration);
 
     public void ResetBackgroundColor(float transitionDuration)
         => SetBackgroundColor(_defaultBackgroundColor, transitionDuration);

@@ -88,12 +88,25 @@ public class DialogueController : DialogueSubsystem
     private IEnumerator TypeText(string text)
     {
         _isTypingText = true;
+        char previousLetter;
+        bool isTypingTag = false;
 
         foreach (char letter in text)
         {
+            previousLetter = letter;
             _lineText += letter;
+
+            if (isTypingTag)
+            {
+                if (previousLetter == '>')
+                    isTypingTag = false;
+
+                yield return new WaitForFixedUpdate();
+            }
+
+            isTypingTag = letter == '<';
+
             _dialogueManager.GetEvents.RaiseUpdateDialogueLine(_lineText);
-            
             yield return new WaitForSeconds(_timePerLetter);
         }
 

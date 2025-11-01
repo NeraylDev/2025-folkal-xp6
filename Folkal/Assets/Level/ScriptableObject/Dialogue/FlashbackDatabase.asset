@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogueDataList:
   - {fileID: 11400000, guid: 26394a0f2e8ed8849bfb95416537371c, type: 2}
-  - {fileID: 11400000, guid: 26394a0f2e8ed8849bfb95416537371c, type: 2}
+  - {fileID: 11400000, guid: ee7af039b0ab756459655186a90c5ca1, type: 2}

@@ -16,14 +16,14 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void TryExit()
     {
-        if (GetPlayerManager.GetPlayerMovement.CanMove == false)
-            return;
-
         if (GetPlayerManager.GetPlayerBreathing.IsBreathing)
         {
             GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetPlayerState("Breathing"));
             return;
         }
+
+        if (GetPlayerManager.GetPlayerMovement.CanMove == false)
+            return;
 
         if (GetPlayerManager.GetPlayerThrowing.IsChargingThrow)
         {

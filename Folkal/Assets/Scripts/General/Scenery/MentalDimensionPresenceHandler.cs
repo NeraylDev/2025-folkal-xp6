@@ -22,10 +22,10 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
     {
         _propertyBlock = new MaterialPropertyBlock();
 
-        _playerEvents.onEnterMentalDimension += (PlayerManager playerManager)
-            => SetState(true, playerManager);
-        _playerEvents.onExitMentalDimension += (PlayerManager playerManager)
-            => SetState(false, playerManager);
+        _playerEvents.onEnterMentalDimension += (PlayerManager playerManager, float duration)
+            => SetState(true, playerManager, duration);
+        _playerEvents.onExitMentalDimension += (PlayerManager playerManager, float duration)
+            => SetState(false, playerManager, duration);
     }
 
     private void Start()
@@ -34,7 +34,7 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
         _defaultFogDensity = RenderSettings.fogDensity;
     }
 
-    private void SetState(bool active, PlayerManager playerManager)
+    private void SetState(bool active, PlayerManager playerManager, float transitionDuration)
     {
         StopAllCoroutines();
         _activeTweeners.ForEach((x) => x.Kill());
@@ -44,17 +44,15 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
             return;
 
         if (active)
-            Activate(playerManager);
+            Activate(playerManager, transitionDuration);
         else
-            Deactivate(playerManager);
+            Deactivate(playerManager, transitionDuration);
     }
 
-    private void Activate(PlayerManager playerManager)
+    private void Activate(PlayerManager playerManager, float transitionDuration)
     {
         if (_isActive)
             return;
-
-        float transitionDuration = playerManager.GetPlayerBreathing.GetBreathingOutDuration;
 
         _particles.SetActive(true);
         _particles.transform.position = playerManager.transform.position;
@@ -65,12 +63,10 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
         _isActive = true;
     }
 
-    private void Deactivate(PlayerManager playerManager)
+    private void Deactivate(PlayerManager playerManager, float transitionDuration)
     {
         if (!_isActive)
             return;
-
-        float transitionDuration = 1f;
 
         _particles.SetActive(false);
         StartCoroutine(SetMaterialPresence(1, 0, transitionDuration));

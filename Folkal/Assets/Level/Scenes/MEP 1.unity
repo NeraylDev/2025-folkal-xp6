@@ -6354,7 +6354,6 @@ GameObject:
   m_Component:
   - component: {fileID: 406816964}
   - component: {fileID: 406816965}
-  - component: {fileID: 406816966}
   - component: {fileID: 406816967}
   m_Layer: 5
   m_Name: HUD
@@ -6403,21 +6402,6 @@ MonoBehaviour:
   _finishedUI: {fileID: 657034144}
   _defaultCrosshair: {fileID: 629308954}
   _interactionCrosshair: {fileID: 1991733868}
---- !u!114 &406816966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 406816963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e8919725f454e4c85e02b700794681, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dialogueBox: {fileID: 1738084790}
-  _characterNameText: {fileID: 325671518}
-  _dialogueText: {fileID: 240663610}
 --- !u!114 &406816967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9273,6 +9257,7 @@ GameObject:
   - component: {fileID: 1445059442}
   - component: {fileID: 1445059443}
   - component: {fileID: 1445059444}
+  - component: {fileID: 1445059445}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -9309,7 +9294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _events: {fileID: 11400000, guid: 7b41e42d8192204478983921834b5735, type: 2}
   _dialogueController: {fileID: 1445059444}
-  _dialogueUI: {fileID: 406816966}
+  _dialogueUI: {fileID: 1445059445}
   _flashbackDatabase: {fileID: 11400000, guid: a906f3ad190bfcb45ab04d47cd67c399, type: 2}
 --- !u!114 &1445059444
 MonoBehaviour:
@@ -9323,6 +9308,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82eaca8ff659c554b84795a8a261b914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1445059445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445059441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e8919725f454e4c85e02b700794681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogueBox: {fileID: 1738084790}
+  _characterNameText: {fileID: 325671518}
+  _dialogueText: {fileID: 240663610}
 --- !u!1 &1468479347
 GameObject:
   m_ObjectHideFlags: 0

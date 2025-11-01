@@ -14,5 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _character: 1
   _lineList:
-  - text: "Que som foi aquele? Onde est\xE1 Ka?"
-  - text: "Voc\xEA viu Ka?!"
+  - text: "Onde est\xE1 <color=#FDE16A>KA</color>?!"
+  - text: "ONDE EST\xC1 <color=#FDE16A>KA</color>?!"
+  - text: "A MORTE EST\xC1 CHEGANDO! ONDE EST\xC1 <color=#FDE16A>KA</color>?!"
+  - text: Irei procurar por <color=#FDE16A>Ka</color>! Volte para casa, AGORA!
+  - text: "Volte e se proteja nas profundezas! Em breve <color=#FDE16A>Ka</color>
+      e eu chegaremos l\xE1!"

@@ -41,6 +41,16 @@ public class LevelManager : MonoBehaviour
         _levelStateMachine.Initialize(new LevelFlashbackOneState(_levelStateMachine, this));
     }
 
+    private void Update()
+    {
+        _levelStateMachine.Execute();
+    }
+
+    private void FixedUpdate()
+    {
+        _levelStateMachine.FixedExecute();
+    }
+
     public PlayerManager GetPlayerManager()
     {
         if (_playerManager == null)
