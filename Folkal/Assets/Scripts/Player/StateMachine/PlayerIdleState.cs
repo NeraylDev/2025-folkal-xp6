@@ -21,13 +21,13 @@ public class PlayerIdleState : PlayerBaseState
 
         if (GetPlayerManager.GetPlayerBreathing.IsBreathing)
         {
-            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetState("Breathing"));
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetPlayerState("Breathing"));
             return;
         }
 
         if (GetPlayerManager.GetPlayerThrowing.IsChargingThrow)
         {
-            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetState("Throwing"));
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetPlayerState("Throwing"));
             return;
         }
 
@@ -35,11 +35,11 @@ public class PlayerIdleState : PlayerBaseState
         {
             if (GetPlayerManager.GetPlayerMovement.IsRunning)
             {
-                GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetState("Running"));
+                GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetPlayerState("Running"));
                 return;
             }
 
-            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetState("Walking"));
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetPlayerState("Walking"));
         }
     }
 

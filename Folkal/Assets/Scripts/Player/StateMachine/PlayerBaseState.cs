@@ -1,4 +1,4 @@
-public abstract class PlayerBaseState
+public abstract class PlayerBaseState : IState
 {
     private PlayerManager _playerManager;
     private PlayerStateMachine _playerStateMachine;
@@ -14,8 +14,12 @@ public abstract class PlayerBaseState
     }
 
     public virtual void Enter() { }
+
     public virtual void Execute() { }
+
     public virtual void FixedExecute() { }
+
     public virtual void TryExit() { }
+
     public virtual void Exit() { }
 }

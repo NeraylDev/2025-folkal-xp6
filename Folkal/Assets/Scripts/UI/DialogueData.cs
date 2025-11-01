@@ -6,8 +6,18 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObject/DialogueData")]
 public class DialogueData : ScriptableObject
 {
+    public enum Character
+    {
+        Geeko,
+        Ma,
+        Desconhecido
+    }
+
+
+    [SerializeField] private Character _character;
     [SerializeField] protected List<DialogueLine> _lineList;
 
+    [HideInInspector] public string GetCharacterName => Enum.GetName(typeof(Character), _character);
     public int Length => _lineList.Count;
 
     public DialogueLine GetLine(int index)
@@ -21,7 +31,6 @@ public class DialogueData : ScriptableObject
     public class DialogueLine
     {
         [SerializeField][TextArea] protected string text;
-        [SerializeField] private List<DialogueOption> _options;
 
         public string GetText => text;
     }

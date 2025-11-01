@@ -35,9 +35,9 @@ public class BreathingUI : MonoBehaviour
         SetAlpha(0, 0);
 
         float breathingInDuration = playerManager.GetPlayerBreathing.GetBreathingInDuration;
-        SetScale(_breathingBorderTransform, 1, breathingInDuration / 5);
-        SetScale(_breathingCircleTransform, 1, breathingInDuration);
-        SetAlpha(1, breathingInDuration);
+        SetScale(_breathingBorderTransform, 1, breathingInDuration / 4, Ease.OutExpo);
+        SetScale(_breathingCircleTransform, 1, breathingInDuration, Ease.Linear);
+        SetAlpha(1, breathingInDuration / 2);
     }
 
     private void HideUI(PlayerManager playerManager)
@@ -65,9 +65,9 @@ public class BreathingUI : MonoBehaviour
         _activeTweeners.Clear();
     }
 
-    private void SetScale(RectTransform rectTransform, float size, float duration)
+    private void SetScale(RectTransform rectTransform, float size, float duration, Ease ease = Ease.Unset)
     {
-        _activeTweeners.Add(rectTransform.DOScale(Vector2.one * size, duration));
+        _activeTweeners.Add(rectTransform.DOScale(Vector2.one * size, duration).SetEase(ease));
     }
 
     private void SetAlpha(float value, float duration)

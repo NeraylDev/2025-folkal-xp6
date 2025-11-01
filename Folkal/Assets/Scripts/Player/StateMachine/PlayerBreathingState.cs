@@ -66,7 +66,7 @@ public class PlayerBreathingState : PlayerBaseState
     {
         if (GetPlayerManager.GetPlayerBreathing.IsBreathing == false)
         {
-            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetState("Idle"));
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetPlayerState("Idle"));
         }
     }
 

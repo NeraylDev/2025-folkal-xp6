@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : PlayerSubsystem
 {
-    [SerializeField] private UIEvents _uiEvents;
+    [SerializeField] private DialogueEvents _dialogueEvents;
     [Space]
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _runningSpeed;
@@ -56,9 +56,6 @@ public class PlayerMovement : PlayerSubsystem
 
     protected override void SetEvents(InputActionAsset actionAsset)
     {
-        if (_uiEvents == null)
-            return;
-
         actionAsset.FindAction("Move").performed += (InputAction.CallbackContext context)
             => SetInputDirection(context.ReadValue<Vector2>());
         actionAsset.FindAction("Move").canceled += (InputAction.CallbackContext context)
@@ -69,8 +66,10 @@ public class PlayerMovement : PlayerSubsystem
         actionAsset.FindAction("Run").canceled += (InputAction.CallbackContext context)
             => DeactivateRunning();
 
-        _uiEvents.onSpeechStart += () => SetCanMove(false);
-        _uiEvents.onSpeechEnd += () => SetCanMove(true);
+        _dialogueEvents.onDialogueStart += (DialogueData data)
+            => SetCanMove(false);
+        _dialogueEvents.onDialogueEnd += (DialogueData data)
+            => SetCanMove(true);
     }
 
     public void Move()

@@ -40,7 +40,7 @@ public class PlayerThrowingState : PlayerBaseState
     {
         if (GetPlayerManager.GetPlayerThrowing.HasThrewObject)
         {
-            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetState("Idle"));
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetPlayerState("Idle"));
         }
     }
 

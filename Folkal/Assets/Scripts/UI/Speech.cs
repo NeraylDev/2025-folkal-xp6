@@ -90,7 +90,7 @@ public abstract class Speech<Data> : MonoBehaviour
         if (_uiEvents == null)
             return;
 
-        _uiEvents.RaiseSpeechStart();
+        //_uiEvents.RaiseSpeechStart();
     }
 
     protected virtual void HideSpeechBox()
@@ -102,7 +102,7 @@ public abstract class Speech<Data> : MonoBehaviour
         if (_uiEvents == null)
             return;
 
-        _uiEvents.RaiseSpeechEnd();
+        //_uiEvents.RaiseSpeechEnd();
     }
 
     protected IEnumerator TypeText(string text)

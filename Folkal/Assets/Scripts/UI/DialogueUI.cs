@@ -1,80 +1,57 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using TMPro;
-using System.Collections;
 using DG.Tweening;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using System.Collections;
 
-public class DialogueUI : Speech<DialogueData>
+public class DialogueUI : DialogueSubsystem
 {
-    [Header("Dialogue Settings")]
-    [SerializeField] private TMP_Text _npcNameText;
-    private NPCData _npcData;
-    private DialogueData _dialogueData;
+    [Header("Speech Settings")]
+    [SerializeField] protected GameObject _dialogueBox;
+    [Space]
+    [SerializeField] private TMP_Text _characterNameText;
+    [SerializeField] protected TMP_Text _dialogueText;
 
-    public static DialogueUI instance;
-
-    protected override void Awake()
+    protected override void SetEvents(InputActionAsset actionAsset)
     {
-        base.Awake();
+        _dialogueManager.GetEvents.onDialogueStart += (DialogueData data)
+            => UpdateCharacterName(data);
+        _dialogueManager.GetEvents.onDialogueStart += (DialogueData data)
+            => ShowDialogueBox();
 
-        // --- Singleton ---
-        if (instance != null)
-            Destroy(gameObject);
-        instance = this;
+        _dialogueManager.GetEvents.onUpdateDialogueLine += (string lineText)
+            => UpdateText(lineText);
+
+        _dialogueManager.GetEvents.onDialogueEnd += (DialogueData data)
+            => HideDialogueBox();
     }
 
-    public void StartSpeech(DialogueData dialogueData, NPCData npcData)
+    private void UpdateCharacterName(DialogueData data)
     {
-        if (IsExecutingSpeech)
-            return;
-
-        _npcData = npcData;
-        
-        Color initialNameColor = _npcNameText.color;
+        Color initialNameColor = _characterNameText.color;
         initialNameColor.a = 0;
+
         Color finalNameColor = initialNameColor;
         finalNameColor.a = 1;
 
-        _npcNameText.color = initialNameColor;
-        _npcNameText.DOColor(finalNameColor, 0.5f);
-        _npcNameText.text = _npcData.GetName;
-
-        StartSpeech(dialogueData);
-
-        if (_uiEvents == null)
-            return;
-
-        _uiEvents.RaiseSpeechStart();
+        _characterNameText.color = initialNameColor;
+        _characterNameText.DOColor(finalNameColor, 0.5f);
+        _characterNameText.text = data.GetCharacterName;
     }
 
-    public override void StartSpeech(DialogueData data)
+    private void UpdateText(string lineText)
     {
-        _dialogueData = data;
-        lineIndex = 0;
-
-        onStartSpeech.Invoke();
+        _dialogueText.text = lineText;
     }
 
-    protected override void UpdateText(bool instantaneously = false)
+    protected virtual void ShowDialogueBox()
     {
-        DialogueData.DialogueLine dialogueLine = _dialogueData.GetLine(lineIndex);
-        if (dialogueLine == null)
-            return;
-
-        if (instantaneously)
-        {
-            GetSpeechText.text = dialogueLine.GetText;
-        }
-        else
-        {
-            GetSpeechText.text = "";
-            StartCoroutine(TypeText(dialogueLine.GetText));
-        }
+        _dialogueBox.SetActive(true);
     }
 
-    protected override bool IsSpeechFinished()
-        => !(lineIndex < _dialogueData.Length);
-
+    protected virtual void HideDialogueBox()
+    {
+        _dialogueBox.SetActive(false);
+    }
 }

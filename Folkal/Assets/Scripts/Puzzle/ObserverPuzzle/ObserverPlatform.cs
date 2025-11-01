@@ -28,6 +28,9 @@ public class ObserverPlatform : MonoBehaviour
 
     private void ActivateObservers()
     {
+        if (_observerList.Count <= 0)
+            return;
+
         _observerList.ForEach((x) => x.Activate(_playerManager));
         _isActive = true;
     }

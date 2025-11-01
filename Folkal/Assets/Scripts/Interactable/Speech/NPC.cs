@@ -11,7 +11,14 @@ public class NPC : MonoBehaviour, IInteractable
     private int _dialogueIndex = 0;
     private bool _allowInteraction = true;
 
-    public NPCData GetData => _data;
+    private DialogueManager _dialogueManager;
+
+    private void Start()
+    {
+        LevelManager levelManager = LevelManager.instance;
+        if (levelManager != null)
+            _dialogueManager = levelManager.GetDialogueManager;
+    }
 
     public bool CanInteract()
     {
@@ -25,14 +32,12 @@ public class NPC : MonoBehaviour, IInteractable
 
     public void TryStartDialogue(PlayerManager playerManager)
     {
-        DialogueUI dialogueUI = DialogueUI.instance;
-        if (dialogueUI == null || !_allowInteraction)
-            return;
-
-        if (!dialogueUI.IsExecutingSpeech && playerManager.CanStartDialogue())
+        if (!_dialogueManager.IsExecutingDialogue && playerManager.CanStartDialogue())
         {
-            dialogueUI.StartSpeech(_dialogueList[_dialogueIndex], _data);
-            dialogueUI.onFinishSpeech.AddListener(UpdateDialogueIndex);
+            _dialogueManager.StartDialogue(_dialogueList[_dialogueIndex]);
+            _dialogueManager.GetEvents.onDialogueEnd += (DialogueData data)
+                => UpdateDialogueIndex();
+
             _allowInteraction = false;
         }
     }
@@ -46,11 +51,11 @@ public class NPC : MonoBehaviour, IInteractable
 
         StartCoroutine(ActivateInteraction());
 
-        DialogueUI dialogueUI = DialogueUI.instance;
-        if (dialogueUI == null)
-            return;
-
-        dialogueUI.onFinishSpeech.RemoveListener(UpdateDialogueIndex);
+        if (_dialogueManager != null)
+        {
+            _dialogueManager.GetEvents.onDialogueEnd -= (DialogueData data)
+                => UpdateDialogueIndex();
+        }
     }
 
     private IEnumerator ActivateInteraction()

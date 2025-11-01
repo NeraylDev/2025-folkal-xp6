@@ -1,8 +1,8 @@
+using System;
 using UnityEngine;
 
-public class Observer : MonoBehaviour
+public abstract class Observer : MonoBehaviour
 {
-    [SerializeField] private Material _activeMaterial;
     private Transform _playerCameraTransform;
     private bool _wasObserved;
     private bool _isActive;
@@ -15,6 +15,10 @@ public class Observer : MonoBehaviour
         }
     }
 
+    protected abstract void OnActivated();
+    protected abstract void OnDeactivated();
+    protected abstract void OnObserved();
+
     private void VerifyPlayerView()
     {
         if (_playerCameraTransform == null)
@@ -23,10 +27,9 @@ public class Observer : MonoBehaviour
         Vector3 direction = (transform.position - _playerCameraTransform.position).normalized;
         float dotResult = Vector3.Dot(_playerCameraTransform.forward, direction);
 
-        if (dotResult >= 0.985f)
+        if (dotResult >= 0.99f)
         {
-            GetComponent<Renderer>().material = _activeMaterial;
-            Debug.Log("Revela ambiente");
+            OnObserved();
             _wasObserved = true;
         }
     }
@@ -34,12 +37,16 @@ public class Observer : MonoBehaviour
     public void Activate(PlayerManager playerManager)
     {
         _playerCameraTransform = playerManager.GetCameraTransform;
+
+        OnActivated();
         _isActive = true;
     }
 
     public void Deactivate()
     {
         _playerCameraTransform = null;
+
+        OnDeactivated();
         _isActive = false;
     }
 
