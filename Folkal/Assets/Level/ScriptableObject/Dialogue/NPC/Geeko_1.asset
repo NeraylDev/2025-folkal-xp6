@@ -15,8 +15,7 @@ MonoBehaviour:
   _character: 0
   _lineList:
   - text: "Que curioso, h\xE1 tempos n\xE3o vejo algu\xE9m como voc\xEA."
-  - text: "Me chamo Geeko. Inicio hoje minha jornada para aprender as <color=#FDE16A>Tr\xEAs
-      Sabedorias</color>."
+  - text: "Me chamo Geeko. Hoje inicio minha jornada das <color=#FDE16A>Tr\xEAs Sabedorias</color>."
   - text: "Ap\xF3s a <color=#FDE16A>1\xAA Morte do Mundo</color> meu povo criou as
       <color=#FDE16A>Tr\xEAs Sabedorias</color> e, desde ent\xE3o, aprend\xEA-las
       se tornou uma tradi\xE7\xE3o."

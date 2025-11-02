@@ -29,11 +29,11 @@ public class DialogueManager : MonoBehaviour
         _dialogueUI.Initialize(this, actionAsset);
     }
 
-    public void StartDialogue(DialogueData data, bool isLevelEvent = false)
+    public void StartDialogue(DialogueData data)
     {
         if (_isExecutingDialogue)
             return;
 
-        _dialogueController.StartDialogue(data, isLevelEvent);
+        _dialogueController.StartDialogue(data);
     }
 }

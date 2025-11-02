@@ -4,11 +4,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObject/UIEvents")]
 public class UIEvents : ScriptableObject
 {
-    /*public Action onSpeechStart;
-    public Action onSpeechEnd;
+    public Action<float> onFadeInToBlack;
+    public Action<float> onFadeOutToBlack;
 
-    public void RaiseSpeechStart()
-        => onSpeechStart?.Invoke();
-    public void RaiseSpeechEnd()
-        => onSpeechEnd?.Invoke();*/
+    public void RaiseFadeInToBlack(float duration)
+        => onFadeInToBlack.Invoke(duration);
+
+    public void RaiseFadeOutToBlack(float duration)
+        => onFadeOutToBlack.Invoke(duration);
 }

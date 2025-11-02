@@ -21,7 +21,7 @@ public class PlayerEvents : ScriptableObject
 
 
     // --- Mental Dimension Events ---
-    public event Action<PlayerManager, float> onEnterMentalDimension;
+    public event Action<PlayerManager, MentalDimensionPresenceHandler.MentalDimensionMode, float> onEnterMentalDimension;
     public event Action<PlayerManager, float> onExitMentalDimension;
 
 
@@ -49,8 +49,6 @@ public class PlayerEvents : ScriptableObject
         => onRunStop?.Invoke(playerManager);
 
 
-
-
     public void RaisePickUpThrowable(PlayerManager playerManager)
         => onPickUpThrowable?.Invoke(playerManager);
 
@@ -66,10 +64,12 @@ public class PlayerEvents : ScriptableObject
 
 
 
-    public void RaiseEnterMentalDimension(PlayerManager playerManager, float duration)
-        => onEnterMentalDimension?.Invoke(playerManager, duration);
+
+    public void RaiseEnterMentalDimension(PlayerManager playerManager, MentalDimensionPresenceHandler.MentalDimensionMode mode, float duration)
+        => onEnterMentalDimension?.Invoke(playerManager, mode, duration);
     public void RaiseExitMentalDimension(PlayerManager playerManager, float duration)
         => onExitMentalDimension?.Invoke(playerManager, duration);
+
 
 
 

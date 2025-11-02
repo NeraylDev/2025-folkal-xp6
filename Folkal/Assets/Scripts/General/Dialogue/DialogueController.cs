@@ -8,7 +8,7 @@ public class DialogueController : DialogueSubsystem
     private int _lineIndex;
 
     private string _lineText;
-    private float _timePerLetter = 0.015f;
+    private float _timePerLetter = 0.02f;
     private bool _isTypingText;
 
     private float _timeToClick = 0.1f;
@@ -27,24 +27,21 @@ public class DialogueController : DialogueSubsystem
             _currentTimeToClick += Time.deltaTime;
     }
 
-    protected override void SetEvents(InputActionAsset actionAsset)
-    {
-        InputSystem.actions.FindAction("Interact").canceled += (InputAction.CallbackContext context)
-            => TryUpdateLine(_currentDialogueData);
-    }
-
-    public void StartDialogue(DialogueData data, bool isLevelEvent = false)
+    public void StartDialogue(DialogueData data)
     {
         _lineText = "";
         _lineIndex = -1;
         _currentDialogueData = data;
 
         _dialogueManager.SetIsExecutingDialogue(true);
-        if (isLevelEvent)
-            TryUpdateLine(_currentDialogueData);
+        TryUpdateLine(_currentDialogueData);
 
+        InputSystem.actions.FindAction("Interact").canceled += OnSkipDialogueLine;
         _dialogueManager.GetEvents.RaiseDialogueStart(_currentDialogueData);
     }
+
+    private void OnSkipDialogueLine(InputAction.CallbackContext context)
+        => TryUpdateLine(_currentDialogueData);
 
     public void TryUpdateLine(DialogueData data)
     {
@@ -78,6 +75,7 @@ public class DialogueController : DialogueSubsystem
     {
         StopAllCoroutines();
 
+        InputSystem.actions.FindAction("Interact").canceled -= OnSkipDialogueLine;
         _dialogueManager.SetIsExecutingDialogue(false);
         _dialogueManager.GetEvents.RaiseDialogueEnd(data);
     }
@@ -88,25 +86,34 @@ public class DialogueController : DialogueSubsystem
     private IEnumerator TypeText(string text)
     {
         _isTypingText = true;
-        char previousLetter;
+
         bool isTypingTag = false;
+        string currentTag = "";
 
         foreach (char letter in text)
         {
-            previousLetter = letter;
-            _lineText += letter;
+            if (letter == '<')
+            {
+                isTypingTag = true;
+                currentTag = "";
+            }
 
             if (isTypingTag)
             {
-                if (previousLetter == '>')
-                    isTypingTag = false;
+                currentTag += letter;
 
-                yield return new WaitForFixedUpdate();
+                if (letter == '>')
+                {
+                    isTypingTag = false;
+                    _lineText += currentTag;
+                }
+
+                continue;
             }
 
-            isTypingTag = letter == '<';
-
+            _lineText += letter;
             _dialogueManager.GetEvents.RaiseUpdateDialogueLine(_lineText);
+            
             yield return new WaitForSeconds(_timePerLetter);
         }
 

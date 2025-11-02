@@ -5,14 +5,20 @@ public class LevelManager : MonoBehaviour
 {
     private LevelStateMachine _levelStateMachine;
 
+    private UIManager _uiManager;
     private PlayerManager _playerManager;
     private DialogueManager _dialogueManager;
 
     private MentalDimensionPresenceHandler _mentalDimensionPresenceHandler;
 
+    private float _timeToRunMachine = 0.05f;
+    private float _currentTimeToRunMachine;
+    private bool _isMachineRunning;
+
     public DialogueManager GetDialogueManager => _dialogueManager;
     public MentalDimensionPresenceHandler GetMentalDimensionPresenceHandler
         => _mentalDimensionPresenceHandler;
+
 
     public static LevelManager instance;
 
@@ -36,19 +42,32 @@ public class LevelManager : MonoBehaviour
         _levelStateMachine = new LevelStateMachine();
     }
 
-    private void Start()
-    {
-        _levelStateMachine.Initialize(new LevelFlashbackOneState(_levelStateMachine, this));
-    }
-
     private void Update()
     {
+        if (_currentTimeToRunMachine < _timeToRunMachine)
+        {
+            _currentTimeToRunMachine += Time.deltaTime;
+        }
+        else if (_isMachineRunning == false)
+        {
+            _levelStateMachine.Initialize(new LevelFlashbackOneState(_levelStateMachine, this));
+            _isMachineRunning = true;
+        }
+
         _levelStateMachine.Execute();
     }
 
     private void FixedUpdate()
     {
         _levelStateMachine.FixedExecute();
+    }
+
+    public UIManager GetUIManager()
+    {
+        if (_uiManager == null)
+            _uiManager = UIManager.instance;
+
+        return _uiManager;
     }
 
     public PlayerManager GetPlayerManager()
@@ -61,6 +80,7 @@ public class LevelManager : MonoBehaviour
 
     private void OnSceneLoaded()
     {
+        _uiManager = UIManager.instance;
         _playerManager = PlayerManager.instance;
     }
 }
