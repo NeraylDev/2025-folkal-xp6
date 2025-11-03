@@ -3,11 +3,11 @@ using UnityEngine;
 
 public abstract class Observer : MonoBehaviour
 {
-    private Transform _playerCameraTransform;
-    private bool _wasObserved;
-    private bool _isActive;
+    protected Transform _playerCameraTransform;
+    protected bool _wasObserved;
+    protected bool _isActive;
 
-    private void Update()
+    protected virtual void Update()
     {
         if (_isActive && !_wasObserved)
         {
@@ -15,8 +15,8 @@ public abstract class Observer : MonoBehaviour
         }
     }
 
-    protected abstract void OnActivated();
-    protected abstract void OnDeactivated();
+    protected abstract void OnActivated(PlayerManager playerManager);
+    protected abstract void OnDeactivated(PlayerManager playerManager);
     protected abstract void OnObserved();
 
     private void VerifyPlayerView()
@@ -38,15 +38,15 @@ public abstract class Observer : MonoBehaviour
     {
         _playerCameraTransform = playerManager.GetCameraTransform;
 
-        OnActivated();
+        OnActivated(playerManager);
         _isActive = true;
     }
 
-    public void Deactivate()
+    public void Deactivate(PlayerManager playerManager)
     {
         _playerCameraTransform = null;
 
-        OnDeactivated();
+        OnDeactivated(playerManager);
         _isActive = false;
     }
 

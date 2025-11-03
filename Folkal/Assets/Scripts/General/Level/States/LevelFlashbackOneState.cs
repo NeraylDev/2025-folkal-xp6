@@ -38,13 +38,12 @@ public class LevelFlashbackOneState : LevelBaseState
 
         _flashbackDialogue = _dialogueManager.GetFlashbackDatabase.GetDialogueData("Flashback_1");
         StartDialogue(1);
-
         _playerManager.GetEvents.RaiseEnterMentalDimension(_playerManager, MentalDimensionPresenceHandler.MentalDimensionMode.Corruption, 0.1f);
+
         _onFirstDialogueEnd = OnFirstDialogueEnd;
         _onFirstBreathingEnd = OnFirstBreathingEnd;
         _onSecondDialogueEnd = OnSecondDialogueEnd;
         _onSecondBreathingEnd = OnSecondBreathingEnd;
-
         _dialogueManager.GetEvents.onDialogueEnd += _onFirstDialogueEnd;
     }
 
@@ -110,8 +109,6 @@ public class LevelFlashbackOneState : LevelBaseState
     public override void Exit()
     {
         _blockPlayerMove = false;
-
-        _playerManager.GetPlayerMovement.SetCanMove(true);
         GetLevelStateMachine.SetState(null);
     }
     

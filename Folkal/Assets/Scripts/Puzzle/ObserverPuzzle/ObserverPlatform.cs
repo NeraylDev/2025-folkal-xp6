@@ -39,7 +39,7 @@ public class ObserverPlatform : MonoBehaviour
     {
         _playerEvents.RaiseExitMentalDimension(_playerManager, 1f);
 
-        _observerList.ForEach((x) => x.Deactivate());
+        _observerList.ForEach((x) => x.Deactivate(_playerManager));
         _isActive = false;
     }
 
