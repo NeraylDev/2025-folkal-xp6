@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class UIFadingElement : MonoBehaviour
 {
-    private UIManager uiManager;
-
     private Image _blackImage;
     private Tweener _fadingTweener;
 

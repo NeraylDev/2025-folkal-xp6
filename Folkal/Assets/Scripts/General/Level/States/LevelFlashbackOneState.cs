@@ -43,7 +43,6 @@ public class LevelFlashbackOneState : LevelBaseState
         _onFirstDialogueEnd = OnFirstDialogueEnd;
         _onFirstBreathingEnd = OnFirstBreathingEnd;
         _onSecondDialogueEnd = OnSecondDialogueEnd;
-        _onSecondBreathingEnd = OnSecondBreathingEnd;
         _dialogueManager.GetEvents.onDialogueEnd += _onFirstDialogueEnd;
     }
 
@@ -87,21 +86,12 @@ public class LevelFlashbackOneState : LevelBaseState
 
     private void OnSecondDialogueEnd(DialogueData data)
     {
-        InputSystem.actions.FindAction("Breath").started += StartBreathing;
+        _playerManager.GetEvents.RaiseExitMentalDimension(_playerManager, _playerManager.GetPlayerBreathing.GetBreathingOutDuration);
+        Exit();
 
-        _playerManager.GetEvents.onBreathingStop += _onSecondBreathingEnd;
         _dialogueManager.GetEvents.onDialogueEnd -= _onSecondDialogueEnd;
     }
 
-    private void OnSecondBreathingEnd(PlayerManager playerManager)
-    {
-        InputSystem.actions.FindAction("Breath").started -= StartBreathing;
-
-        _playerManager.GetEvents.RaiseExitMentalDimension(playerManager, playerManager.GetPlayerBreathing.GetBreathingOutDuration);
-        Exit();
-
-        _playerManager.GetEvents.onBreathingStop -= _onSecondBreathingEnd;
-    }
 
     public void StartBreathing(InputAction.CallbackContext context)
         => _playerManager.GetPlayerBreathing.SetIsBreathing(true);

@@ -16,7 +16,7 @@ public class PlayerEvents : ScriptableObject
     public event Action<PlayerManager> onPickUpThrowable;
     public event Action<PlayerManager> onDropThrowable;
 
-    public event Action<PlayerManager> onThrowingStart;
+    //public event Action<PlayerManager> onThrowingStart;
     public event Action<PlayerManager> onThrow;
 
 

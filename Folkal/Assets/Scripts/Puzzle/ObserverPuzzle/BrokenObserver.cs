@@ -25,6 +25,15 @@ public class BrokenObserver : Observer
         base.Update();
     }
 
+    private void OnDestroy()
+    {
+        if (_mentalPresenceTween != null)
+            _mentalPresenceTween.Kill();
+
+        if (_observedTween != null)
+            _observedTween.Kill();
+    }
+
     protected override void OnActivated(PlayerManager playerManager)
     {
         if (_mentalPresenceTween != null)
