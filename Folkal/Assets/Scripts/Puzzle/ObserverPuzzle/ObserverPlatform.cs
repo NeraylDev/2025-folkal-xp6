@@ -17,6 +17,18 @@ public class ObserverPlatform : MonoBehaviour
             => TryActivate(playerManager);
     }
 
+    private void Start()
+    {
+        Observer[] observers = FindObjectsByType(typeof(Observer), FindObjectsSortMode.None) as Observer[];
+        if (observers != null && _observerList.Count > 0)
+            _observerList.Clear();
+
+        foreach (Observer observer in observers)
+        {
+            _observerList.Add(observer);
+        }
+    }
+
     private void TryActivate(PlayerManager playerManager)
     {
         if (_playerManager == null || !_isPlayerOnPlatform)
