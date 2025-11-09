@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _character: 0
   _lineList:
-  - text: "\"Boas-vindas ao <color=#FDE16A>Templo da Observa\xE7\xE3o</color>.\""
-  - text: "\"Aqui s\xE3o armazenados resultados de observa\xE7\xF5es di\xE1rias sobre
-      o mundo.\""
+  - text: "\"Reconhecer as duras observa\xE7\xF5es de nosso mundo requer preparo
+      pr\xE9vio.\""
+  - text: "\"Para abandonar a ignor\xE2ncia, <color=#FDE16A>respire fundo</color>.
+      Use a <color=#FDE16A>Plataforma de Foco</color> se necess\xE1rio.\""

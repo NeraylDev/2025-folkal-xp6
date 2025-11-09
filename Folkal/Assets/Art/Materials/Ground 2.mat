@@ -101,7 +101,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NSNoiseScale: 100
+    - _NSNoiseScale: 500
     - _NS_Presence: 0
     - _NoiseIntensity: 0.5
     - _OcclusionStrength: 1

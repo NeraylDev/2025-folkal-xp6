@@ -135,7 +135,7 @@ Material:
     - _Color: {r: 0.6981132, g: 0.49477118, b: 0.26014593, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _NSPrimaryColor: {r: 0.8, g: 0.54239666, b: 0.22352938, a: 0}
-    - _NSSecondaryColor: {r: 0.6226415, g: 0.3412368, b: 0.17328231, a: 0}
+    - _NSSecondaryColor: {r: 0.5943396, g: 0.36191872, b: 0.18222678, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

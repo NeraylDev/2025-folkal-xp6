@@ -1,9 +1,24 @@
 fileFormatVersion: 2
-guid: 2c30b8376714ce64ea8d8e2f18344c12
+guid: c9b2012ffaa8a8349920d5d400e31c9f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Head
+    second: {fileID: 2100000, guid: 6b92c4a8f8daae643b63061e0fae55af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Tree
+    second: {fileID: 2100000, guid: 945997cfab0c65246a0dcfaa5aa70b8c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_TreeVineyard
+    second: {fileID: 2100000, guid: 99a14bdde38ffcc4cad511b853cf33d9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -33,7 +48,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.01
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -65,7 +80,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
@@ -88,7 +103,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.01
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
