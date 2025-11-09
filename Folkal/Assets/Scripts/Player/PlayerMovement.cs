@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : PlayerSubsystem
 {
     [SerializeField] private DialogueEvents _dialogueEvents;
@@ -20,10 +20,14 @@ public class PlayerMovement : PlayerSubsystem
     private bool _isRunning;
 
     private Camera _camera;
-    private Rigidbody _rigidBody;
+    private CharacterController _characterController;
 
     public bool IsRunning => _isRunning;
     public bool CanMove => _canMove;
+
+    public float GetRunningSpeed => _runningSpeed;
+    public float GetThrowingSpeed => _throwingSpeed;
+
     public Vector2 GetInputDirection => _inputDirection;
     public Vector3 GetMoveDirection => _moveDirection;
 
@@ -32,7 +36,7 @@ public class PlayerMovement : PlayerSubsystem
 
     private void Awake()
     {
-        _rigidBody = GetComponent<Rigidbody>();
+        _characterController = GetComponent<CharacterController>();
         _defaultMoveSpeed = _moveSpeed;
         _canMove = true;
     }
@@ -86,7 +90,7 @@ public class PlayerMovement : PlayerSubsystem
         Vector3 finalVelocity = _moveDirection * _moveSpeedModifier * Time.fixedDeltaTime;
         finalVelocity *= _moveSpeed;
 
-        _rigidBody.linearVelocity = finalVelocity + (Vector3.up * -2f);
+        _characterController.Move(finalVelocity + (Vector3.up * -9.8f));
     }
 
     private void SetInputDirection(Vector2 direction)
@@ -95,15 +99,6 @@ public class PlayerMovement : PlayerSubsystem
     public void SetCanMove(bool value)
     {
         _canMove = value;
-        if (!_canMove)
-        {
-            _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
-            _rigidBody.linearVelocity = Vector3.zero;
-        }
-        else
-        {
-            _rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-        }
     }
 
     public void ActivateRunning()

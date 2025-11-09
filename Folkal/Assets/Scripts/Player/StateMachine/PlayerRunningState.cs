@@ -6,9 +6,9 @@ public class PlayerRunningState : PlayerBaseState
 
     public override void Enter()
     {
-        GetPlayerManager.GetEvents.RaiseRunStart(GetPlayerManager);
-
-        GetPlayerManager.GetPlayerMovement.SetMoveSpeed(375f);
+        GetPlayerManager.GetEvents.RaiseRunStart(GetPlayerManager); 
+        
+        GetPlayerManager.GetPlayerMovement.SetMoveSpeed(GetPlayerManager.GetPlayerMovement.GetRunningSpeed);
         GetPlayerManager.GetPlayerCamera.SetCameraEffects(72, 0.3f, 3.25f);
     }
 
