@@ -86,7 +86,7 @@ public class PlayerMovement : PlayerSubsystem
         Vector3 finalVelocity = _moveDirection * _moveSpeedModifier * Time.fixedDeltaTime;
         finalVelocity *= _moveSpeed;
 
-        _rigidBody.linearVelocity = finalVelocity;
+        _rigidBody.linearVelocity = finalVelocity + (Vector3.up * -2f);
     }
 
     private void SetInputDirection(Vector2 direction)

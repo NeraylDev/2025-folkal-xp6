@@ -29,6 +29,16 @@ public class DialogueUI : DialogueSubsystem
 
     private void UpdateCharacterName(DialogueData data)
     {
+        if (data.GetCharacterName == "None")
+        {
+            _characterNameText.enabled = false;
+            return;
+        }
+        else
+        {
+            _characterNameText.enabled = true;
+        }
+
         Color initialNameColor = _characterNameText.color;
         initialNameColor.a = 0;
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bcc75e52ba2f1341ba029feef8eecc6, type: 3}
   m_Name: Flashback_1_1
   m_EditorClassIdentifier: 
-  _character: 2
+  _character: 3
   _lineList:
   - text: "\xC9 saudade o que sente?"
   - text: "Se n\xE3o h\xE1 mais volta, por que insiste?"

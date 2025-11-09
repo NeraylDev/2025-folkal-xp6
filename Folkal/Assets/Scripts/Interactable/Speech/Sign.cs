@@ -3,8 +3,16 @@ using UnityEngine;
 
 public class Sign : MonoBehaviour, IInteractable
 {
-    [SerializeField] private SignData _data;
+    [SerializeField] private DialogueData _data;
     private bool _allowInteraction = true;
+
+    private DialogueManager _dialogueManager;
+
+    private void Start()
+    {
+        if (LevelManager.instance != null)
+            _dialogueManager = LevelManager.instance.GetDialogueManager;
+    }
 
     public bool CanInteract()
     {
@@ -18,27 +26,19 @@ public class Sign : MonoBehaviour, IInteractable
 
     public void TryStartReading(PlayerManager playerManager)
     {
-        SignUI signUI = SignUI.instance;
-        if (signUI == null || !_allowInteraction)
+        if (_dialogueManager == null || !_allowInteraction || _data == null)
             return;
 
-        if (!signUI.IsExecutingSpeech && playerManager.CanReadSign())
-        {
-            signUI.StartSpeech(_data);
-            signUI.onFinishSpeech.AddListener(UpdateInteraction);
-            _allowInteraction = false;
-        }
+        _dialogueManager.StartDialogue(_data);
+        _dialogueManager.GetEvents.onDialogueEnd += UpdateInteraction;
+
+        _allowInteraction = false;
     }
 
-    private void UpdateInteraction()
+    private void UpdateInteraction(DialogueData data)
     {
         StartCoroutine(ActivateInteraction());
-
-        SignUI signUI = SignUI.instance;
-        if (signUI == null)
-            return;
-
-        signUI.onFinishSpeech.RemoveListener(UpdateInteraction);
+        _dialogueManager.GetEvents.onDialogueEnd -= UpdateInteraction;
     }
 
     private IEnumerator ActivateInteraction()

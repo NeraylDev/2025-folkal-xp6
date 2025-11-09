@@ -8,6 +8,7 @@ public class DialogueData : ScriptableObject
 {
     public enum Character
     {
+        None,
         Geeko,
         Mam,
         Desconhecido
