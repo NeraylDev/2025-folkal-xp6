@@ -107,6 +107,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _Presence: 0
+    - _PresenceScale: 750
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1

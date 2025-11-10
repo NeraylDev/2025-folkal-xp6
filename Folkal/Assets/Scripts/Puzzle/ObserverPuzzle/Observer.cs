@@ -26,7 +26,6 @@ public abstract class Observer : MonoBehaviour
 
         Vector3 direction = (transform.position - _playerCameraTransform.position).normalized;
         float dotResult = Vector3.Dot(_playerCameraTransform.forward, direction);
-        dotResult = Mathf.Abs(dotResult);
 
         if (dotResult >= 0.995f)
         {

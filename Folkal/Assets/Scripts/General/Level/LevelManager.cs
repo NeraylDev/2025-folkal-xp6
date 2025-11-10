@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour
         }
         else if (_isMachineRunning == false)
         {
-            //_levelStateMachine.Initialize(new LevelFlashbackOneState(_levelStateMachine, this));
+            _levelStateMachine.Initialize(new LevelFlashbackOneState(_levelStateMachine, this));
             _isMachineRunning = true;
         }
 
