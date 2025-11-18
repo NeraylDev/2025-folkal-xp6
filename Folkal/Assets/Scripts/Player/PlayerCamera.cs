@@ -12,10 +12,6 @@ public class PlayerCamera : PlayerSubsystem
     private CinemachineBasicMultiChannelPerlin _cinemachineNoise;
     private Camera _camera;
 
-    [Header("Interaction Settings")]
-    [SerializeField] private float _interactionDistance;
-    [SerializeField] private LayerMask _interactableMask;
-
     [Header("Noise Settings")]
     [SerializeField] private NoiseSettings[] _noiseProfiles;
     private float _currentNoiseAmplitude;
@@ -71,7 +67,7 @@ public class PlayerCamera : PlayerSubsystem
         _isShaking = true;
     }
 
-    public void DeactivateCameraShake()
+    private void DeactivateCameraShake()
     {
         if (_noiseProfiles != null)
             _cinemachineNoise.NoiseProfile = _noiseProfiles[0];

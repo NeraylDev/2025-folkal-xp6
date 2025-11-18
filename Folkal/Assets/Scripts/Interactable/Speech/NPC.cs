@@ -6,7 +6,6 @@ using UnityEngine;
 public class NPC : MonoBehaviour, IInteractable
 {
     [Header("NPC Settings")]
-    [SerializeField] private NPCData _data;
     [SerializeField] private List<DialogueData> _dialogueList = new List<DialogueData>();
     private int _dialogueIndex = 0;
     private bool _allowInteraction = true;
@@ -30,7 +29,7 @@ public class NPC : MonoBehaviour, IInteractable
         TryStartDialogue(playerManager);
     }
 
-    public void TryStartDialogue(PlayerManager playerManager)
+    private void TryStartDialogue(PlayerManager playerManager)
     {
         if (!_dialogueManager.IsExecutingDialogue && playerManager.CanStartDialogue())
         {
@@ -42,7 +41,7 @@ public class NPC : MonoBehaviour, IInteractable
         }
     }
 
-    public void UpdateDialogueIndex()
+    private void UpdateDialogueIndex()
     {
         if (_dialogueIndex + 1 < _dialogueList.Count)
         {

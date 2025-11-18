@@ -36,13 +36,22 @@ public class HUDManager : MonoBehaviour
 
     private void Start()
     {
-        _playerEvents.onStartPointingAtInteractable += (IInteractable interactable)
-            => UpdateCrosshair(interactable);
-        _playerEvents.onStopPointingAtInteractable += ()
-            => UpdateCrosshair();
+        _playerEvents.onStartPointingAtInteractable += UpdateCrosshair;
+        _playerEvents.onStopPointingAtInteractable += UpdateCrosshair;
     }
 
-    public void UpdateCrosshair(IInteractable interactable = null)
+    private void OnDisable()
+    {
+        _playerEvents.onStartPointingAtInteractable -= UpdateCrosshair;
+        _playerEvents.onStopPointingAtInteractable -= UpdateCrosshair;
+    }
+
+    private void UpdateCrosshair()
+    {
+        UpdateCrosshair(null);
+    }
+
+    private void UpdateCrosshair(IInteractable interactable)
     {
         if (interactable == null)
         {
@@ -60,7 +69,7 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    public void SetCrosshair(CrosshairType type)
+    private void SetCrosshair(CrosshairType type)
     {
         if (type == _currentCrosshair)
             return;

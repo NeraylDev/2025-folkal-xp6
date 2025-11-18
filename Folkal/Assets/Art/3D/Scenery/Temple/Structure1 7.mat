@@ -114,11 +114,13 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NSNoiseScale: 51.7
+    - _NSNoiseScale: 14.1
     - _NS_Presence: 0
-    - _NoiseIntensity: 0.5
+    - _NoiseIntensity: 0.4
+    - _NoiseSpeed: 0.01
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _PresenceScale: 100
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -134,8 +136,8 @@ Material:
     - _BaseColor: {r: 0.6981132, g: 0.49477127, b: 0.26014596, a: 1}
     - _Color: {r: 0.6981132, g: 0.49477118, b: 0.26014593, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _NSPrimaryColor: {r: 0.8, g: 0.54239666, b: 0.22352938, a: 0}
-    - _NSSecondaryColor: {r: 0.5943396, g: 0.36191872, b: 0.18222678, a: 0}
+    - _NSPrimaryColor: {r: 0.77254903, g: 0.5529412, b: 0.28235295, a: 0}
+    - _NSSecondaryColor: {r: 0.36078432, g: 0.27843136, b: 0.3137255, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

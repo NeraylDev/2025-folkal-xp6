@@ -104,6 +104,7 @@ Material:
     - _NSNoiseScale: 500
     - _NS_Presence: 0
     - _NoiseIntensity: 0.5
+    - _NoiseSpeed: 0.01
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _Presence: 0

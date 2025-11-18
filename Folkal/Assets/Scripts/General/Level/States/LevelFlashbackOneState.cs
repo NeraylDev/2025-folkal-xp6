@@ -14,7 +14,6 @@ public class LevelFlashbackOneState : LevelBaseState
     private Action<DialogueData> _onFirstDialogueEnd;
     private Action<PlayerManager> _onFirstBreathingEnd;
     private Action<DialogueData> _onSecondDialogueEnd;
-    private Action<PlayerManager> _onSecondBreathingEnd;
 
     private bool _isTryingToActivateDialogue;
     private float _dialogueDelay;
@@ -65,7 +64,9 @@ public class LevelFlashbackOneState : LevelBaseState
     private void OnFirstDialogueEnd(DialogueData data)
     {
         InputSystem.actions.FindAction("Breath").started += StartBreathing;
-        _uiManager.GetFadingElement.FadeOut(7.5f);
+
+        _uiManager.GetEvents.onFadeOutToBlack(5f);
+        _uiManager.GetEvents.onFinishFadeOutToBlack += ShowBreathingInput;
 
         _playerManager.GetEvents.onBreathingStop += _onFirstBreathingEnd;
         _dialogueManager.GetEvents.onDialogueEnd -= _onFirstDialogueEnd;
@@ -74,8 +75,10 @@ public class LevelFlashbackOneState : LevelBaseState
     private void OnFirstBreathingEnd(PlayerManager playerManager)
     {
         InputSystem.actions.FindAction("Breath").started -= StartBreathing;
+        _uiManager.GetEvents.onFinishFadeOutToBlack -= ShowBreathingInput;
+        HideBreathingInput();
 
-        GetLevelManager.GetMentalDimensionPresenceHandler.ChangeMode(MentalDimensionPresenceHandler.MentalDimensionMode.Refletion);
+        GetLevelManager.GetMentalDimensionPresenceHandler.ChangeMode(MentalDimensionPresenceHandler.MentalDimensionMode.Reflection);
 
         _flashbackDialogue = _dialogueManager.GetFlashbackDatabase.GetDialogueData("Flashback_1_1");
         StartDialogue(_playerManager.GetPlayerBreathing.GetBreathingOutDuration + 4f);
@@ -93,8 +96,14 @@ public class LevelFlashbackOneState : LevelBaseState
     }
 
 
-    public void StartBreathing(InputAction.CallbackContext context)
+    private void StartBreathing(InputAction.CallbackContext context)
         => _playerManager.GetPlayerBreathing.SetIsBreathing(true);
+
+    private void ShowBreathingInput()
+        => _uiManager.GetEvents.RaiseShowInputHint("Respirar", "Segure A");
+
+    private void HideBreathingInput()
+        => _uiManager.GetEvents.RaiseHideInputHint();
 
     public override void Exit()
     {

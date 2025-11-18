@@ -57,6 +57,8 @@ public class PlayerThrowing : PlayerSubsystem
         if (!_isChargingThrow || !_playerManager.GetPlayerHand.IsHoldingThrowable)
             return;
 
+        ApplyForce(_playerManager.GetPlayerHand.RemoveHeldThrowable());
+
         _isChargingThrow = false;
         _hasThrewObject = true;
     }
@@ -73,7 +75,7 @@ public class PlayerThrowing : PlayerSubsystem
         _canThrow = false;
     }
 
-    public void ApplyForce(Throwable throwable)
+    private void ApplyForce(Throwable throwable)
     {
         if (throwable == null)
             return;

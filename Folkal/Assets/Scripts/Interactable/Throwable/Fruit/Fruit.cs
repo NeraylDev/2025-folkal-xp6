@@ -10,13 +10,21 @@ public abstract class Fruit : Throwable
     {
         base.Awake();
 
-        if (transform.parent != null && transform.parent.TryGetComponent(out FruitTree rootTree))
+        FruitTree tree = GetComponentInParent<FruitTree>();
+        if (transform.parent != null)
         {
-            SetTree(rootTree);
+            SetTree(tree);
         }
     }
 
-    public void SetTree(FruitTree tree) => _tree = tree;
+    public void SetTree(FruitTree tree)
+    {
+        if (tree == null)
+            return;
+
+        tree.AddFruit(this);
+        _tree = tree;
+    }
 
     public void RemoveFromTree()
     {
@@ -27,6 +35,6 @@ public abstract class Fruit : Throwable
         _tree = null;
     }
 
-    public override void OnCollide() { }
+    protected override void OnCollide() { }
 
 }

@@ -43,7 +43,7 @@ public class DialogueController : DialogueSubsystem
     private void OnSkipDialogueLine(InputAction.CallbackContext context)
         => TryUpdateLine(_currentDialogueData);
 
-    public void TryUpdateLine(DialogueData data)
+    private void TryUpdateLine(DialogueData data)
     {
         if (_dialogueManager.IsExecutingDialogue == false || _currentTimeToClick < _timeToClick)
             return;
@@ -71,7 +71,7 @@ public class DialogueController : DialogueSubsystem
         _dialogueManager.GetEvents.RaiseUpdateDialogueLine(_lineText);
     }
 
-    public void StopDialogue(DialogueData data)
+    private void StopDialogue(DialogueData data)
     {
         StopAllCoroutines();
 

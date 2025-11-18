@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MentalDimensionElement : MonoBehaviour
+public class MDElement : MonoBehaviour
 {
     [SerializeField] private ParticleSystem[] _particleArray;
     private bool _isActive;

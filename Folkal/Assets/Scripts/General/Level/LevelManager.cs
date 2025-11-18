@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +16,7 @@ public class LevelManager : MonoBehaviour
     private float _currentTimeToRunMachine;
     private bool _isMachineRunning;
 
+    public LevelStateMachine GetLevelStateMachine => _levelStateMachine;
     public DialogueManager GetDialogueManager => _dialogueManager;
     public MentalDimensionPresenceHandler GetMentalDimensionPresenceHandler
         => _mentalDimensionPresenceHandler;
@@ -24,7 +26,7 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
 
         SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode)
             => OnSceneLoaded();
@@ -78,9 +80,27 @@ public class LevelManager : MonoBehaviour
         return _playerManager;
     }
 
+    public void LoadScene(int index, float delay = 0f)
+    {
+        if (delay > 0)
+        {
+            StartCoroutine(LoadSceneWithDelay(index, delay));
+            return;
+        }
+
+        SceneManager.LoadScene(index);
+    }
+
     private void OnSceneLoaded()
     {
         _uiManager = UIManager.instance;
         _playerManager = PlayerManager.instance;
+    }
+
+    private IEnumerator LoadSceneWithDelay(int index, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        SceneManager.LoadScene(index);
     }
 }

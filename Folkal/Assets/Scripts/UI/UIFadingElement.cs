@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class UIFadingElement : MonoBehaviour
 {
+    private UIEvents _uiEvents;
+
     private Image _blackImage;
     private Tweener _fadingTweener;
 
@@ -19,8 +21,10 @@ public class UIFadingElement : MonoBehaviour
 
     public void Initialize(UIManager uiManager)
     {
-        uiManager.GetEvents.onFadeInToBlack += FadeIn;
-        uiManager.GetEvents.onFadeOutToBlack += FadeOut;
+        _uiEvents = uiManager.GetEvents;
+
+        _uiEvents.onFadeInToBlack += FadeIn;
+        _uiEvents.onFadeOutToBlack += FadeOut;
     }
 
     public void FadeIn(float duration = 1f)
@@ -28,7 +32,7 @@ public class UIFadingElement : MonoBehaviour
         if (_fadingTweener != null)
             _fadingTweener.Kill();
 
-        _fadingTweener = _blackImage.DOFade(1, duration);
+        _fadingTweener = _blackImage.DOFade(1, duration).OnComplete(_uiEvents.RaiseFinishFadeInToBlack);
     }
 
     public void FadeOut(float duration = 1f)
@@ -36,6 +40,6 @@ public class UIFadingElement : MonoBehaviour
         if (_fadingTweener != null)
             _fadingTweener.Kill();
 
-        _fadingTweener = _blackImage.DOFade(0, duration);
+        _fadingTweener = _blackImage.DOFade(0, duration).OnComplete(_uiEvents.RaiseFinishFadeOutToBlack);
     }
 }

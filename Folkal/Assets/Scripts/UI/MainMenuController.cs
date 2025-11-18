@@ -13,6 +13,8 @@ public class MainMenuController : MonoBehaviour
     private void Awake()
     {
         _inputActions = InputSystem.actions;
+
+        Cursor.visible = false;
     }
 
     private void Start()

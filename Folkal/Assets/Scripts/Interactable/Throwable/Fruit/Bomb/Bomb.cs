@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bomb : Throwable
+public class Bomb : Fruit
 {
     [Header("Bomb Settings")]
     [SerializeField] private GameObject _explosionVFX;
@@ -22,7 +22,13 @@ public class Bomb : Throwable
             _wasThrown = true;
     }
 
-    public override void OnCollide()
+    public override void OnHeld()
+    {
+        base.OnHeld();
+        RemoveFromTree();
+    }
+
+    protected override void OnCollide()
     {
         if (!_wasThrown)
             return;
@@ -56,9 +62,6 @@ public class Bomb : Throwable
                 float distanceToHittedObject = Vector3.Distance(transform.position, hittedTransform.position);
                 float distanceModifier = Mathf.Lerp(1f, 0f, Mathf.Clamp01(distanceToHittedObject / _explosionRadius));
 
-                if (hittedTransform.TryGetComponent(out Destructible destructible))
-                    destructible.ApplyDamage();
-
                 ApplyExplosionForce(hittedTransform, _explosionForce * distanceModifier);
             }
         }
@@ -68,6 +71,9 @@ public class Bomb : Throwable
     {
         Vector3 forceDirection = (hittedTransform.position - transform.position).normalized;
         Vector3 finalForce = forceDirection * _explosionForce;
+
+        if (hittedTransform.TryGetComponent(out Destructible destructible))
+            destructible.ApplyDamage();
 
         if (hittedTransform.TryGetComponent(out Rigidbody hittedRigidbody))
             hittedRigidbody.AddForce(finalForce, ForceMode.Impulse);

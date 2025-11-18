@@ -117,8 +117,10 @@ Material:
     - _NSNoiseScale: 25
     - _NS_Presence: 0
     - _NoiseIntensity: 0
+    - _NoiseSpeed: 0.01
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _PresenceScale: 100
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -134,7 +136,7 @@ Material:
     - _BaseColor: {r: 0.6981132, g: 0.49477127, b: 0.26014596, a: 1}
     - _Color: {r: 0.6981132, g: 0.49477118, b: 0.26014593, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _NSPrimaryColor: {r: 0.7830189, g: 0.6427768, b: 0.43952474, a: 0}
+    - _NSPrimaryColor: {r: 0.8018868, g: 0.6165525, b: 0.38203096, a: 0}
     - _NSSecondaryColor: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

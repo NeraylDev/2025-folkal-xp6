@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DialogueSubsystem : MonoBehaviour
+public abstract class DialogueSubsystem : MonoBehaviour
 {
     protected DialogueManager _dialogueManager;
 

@@ -22,25 +22,30 @@ public class PlayerWalkingState : PlayerBaseState
         if (GetPlayerManager.GetPlayerMovement.CanMove == false
             || GetPlayerManager.GetPlayerMovement.GetInputDirection == Vector2.zero)
         {
-            GetPlayerStateMachine.SetState(new PlayerIdleState(GetPlayerStateMachine, GetPlayerManager));
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetPlayerState("Idle"));
             return;
         }
 
         if (GetPlayerManager.GetPlayerBreathing.IsBreathing)
         {
-            GetPlayerStateMachine.SetState(new PlayerBreathingState(GetPlayerStateMachine, GetPlayerManager));
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetPlayerState("Breathing"));
         }
 
         if (GetPlayerManager.GetPlayerThrowing.IsChargingThrow)
         {
-            GetPlayerStateMachine.SetState(new PlayerThrowingState(GetPlayerStateMachine, GetPlayerManager));
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetPlayerState("Throwing"));
             return;
         }
 
         if (GetPlayerManager.GetPlayerMovement.IsRunning)
         {
-            GetPlayerStateMachine.SetState(new PlayerRunningState(GetPlayerStateMachine, GetPlayerManager));
+            GetPlayerStateMachine.SetState(GetPlayerStateMachine.GetPlayerState("Running"));
         }
+    }
+
+    public override void Exit()
+    {
+        GetPlayerManager.GetEvents.RaiseWalkStop(GetPlayerManager);
     }
 
 }

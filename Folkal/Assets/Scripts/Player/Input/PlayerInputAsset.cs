@@ -268,6 +268,17 @@ public partial class @PlayerInputAsset: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""07d84f1f-f067-43f0-94a9-5fa44f70d1c8"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""ffdde83d-0f8c-4660-88cc-a0edf64c49a7"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",

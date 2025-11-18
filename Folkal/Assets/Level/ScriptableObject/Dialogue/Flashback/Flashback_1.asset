@@ -16,4 +16,4 @@ MonoBehaviour:
   _lineList:
   - text: "\"Onde est\xE1 <color=#FDE16A>Ka</color>?!\""
   - text: "\"ONDE EST\xC1 <color=#FDE16A>KA</color>?!\""
-  - text: "\"A MORTE EST\xC1 CHEGANDO! ONDE EST\xC1 <color=#FDE16A>KA</color>?!\""
+  - text: "\"A <color=#FDE16A>MORTE</color> EST\xC1 CHEGANDO! ONDE EST\xC1 <color=#FDE16A>KA</color>?!\""

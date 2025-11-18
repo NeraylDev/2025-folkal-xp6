@@ -14,11 +14,18 @@ public class PlayerHand : PlayerSubsystem
     private Transform _cameraTransform;
     private Vector3 _offset;
 
+    private bool _isHoldingForTheFirstTime;
+
     public Throwable GetHeldThrowable => _heldThrowable;
     public bool IsHoldingThrowable { get { return _heldThrowable != null; } }
 
 
     #region MonoBehaviour Methods
+
+    private void Awake()
+    {
+        _isHoldingForTheFirstTime = true;
+    }
 
     private void FixedUpdate()
     {
@@ -69,13 +76,16 @@ public class PlayerHand : PlayerSubsystem
         if (IsHoldingThrowable)
             return;
 
+        if (_isHoldingForTheFirstTime)
+            LevelManager.instance.GetUIManager().GetEvents.RaiseShowInputHint("Arremessar", "RT");
+
         SetHeldThrowable(throwable);
 
         _playerManager.GetPlayerThrowing.ResetInputDelayTimer();
         _playerManager.GetEvents.RaisePickUpThrowable(_playerManager);
     }
 
-    public void SetHeldThrowable(Throwable throwable)
+    private void SetHeldThrowable(Throwable throwable)
     {
         _heldThrowable = throwable;
         _heldThrowable.OnHeld();
@@ -83,6 +93,12 @@ public class PlayerHand : PlayerSubsystem
 
     public Throwable RemoveHeldThrowable()
     {
+        if (_isHoldingForTheFirstTime)
+        {
+            LevelManager.instance.GetUIManager().GetEvents.RaiseHideInputHint();
+            _isHoldingForTheFirstTime = false;
+        }
+
         Throwable temp = _heldThrowable;
         _heldThrowable.EnableRigidbody();
         _heldThrowable = null;

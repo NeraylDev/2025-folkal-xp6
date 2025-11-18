@@ -9,7 +9,8 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
 {
     public enum MentalDimensionMode
     {
-        Refletion,
+        Deactivated,
+        Reflection,
         Corruption
     }
 
@@ -18,9 +19,9 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
     [Header("Visual")]
     [SerializeField] private Color _mentalDimensionFogColor;
 
-    [Header("Dimention Elements")]
-    [SerializeField] private MentalDimensionElement _refletionElements;
-    [SerializeField] private MentalDimensionElement _corruptionElements;
+    [Header("Dimension Elements")]
+    [SerializeField] private MDElement _reflectionElements;
+    [SerializeField] private MDElement _corruptionElements;
     [Space]
     [SerializeField] private Material _terrainMaterial;
     [SerializeField] private List<MDPresenceMaterial> _presenceMaterialList = new List<MDPresenceMaterial>();
@@ -39,10 +40,14 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
     {
         _propertyBlock = new MaterialPropertyBlock();
 
-        _playerEvents.onEnterMentalDimension += (playerManager, mode, duration)
-            => SetState(true, playerManager, mode, duration);
-        _playerEvents.onExitMentalDimension += (playerManager, duration)
-            => SetState(false, playerManager, duration);
+        _playerEvents.onEnterMentalDimension += OnEnterMentalDimension;
+        _playerEvents.onExitMentalDimension += OnExitMentalDimension;
+    }
+
+    private void OnDisable()
+    {
+        _playerEvents.onEnterMentalDimension -= OnEnterMentalDimension;
+        _playerEvents.onExitMentalDimension -= OnExitMentalDimension;
     }
 
     private void Start()
@@ -70,6 +75,16 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
             _presenceMaterialList.Add(material);
     }
 
+    private void OnEnterMentalDimension(PlayerManager playerManager, MentalDimensionMode mode, float duration)
+    {
+        SetState(true, playerManager, mode, duration);
+    }
+
+    private void OnExitMentalDimension(PlayerManager playerManager, float duration)
+    {
+        SetState(false, playerManager, MentalDimensionMode.Deactivated, duration);
+    }
+
     private void SetState(bool active, PlayerManager playerManager, MentalDimensionMode mode, float transitionDuration)
     {
         StopAllCoroutines();
@@ -79,15 +94,10 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
         if (playerManager == null)
             return;
 
-        if (active)
+        if (mode != MentalDimensionMode.Deactivated)
             Activate(playerManager, mode, transitionDuration);
         else
             Deactivate(playerManager, transitionDuration);
-    }
-
-    private void SetState(bool active, PlayerManager playerManager, float transitionDuration)
-    {
-        SetState(active, playerManager, MentalDimensionMode.Refletion, transitionDuration);
     }
 
     private void Activate(PlayerManager playerManager, MentalDimensionMode mode, float transitionDuration)
@@ -97,8 +107,8 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
 
         _currentMode = mode;
 
-        if (_currentMode == MentalDimensionMode.Refletion)
-            _refletionElements.Activate(playerManager.transform.position);
+        if (_currentMode == MentalDimensionMode.Reflection)
+            _reflectionElements.Activate(playerManager.transform.position);
         else
             _corruptionElements.Activate(playerManager.transform.position);
 
@@ -115,8 +125,8 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
         if (!_isActive)
             return;
 
-        if (_refletionElements.IsActive)
-            _refletionElements.Deactivate();
+        if (_reflectionElements.IsActive)
+            _reflectionElements.Deactivate();
 
         if (_corruptionElements.IsActive)
             _corruptionElements.Deactivate();
@@ -131,15 +141,15 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
 
     public void ChangeMode(MentalDimensionMode mode)
     {
-        if (mode == MentalDimensionMode.Refletion)
+        if (mode == MentalDimensionMode.Reflection)
         {
-            _refletionElements.Activate(_corruptionElements.transform.position);
+            _reflectionElements.Activate(_corruptionElements.transform.position);
             _corruptionElements.Deactivate();
         }
         else
         {
-            _corruptionElements.Activate(_refletionElements.transform.position);
-            _refletionElements.Deactivate();
+            _corruptionElements.Activate(_reflectionElements.transform.position);
+            _reflectionElements.Deactivate();
         }
 
         _currentMode = mode;
@@ -205,11 +215,11 @@ public class MentalDimensionPresenceHandler : MonoBehaviour
         float timer = 0;
         do
         {
-            float presence = Mathf.Lerp(initialValue, endValue, timer / duration);
+            float mentalDimensionPresence = Mathf.Lerp(initialValue, endValue, timer / duration);
 
-            SetMaterialPresence(presence);
+            SetMaterialPresence(mentalDimensionPresence);
             if (_terrainMaterial != null)
-                _terrainMaterial.SetFloat("_NS_Presence", presence);
+                _terrainMaterial.SetFloat("_NS_Presence", mentalDimensionPresence);
 
             timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();

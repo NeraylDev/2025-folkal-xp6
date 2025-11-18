@@ -76,7 +76,7 @@ public class PlayerMovement : PlayerSubsystem
             => SetCanMove(true);
     }
 
-    public void Move()
+    private void Move()
     {
         if (!_canMove)
             return;
@@ -101,7 +101,7 @@ public class PlayerMovement : PlayerSubsystem
         _canMove = value;
     }
 
-    public void ActivateRunning()
+    private void ActivateRunning()
     {
         if (!_canMove || _inputDirection == Vector2.zero
             || Vector2.Dot(_inputDirection, Vector2.up) <= 0
@@ -111,7 +111,7 @@ public class PlayerMovement : PlayerSubsystem
         _isRunning = true;
     }
 
-    public void DeactivateRunning()
+    private void DeactivateRunning()
     {
         if (_playerManager.GetPlayerThrowing.IsChargingThrow)
             return;
@@ -120,12 +120,10 @@ public class PlayerMovement : PlayerSubsystem
     }
 
     public void SetMoveSpeed(float speed) => _moveSpeed = speed;
-    public void SetMoveSpeedModifier(float modifier) => _moveSpeedModifier = modifier;
 
     public void ResetMoveSpeed() => _moveSpeed = _defaultMoveSpeed;
-    public void ResetMoveSpeedModifier() => _moveSpeedModifier = 1f;
 
-    public void UpdateRotation()
+    private void UpdateRotation()
     {
         Vector3 finalRotation = _camera.transform.rotation.eulerAngles;
         finalRotation.x = 0;

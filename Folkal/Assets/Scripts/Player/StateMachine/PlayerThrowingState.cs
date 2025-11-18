@@ -52,9 +52,6 @@ public class PlayerThrowingState : PlayerBaseState
             _throwChargingTween = null;
         }
 
-        Throwable throwable = GetPlayerManager.GetPlayerHand.RemoveHeldThrowable();
-        GetPlayerManager.GetPlayerThrowing.ApplyForce(throwable);
-
         GetPlayerManager.GetPlayerHand.SetOffsetZ(0);
         GetPlayerManager.GetEvents.RaiseThrow(GetPlayerManager);
     }

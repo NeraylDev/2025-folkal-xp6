@@ -24,7 +24,7 @@ public class Sign : MonoBehaviour, IInteractable
         TryStartReading(playerManager);
     }
 
-    public void TryStartReading(PlayerManager playerManager)
+    private void TryStartReading(PlayerManager playerManager)
     {
         if (_dialogueManager == null || !_allowInteraction || _data == null)
             return;

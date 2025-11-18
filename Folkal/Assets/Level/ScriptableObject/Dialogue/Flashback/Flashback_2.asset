@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bcc75e52ba2f1341ba029feef8eecc6, type: 3}
+  m_Name: Flashback_2
+  m_EditorClassIdentifier: 
+  _character: 2
+  _lineList:
+  - text: "\"Amigos, a <color=#FDE16A>1\xAA Morte do Mundo</color> se aproxima e
+      temo por nossas vidas.\""
+  - text: "\"N\xE3o temos c\xE1lculos precisos, mas a chegada da <color=#FDE16A>Morte</color>
+      deve ocorrer nos pr\xF3ximos amanheceres."
+  - text: "\"Ent\xE3o n\xE3o saiam para a superf\xEDcie.\""
+  - text: '"Em casos de fome e sede, comunique-nos. Eu, <color=#FDE16A>Ka</color>
+      e <color=#FDE16A>Moulk</color> nos resposabilizaremos pela busca de recursos."'
+  - text: "\"Dito isto, cuidem-se e n\xE3o percam a esperan\xE7a.\""

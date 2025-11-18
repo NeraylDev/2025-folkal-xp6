@@ -34,7 +34,7 @@ public class ObserverPlatform : MonoBehaviour
         if (_playerManager == null || !_isPlayerOnPlatform)
             return;
 
-        _playerEvents.RaiseEnterMentalDimension(playerManager, MentalDimensionPresenceHandler.MentalDimensionMode.Refletion, playerManager.GetPlayerBreathing.GetBreathingOutDuration);
+        _playerEvents.RaiseEnterMentalDimension(playerManager, MentalDimensionPresenceHandler.MentalDimensionMode.Reflection, playerManager.GetPlayerBreathing.GetBreathingOutDuration);
         ActivateObservers();
     }
 

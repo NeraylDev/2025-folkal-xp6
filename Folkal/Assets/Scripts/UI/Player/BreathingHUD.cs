@@ -3,14 +3,14 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BreathingUI : MonoBehaviour
+public class BreathingHUD : MonoBehaviour
 {
     [SerializeField] private PlayerEvents _playerEvents;
     [Space]
     [SerializeField] private RectTransform _breathingBorderTransform;
     [SerializeField] private RectTransform _breathingCircleTransform;
     [SerializeField] private Image[] _breathingUIImages;
-    private List<Tween> _activeTweeners = new List<Tween>();
+    private List<Tweener> _activeTweeners = new List<Tweener>();
 
     private void Awake()
     {
@@ -18,13 +18,26 @@ public class BreathingUI : MonoBehaviour
         _breathingCircleTransform.localScale = Vector2.zero;
         SetAlpha(0, 0);
 
-        _playerEvents.onBreathingStart += (PlayerManager playerManager)
-            => ShowUI(playerManager);
-        _playerEvents.onBreathingStop += (PlayerManager playerManager)
-            => HideUI(playerManager);
-        _playerEvents.onBreathingCanceled += (PlayerManager playerManager)
-            => ForceHideUI();
+        _playerEvents.onBreathingStart += OnBreathingStart;
+        _playerEvents.onBreathingStop += OnBreathingStop;
+        _playerEvents.onBreathingCanceled += OnBreathingCanceled;
     }
+
+    private void OnDisable()
+    {
+        _playerEvents.onBreathingStart -= OnBreathingStart;
+        _playerEvents.onBreathingStop -= OnBreathingStop;
+        _playerEvents.onBreathingCanceled -= OnBreathingCanceled;
+    }
+
+    private void OnBreathingStart(PlayerManager playerManager)
+        => ShowUI(playerManager);
+
+    private void OnBreathingStop(PlayerManager playerManager)
+        => HideUI(playerManager);
+
+    private void OnBreathingCanceled(PlayerManager playerManager)
+        => ForceHideUI();
 
     private void ShowUI(PlayerManager playerManager)
     {
