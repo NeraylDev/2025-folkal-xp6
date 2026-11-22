@@ -17,8 +17,8 @@ MonoBehaviour:
   - text: "\"Amigos, a <color=#FDE16A>1\xAA Morte do Mundo</color> se aproxima e
       temo por nossas vidas.\""
   - text: "\"N\xE3o temos c\xE1lculos precisos, mas a chegada da <color=#FDE16A>Morte</color>
-      deve ocorrer nos pr\xF3ximos amanheceres."
-  - text: "\"Ent\xE3o n\xE3o saiam para a superf\xEDcie.\""
-  - text: '"Em casos de fome e sede, comunique-nos. Eu, <color=#FDE16A>Ka</color>
-      e <color=#FDE16A>Moulk</color> nos resposabilizaremos pela busca de recursos."'
-  - text: "\"Dito isto, cuidem-se e n\xE3o percam a esperan\xE7a.\""
+      deve ocorrer nos pr\xF3ximos amanheceres.\""
+  - text: '"Em caso de fome ou sede, comunique-nos. Eu, <color=#FDE16A>Ka</color>
+      e <color=#FDE16A>Moulk</color> nos responsabilizaremos pela busca de recursos."'
+  - text: "\"Dito isto, n\xE3o saiam para a superf\xEDcie. Cuidem-se e n\xE3o percam
+      a esperan\xE7a.\""

@@ -100,7 +100,7 @@ public class LevelFlashbackOneState : LevelBaseState
         => _playerManager.GetPlayerBreathing.SetIsBreathing(true);
 
     private void ShowBreathingInput()
-        => _uiManager.GetEvents.RaiseShowInputHint("Respirar", "Segure A");
+        => _uiManager.GetEvents.RaiseShowInputHint("Respirar", "A");
 
     private void HideBreathingInput()
         => _uiManager.GetEvents.RaiseHideInputHint();

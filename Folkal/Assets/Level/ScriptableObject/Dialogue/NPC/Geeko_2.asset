@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bcc75e52ba2f1341ba029feef8eecc6, type: 3}
+  m_Name: Geeko_2
+  m_EditorClassIdentifier: 
+  _character: 1
+  _lineList:
+  - text: "Minha surpresa com sua presen\xE7a se deve ao fato de n\xE3o acreditar
+      que <color=#FDE16A>Morte do Mundo</color> pudesse ser, de alguma forma, piedosa. "
+  - text: "O vazio da exist\xEAncia aniquilou a solitude. Isto torna uma uma alma
+      viva como a ti reconfortante."
